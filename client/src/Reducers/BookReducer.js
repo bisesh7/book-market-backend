@@ -40,8 +40,7 @@ export const BooksReducer = (state, action) => {
     case REMOVE_FROM_BOOKS:
       return removeBook(action.bookId, state);
     case SET_BOOKS:
-      console.log(action);
-      return { ...state };
+      return { ...state, books: action.books };
     default:
       return state;
   }

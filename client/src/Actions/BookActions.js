@@ -10,7 +10,7 @@ export const removeFromBooks = (id) => ({
   bookId: id,
 });
 
-export const setBooks = () => ({
+export const setBooks = (books) => ({
   type: SET_BOOKS,
-  books: {},
+  books,
 });

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Col, Container, Row } from "reactstrap";
 import BooksDisplayComponent from "./BooksDisplayComponent";
 import CartComponent from "./CartComponent";
@@ -7,8 +7,12 @@ import { Alert } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import { BooksContext } from "../Contexts/BooksContext";
+import { setBooks } from "../Actions/BookActions";
 
 const HomeComponent = (props) => {
+  const { booksDispatch } = useContext(BooksContext);
+
   useEffect(() => {
     axios
       .get("/api/books", {
@@ -17,7 +21,9 @@ const HomeComponent = (props) => {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        if (res.data.success) {
+          booksDispatch(setBooks(res.data.books));
+        }
       });
   }, []);
 

@@ -1,11 +1,10 @@
 import React, { createContext, useReducer } from "react";
 import { BooksReducer } from "../Reducers/BookReducer";
-import booksJSON from "../Books/book_set.json";
 
 export const BooksContext = createContext();
 
 const BooksContextProvider = (props) => {
-  const [books, booksDispatch] = useReducer(BooksReducer, { books: booksJSON });
+  const [books, booksDispatch] = useReducer(BooksReducer, { books: [] });
 
   return (
     <BooksContext.Provider value={{ books, booksDispatch }}>
