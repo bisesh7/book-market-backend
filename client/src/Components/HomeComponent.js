@@ -6,8 +6,21 @@ import NavbarComponent from "./NavbarComponent";
 import { Alert } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 const HomeComponent = (props) => {
+  useEffect(() => {
+    axios
+      .get("/api/books", {
+        headers: {
+          Authorization: "6D1AC1DBDDC2D9EA",
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+  }, []);
+
   // Alert
   const [alertVisible, setAlertVisible] = useState(false);
   const onAlertDismiss = () => setAlertVisible(false);

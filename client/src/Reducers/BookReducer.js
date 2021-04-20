@@ -1,4 +1,8 @@
-import { ADD_TO_BOOKS, REMOVE_FROM_BOOKS } from "../Actions/ActionTypes";
+import {
+  ADD_TO_BOOKS,
+  REMOVE_FROM_BOOKS,
+  SET_BOOKS,
+} from "../Actions/ActionTypes";
 
 const addBook = (bookId, state) => {
   const updatedBooks = [...state.books];
@@ -35,6 +39,9 @@ export const BooksReducer = (state, action) => {
       return addBook(action.bookId, state);
     case REMOVE_FROM_BOOKS:
       return removeBook(action.bookId, state);
+    case SET_BOOKS:
+      console.log(action);
+      return { ...state };
     default:
       return state;
   }
