@@ -83,7 +83,9 @@ const BookDetailComponent = (props) => {
                 </span>
               </div>
               <div className="mt-3">
-                {getNPRFromDollar(book.price.substring(1, book.price.length))}{" "}
+                <strong className="text-primary">
+                  {getNPRFromDollar(book.price.substring(1, book.price.length))}
+                </strong>{" "}
                 <br />
                 <span>Stock: {book.stock}</span>
                 <br />
@@ -107,7 +109,7 @@ const BookDetailComponent = (props) => {
   return (
     <div>
       <NavbarComponent {...props} />
-      <Container>
+      <Container fluid={true}>
         <Alert color="danger" isOpen={alertVisible} toggle={onAlertDismiss}>
           {alertMessage}
         </Alert>
