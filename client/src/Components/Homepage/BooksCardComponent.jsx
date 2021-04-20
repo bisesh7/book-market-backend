@@ -84,6 +84,8 @@ const BooksCardComponent = (props) => {
           </div>
         </div>
         <small>
+          <span className="text-muted">By</span> {props.author}
+          <br />
           Price:{" "}
           <b className="text-primary">
             {getNPRFromDollar(props.price.substring(1, props.price.length))}
@@ -94,10 +96,8 @@ const BooksCardComponent = (props) => {
         <Collapse isOpen={isOpen}>
           <CardText>
             <small>
-              Date Created: <br />
+              Date Created: &nbsp;
               {getFormattedDate(props.published_date)} <br />
-              Author: {props.author}
-              <br />
               Genre:{" "}
               {props.genre.includes("|")
                 ? getFormattedGenre(props.genre)

@@ -39,9 +39,9 @@ const CartListGroupItem = (props) => {
           </Col>
           <Col md="6">
             <small>
-              {props.name} <br />
+              <strong>{props.name}</strong> <br />
               Quantity: {props.quantity} <br />
-              <b className="cart-quantity-button">
+              <strong className="cart-quantity-button">
                 <span
                   className="cart-quantity-minus-button mr-2"
                   onClick={quantityDecreaseHandler}
@@ -58,7 +58,7 @@ const CartListGroupItem = (props) => {
                 >
                   <FontAwesomeIcon icon={faPlusSquare} />
                 </span>
-              </b>
+              </strong>
               <br />
               <b className="text-primary">
                 {getNPRFromDollar(
