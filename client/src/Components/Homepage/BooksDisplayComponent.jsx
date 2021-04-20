@@ -73,18 +73,18 @@ const BooksDisplayComponent = (props) => {
   //   All the book cards
   const [bookCards, setBookCards] = useState(null);
 
-  const cardDeckHasFourCards = (index) => {
-    index = index + 1;
-    let flag = false;
+  // const cardDeckHasFourCards = (index) => {
+  //   index = index + 1;
+  //   let flag = false;
 
-    if (index % 4 === 0) {
-      flag = true;
-    } else {
-      flag = false;
-    }
+  //   if (index % 4 === 0) {
+  //     flag = true;
+  //   } else {
+  //     flag = false;
+  //   }
 
-    return flag;
-  };
+  //   return flag;
+  // };
 
   //   Generating cards of books in genre
   useEffect(() => {
@@ -218,25 +218,23 @@ const BooksDisplayComponent = (props) => {
 
   return (
     <div className={props.className}>
-      <div>
-        <InputGroup>
-          <InputGroupAddon addonType="prepend">
-            <InputGroupText>
-              <FontAwesomeIcon icon={faFilter} />
-            </InputGroupText>
-          </InputGroupAddon>
-          <Input
-            onChange={(e) => {
-              setGenreSelected(e.target.value);
-            }}
-            type="select"
-            className="genre-select"
-            defaultValue="all-genres"
-          >
-            {genreOptions}
-          </Input>
-        </InputGroup>
-      </div>
+      <InputGroup>
+        <InputGroupAddon addonType="prepend">
+          <InputGroupText>
+            <FontAwesomeIcon icon={faFilter} />
+          </InputGroupText>
+        </InputGroupAddon>
+        <Input
+          onChange={(e) => {
+            setGenreSelected(e.target.value);
+          }}
+          type="select"
+          className="genre-select"
+          defaultValue="all-genres"
+        >
+          {genreOptions}
+        </Input>
+      </InputGroup>
 
       <div className={props.className}>{cardDecksShown}</div>
       <div className="d-flex justify-content-center mt-3">

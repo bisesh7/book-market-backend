@@ -60,9 +60,11 @@ const CartListGroupItem = (props) => {
                 </span>
               </b>
               <br />
-              {getNPRFromDollar(
-                props.quantity * props.price.substring(1, props.price.length)
-              )}
+              <b className="text-primary">
+                {getNPRFromDollar(
+                  props.quantity * props.price.substring(1, props.price.length)
+                )}
+              </b>
             </small>
           </Col>
         </Row>

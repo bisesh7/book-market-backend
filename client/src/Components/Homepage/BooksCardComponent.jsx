@@ -85,7 +85,9 @@ const BooksCardComponent = (props) => {
         </CardTitle>
         <small>
           Price:{" "}
-          {getNPRFromDollar(props.price.substring(1, props.price.length))}{" "}
+          <b className="text-primary">
+            {getNPRFromDollar(props.price.substring(1, props.price.length))}
+          </b>
           <br />
           Stock: {props.stock}
         </small>
