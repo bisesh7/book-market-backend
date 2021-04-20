@@ -34,7 +34,7 @@ const CartComponent = (props) => {
             id={book.id}
             key={index}
             stock={book.stock}
-            className="cart-item d-flex p-0 border-0"
+            className="cart-item d-flex p-0 border-0 mb-2"
           />
         );
       });
