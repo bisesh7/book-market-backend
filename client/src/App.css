@@ -2,6 +2,7 @@
   min-width: 13vw;
   max-width: 13vw;
   border: none;
+  border-radius: 0 !important;
 }
 
 .book-card-collpase-button,
@@ -22,6 +23,7 @@
 
 .book-card-image {
   cursor: pointer;
+  border-radius: 0 !important;
 }
 
 .book-card-image:hover {
@@ -58,11 +60,11 @@
   display: none;
 }
 
-.cart-item {
-  padding: 0px 0px 0px 0px;
-}
-
 .add-to-cart-button {
   color: black;
+  border-radius: 0 !important;
+}
+
+.cart-empty-alert {
   border-radius: 0 !important;
 }

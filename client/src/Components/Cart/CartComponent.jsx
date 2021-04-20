@@ -53,7 +53,7 @@ const CartComponent = (props) => {
           Total: {getNPRFromDollar(totalAmount)}
         </small>
       ) : (
-        <Alert color="dark" className="text-center">
+        <Alert color="dark" className="text-center cart-empty-alert">
           Cart is empty.
         </Alert>
       )}
