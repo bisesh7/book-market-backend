@@ -1,15 +1,15 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import { Col, Container, Row, Button, Alert } from "reactstrap";
-import { BooksContext } from "../Contexts/BooksContext";
-import { getFormattedDate } from "../Functions/getFormattedDate";
-import { getFormattedGenre } from "../Functions/getFormattedGenre";
-import { getNPRFromDollar } from "../Functions/getNPRFromDollar";
-import { getNumberFromString } from "../Functions/getNumberFromString";
-import CartComponent from "./CartComponent";
-import NavbarComponent from "./NavbarComponent";
-import { addToCart } from "../Actions/CartActions";
-import { CartContext } from "../Contexts/CartContext";
-import { removeFromBooks } from "../Actions/BookActions";
+import { BooksContext } from "../../Contexts/BooksContext";
+import { getFormattedDate } from "../../utils/getFormattedDate";
+import { getFormattedGenre } from "../../utils/getFormattedGenre";
+import { getNPRFromDollar } from "../../utils/getNPRFromDollar";
+import { getNumberFromString } from "../../utils/getNumberFromString";
+import CartComponent from "../Cart/CartComponent";
+import NavbarComponent from "../NavbarComponent";
+import { addToCart } from "../../Actions/CartActions";
+import { CartContext } from "../../Contexts/CartContext";
+import { removeFromBooks } from "../../Actions/BookActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 

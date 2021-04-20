@@ -9,8 +9,8 @@ import {
   InputGroupAddon,
   InputGroupText,
 } from "reactstrap";
-import { BooksContext } from "../Contexts/BooksContext";
-import { getGenres } from "../Functions/getGenres";
+import { BooksContext } from "../../Contexts/BooksContext";
+import { getGenres } from "../../utils/getGenres";
 import BooksCardComponent from "./BooksCardComponent";
 
 const BooksDisplayComponent = (props) => {

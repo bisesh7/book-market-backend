@@ -1,9 +1,9 @@
 import "./App.css";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import HomeComponent from "./Components/HomeComponent";
+import HomeComponent from "./Components/Homepage/HomeComponent";
 import BooksContextProvider from "./Contexts/BooksContext";
 import CartContextProvider from "./Contexts/CartContext";
-import BookDetailComponent from "./Components/BookDetailComponent";
+import BookDetailComponent from "./Components/BookDetails/BookDetailComponent";
 
 function App() {
   return (

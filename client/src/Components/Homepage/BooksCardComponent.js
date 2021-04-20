@@ -10,13 +10,13 @@ import {
   CardBody,
   Collapse,
 } from "reactstrap";
-import { removeFromBooks } from "../Actions/BookActions";
-import { addToCart } from "../Actions/CartActions";
-import { BooksContext } from "../Contexts/BooksContext";
-import { CartContext } from "../Contexts/CartContext";
-import { getFormattedDate } from "../Functions/getFormattedDate";
-import { getFormattedGenre } from "../Functions/getFormattedGenre";
-import { getNPRFromDollar } from "../Functions/getNPRFromDollar";
+import { removeFromBooks } from "../../Actions/BookActions";
+import { addToCart } from "../../Actions/CartActions";
+import { BooksContext } from "../../Contexts/BooksContext";
+import { CartContext } from "../../Contexts/CartContext";
+import { getFormattedDate } from "../../utils/getFormattedDate";
+import { getFormattedGenre } from "../../utils/getFormattedGenre";
+import { getNPRFromDollar } from "../../utils/getNPRFromDollar";
 
 const BooksCardComponent = (props) => {
   // Getting the cart from context

@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { Col, ListGroupItem, Row } from "reactstrap";
-import { addToBooks, removeFromBooks } from "../Actions/BookActions";
-import { addToCart, removeFromCart } from "../Actions/CartActions";
-import { BooksContext } from "../Contexts/BooksContext";
-import { CartContext } from "../Contexts/CartContext";
-import { getNPRFromDollar } from "../Functions/getNPRFromDollar";
+import { addToBooks, removeFromBooks } from "../../Actions/BookActions";
+import { addToCart, removeFromCart } from "../../Actions/CartActions";
+import { BooksContext } from "../../Contexts/BooksContext";
+import { CartContext } from "../../Contexts/CartContext";
+import { getNPRFromDollar } from "../../utils/getNPRFromDollar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusSquare } from "@fortawesome/free-regular-svg-icons";
 import { faMinusSquare } from "@fortawesome/free-regular-svg-icons";

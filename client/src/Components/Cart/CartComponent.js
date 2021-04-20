@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Alert, ListGroup } from "reactstrap";
-import { CartContext } from "../Contexts/CartContext";
-import { BooksContext } from "../Contexts/BooksContext";
+import { CartContext } from "../../Contexts/CartContext";
+import { BooksContext } from "../../Contexts/BooksContext";
 import CartListGroupItem from "./CartListGroupItemComponent";
-import { getNPRFromDollar } from "../Functions/getNPRFromDollar";
+import { getNPRFromDollar } from "../../utils/getNPRFromDollar";
 
 const CartComponent = (props) => {
   const { cart } = useContext(CartContext);

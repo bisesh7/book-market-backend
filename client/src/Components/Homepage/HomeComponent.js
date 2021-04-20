@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Col, Container, Row } from "reactstrap";
 import BooksDisplayComponent from "./BooksDisplayComponent";
-import CartComponent from "./CartComponent";
-import NavbarComponent from "./NavbarComponent";
+import CartComponent from "../Cart/CartComponent";
+import NavbarComponent from "../NavbarComponent";
 import { Alert } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import { BooksContext } from "../Contexts/BooksContext";
-import { setBooks } from "../Actions/BookActions";
+import { BooksContext } from "../../Contexts/BooksContext";
+import { setBooks } from "../../Actions/BookActions";
 
 const HomeComponent = (props) => {
   const { booksDispatch } = useContext(BooksContext);
