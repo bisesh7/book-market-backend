@@ -67,11 +67,11 @@ const BooksCardComponent = (props) => {
         onClick={showCardDetails}
       />
       <CardBody className="p-2">
-        <CardTitle tag="h6">
+        <div tag="h6">
           <div className="d-flex justify-content-between">
-            <span className="book-card-title" onClick={showCardDetails}>
+            <strong className="book-card-title" onClick={showCardDetails}>
               {props.title}
-            </span>
+            </strong>
             {isOpen ? (
               <small onClick={toggle} className="book-card-collpase-button">
                 &#9650;
@@ -82,7 +82,7 @@ const BooksCardComponent = (props) => {
               </small>
             )}
           </div>
-        </CardTitle>
+        </div>
         <small>
           Price:{" "}
           <b className="text-primary">
