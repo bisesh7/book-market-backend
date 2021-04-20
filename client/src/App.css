@@ -6,8 +6,13 @@
 
 .book-card-collpase-button,
 .cart-quantity-minus-button,
-.cart-quantity-plus-button {
+.cart-quantity-plus-button,
+.book-card-title {
   cursor: pointer;
+}
+
+.book-card-title:hover {
+  text-decoration: underline;
 }
 
 .cart-quantity-minus-button:hover,

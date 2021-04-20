@@ -51,7 +51,7 @@ const BooksCardComponent = (props) => {
     }
   };
 
-  const cardImageClickHandler = (e) => {
+  const showCardDetails = (e) => {
     e.preventDefault();
     props.history.push(`/book/${props.id}`);
   };
@@ -64,12 +64,14 @@ const BooksCardComponent = (props) => {
         src={props.image}
         alt={props.title}
         className="book-card-image"
-        onClick={cardImageClickHandler}
+        onClick={showCardDetails}
       />
       <CardBody className="p-2">
         <CardTitle tag="h6">
           <div className="d-flex justify-content-between">
-            {props.title}
+            <span className="book-card-title" onClick={showCardDetails}>
+              {props.title}
+            </span>
             {isOpen ? (
               <small onClick={toggle} className="book-card-collpase-button">
                 &#9650;
