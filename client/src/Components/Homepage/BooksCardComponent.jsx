@@ -81,14 +81,15 @@ const BooksCardComponent = (props) => {
             )}
           </div>
         </CardTitle>
-
+        <small>
+          Price:{" "}
+          {getNPRFromDollar(props.price.substring(1, props.price.length))}{" "}
+          <br />
+          Stock: {props.stock}
+        </small>
         <Collapse isOpen={isOpen}>
           <CardText>
             <small>
-              Price:{" "}
-              {getNPRFromDollar(props.price.substring(1, props.price.length))}{" "}
-              <br />
-              Stock: {props.stock} <br />
               Date Created: <br />
               {getFormattedDate(props.published_date)} <br />
               Author: {props.author}

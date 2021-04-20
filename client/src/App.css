@@ -1,6 +1,7 @@
 .book-card {
   min-width: 13vw;
   max-width: 13vw;
+  border: none;
 }
 
 .book-card-collpase-button,
