@@ -1,0 +1,53 @@
+.book-card {
+  min-width: 20vw;
+  max-width: 20vw;
+}
+
+.book-card-collpase-button,
+.cart-quantity-minus-button,
+.cart-quantity-plus-button {
+  cursor: pointer;
+}
+
+.cart-quantity-minus-button:hover,
+.cart-quantity-plus-button:hover {
+  opacity: 0.5;
+}
+
+.book-card-image {
+  cursor: pointer;
+}
+
+.book-card-image:hover {
+  opacity: 0.5;
+}
+
+.genre-select {
+  max-width: 20vw;
+}
+
+.cart-image,
+.book-image {
+  width: 100%;
+  height: auto;
+}
+
+.cart-quantity-button {
+  font-size: larger;
+}
+
+.disabled-button {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.cart {
+  overflow-y: scroll;
+  height: 80vh;
+  width: 100%;
+  padding: 0px 10px 0px 0px;
+}
+
+.cart::-webkit-scrollbar {
+  display: none;
+}

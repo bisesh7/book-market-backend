@@ -1,0 +1,23 @@
+{
+  "name": "book-market",
+  "version": "1.0.0",
+  "description": "Online book store || Gurzu inc task",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client-install": "npm install --prefix client",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "author": "bisesh shakya",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^3.3.6",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "concurrently": "^6.0.2"
+  }
+}
