@@ -32,7 +32,7 @@ const NavbarComponent = (props) => {
           <Collapse isOpen={isOpen} navbar>
             <Nav className="mr-auto" navbar>
               <NavItem>
-                <NavLink href="https://github.com/bisesh7/book-market">
+                <NavLink href="https://github.com/bisesh7/book-market-backend">
                   Github
                 </NavLink>
               </NavItem>
