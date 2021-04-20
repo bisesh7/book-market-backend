@@ -17,7 +17,7 @@ const HomeComponent = (props) => {
     axios
       .get("/api/books", {
         headers: {
-          Authorization: "6D1AC1DBDDC2D9EA",
+          Authorization: process.env.REACT_APP_API_KEY,
         },
       })
       .then((res) => {
