@@ -18,27 +18,25 @@ const NavbarComponent = (props) => {
   return (
     <div>
       <Navbar color="light" light expand="md">
-        <Container>
-          <NavbarBrand
-            href="/"
-            onClick={(e) => {
-              e.preventDefault();
-              props.history.push("/");
-            }}
-          >
-            Book-Market
-          </NavbarBrand>
-          <NavbarToggler onClick={toggle} />
-          <Collapse isOpen={isOpen} navbar>
-            <Nav className="mr-auto" navbar>
-              <NavItem>
-                <NavLink href="https://github.com/bisesh7/book-market-backend">
-                  Github
-                </NavLink>
-              </NavItem>
-            </Nav>
-          </Collapse>
-        </Container>
+        <NavbarBrand
+          href="/"
+          onClick={(e) => {
+            e.preventDefault();
+            props.history.push("/");
+          }}
+        >
+          Book-Market
+        </NavbarBrand>
+        <NavbarToggler onClick={toggle} />
+        <Collapse isOpen={isOpen} navbar>
+          <Nav className="mr-auto" navbar>
+            <NavItem>
+              <NavLink href="https://github.com/bisesh7/book-market-backend">
+                Github
+              </NavLink>
+            </NavItem>
+          </Nav>
+        </Collapse>
       </Navbar>
     </div>
   );
