@@ -1,6 +1,6 @@
 .book-card {
-  min-width: 20vw;
-  max-width: 20vw;
+  min-width: 13vw;
+  max-width: 13vw;
 }
 
 .book-card-collpase-button,
@@ -54,4 +54,9 @@
 
 .cart-item {
   padding: 0px 0px 0px 0px;
+}
+
+.add-to-cart-button {
+  color: black;
+  border-radius: 0 !important;
 }

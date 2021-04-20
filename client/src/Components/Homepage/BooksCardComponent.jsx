@@ -57,7 +57,7 @@ const BooksCardComponent = (props) => {
   };
 
   return (
-    <Card className="book-card" key={props.id}>
+    <Card className={props.className} key={props.id}>
       <CardImg
         top
         width="100%"
@@ -66,8 +66,8 @@ const BooksCardComponent = (props) => {
         className="book-card-image"
         onClick={cardImageClickHandler}
       />
-      <CardBody>
-        <CardTitle tag="h5">
+      <CardBody className="p-2">
+        <CardTitle tag="h6">
           <div className="d-flex justify-content-between">
             {props.title}
             {isOpen ? (
@@ -100,18 +100,19 @@ const BooksCardComponent = (props) => {
             </small>
           </CardText>
         </Collapse>
-        <br />
-        {/* If stock is 0 we disable button */}
-        <Button
-          size="sm"
-          color="secondary"
-          disabled={props.stock <= 0}
-          onClick={addToCardButtonHandler}
-          block
-        >
-          <FontAwesomeIcon icon={faCartPlus} />
-        </Button>
       </CardBody>
+      {/* If stock is 0 we disable button */}
+      <Button
+        size="sm"
+        color="secondary"
+        disabled={props.stock <= 0}
+        onClick={addToCardButtonHandler}
+        block
+        outline
+        className="add-to-cart-button"
+      >
+        <FontAwesomeIcon icon={faCartPlus} />
+      </Button>
     </Card>
   );
 };

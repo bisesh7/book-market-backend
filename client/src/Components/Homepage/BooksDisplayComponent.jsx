@@ -66,33 +66,85 @@ const BooksDisplayComponent = (props) => {
       booksAccordingToGenre = books.books;
     }
 
+    setNumberOfCardDecks(3);
     setBooksAccordingToGenre(booksAccordingToGenre);
   }, [genreSelected, books]);
 
   //   All the book cards
   const [bookCards, setBookCards] = useState(null);
 
+  const cardDeckHasFourCards = (index) => {
+    index = index + 1;
+    let flag = false;
+
+    if (index % 4 === 0) {
+      flag = true;
+    } else {
+      flag = false;
+    }
+
+    return flag;
+  };
+
   //   Generating cards of books in genre
   useEffect(() => {
-    const bookCards = booksAccordingToGenre.map((book) => ({
-      key: book.id,
-      card: (
-        <BooksCardComponent
-          id={book.id}
-          title={book["name "]}
-          image={book.image}
-          price={book.price}
-          stock={book.stock}
-          author={book.author}
-          genre={book.genre}
-          published_date={book.published_date}
-          key={book.id}
-          setAlertVisible={props.setAlertVisible}
-          setAlertMessage={props.setAlertMessage}
-          {...props}
-        />
-      ),
-    }));
+    // This is done to seperate the cards of last deck
+    let finalDeckCardsClassName = "";
+    let lastCardDeckIndexes = [];
+
+    if (booksAccordingToGenre.length % 4 !== 0) {
+      const numberOfCardDecks = Math.floor(booksAccordingToGenre.length / 4);
+      const lastCardDeckStartingIndex = numberOfCardDecks * 4;
+
+      for (
+        let i = lastCardDeckStartingIndex;
+        i < booksAccordingToGenre.length;
+        i++
+      ) {
+        lastCardDeckIndexes.push(i);
+      }
+
+      switch (lastCardDeckIndexes.length) {
+        case 1:
+          finalDeckCardsClassName = "book-card last-card-one-card";
+          break;
+        case 2:
+          finalDeckCardsClassName = "book-card last-card-two-cards";
+          break;
+        case 3:
+          finalDeckCardsClassName = "book-card last-card-three-cards";
+          break;
+        default:
+          break;
+      }
+    }
+
+    const bookCards = booksAccordingToGenre.map((book, index) => {
+      return {
+        key: book.id,
+        card: (
+          <BooksCardComponent
+            id={book.id}
+            title={book["name "]}
+            image={book.image}
+            price={book.price}
+            stock={book.stock}
+            author={book.author}
+            genre={book.genre}
+            published_date={book.published_date}
+            key={book.id}
+            setAlertVisible={props.setAlertVisible}
+            setAlertMessage={props.setAlertMessage}
+            {...props}
+            className={
+              lastCardDeckIndexes.includes(index)
+                ? finalDeckCardsClassName
+                : "book-card"
+            }
+          />
+        ),
+      };
+    });
     setBookCards(bookCards);
   }, [booksAccordingToGenre]);
 
@@ -135,7 +187,6 @@ const BooksDisplayComponent = (props) => {
 
   //   Number of card deck initially shown
   const [numberOfCardDecks, setNumberOfCardDecks] = useState(3);
-  const [cardDeskAdded, setCardDeskAdded] = useState(false);
   // Card deck currently in the DOM
   const [cardDecksShown, setCardDecksShown] = useState([]);
 
