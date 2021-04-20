@@ -33,7 +33,7 @@
 }
 
 .cart-quantity-button {
-  font-size: larger;
+  font-size: 1.1rem;
 }
 
 .disabled-button {
@@ -50,4 +50,8 @@
 
 .cart::-webkit-scrollbar {
   display: none;
+}
+
+.cart-item {
+  padding: 0px 0px 0px 0px;
 }

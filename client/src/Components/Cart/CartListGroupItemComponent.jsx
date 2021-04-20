@@ -32,7 +32,7 @@ const CartListGroupItem = (props) => {
 
   return (
     <div>
-      <ListGroupItem>
+      <ListGroupItem className={props.className}>
         <Row>
           <Col md="6" className="d-flex align-items-center">
             <img src={props.image} alt={props.name} className="cart-image" />

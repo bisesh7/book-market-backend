@@ -34,6 +34,7 @@ const CartComponent = (props) => {
             id={book.id}
             key={index}
             stock={book.stock}
+            className="cart-item d-flex p-0 border-0"
           />
         );
       });
@@ -44,7 +45,9 @@ const CartComponent = (props) => {
 
   return (
     <div className={props.className}>
-      <ListGroup className="mt-3 mb-3">{cartListGroupItems}</ListGroup>
+      <ListGroup className="mt-3 mb-3 cart-list">
+        {cartListGroupItems}
+      </ListGroup>
       {cart.books.length ? (
         <small className="float-right">
           Total: {getNPRFromDollar(totalAmount)}
