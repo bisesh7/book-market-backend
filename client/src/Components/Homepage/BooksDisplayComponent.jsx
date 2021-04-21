@@ -155,7 +155,7 @@ const BooksDisplayComponent = (props) => {
       };
     });
     setBookCards(bookCards);
-  }, [booksAccordingToGenre]);
+  }, [booksAccordingToGenre, props]);
 
   // Decks of book cards
   const [cardDecks, setCardDecks] = useState([]);

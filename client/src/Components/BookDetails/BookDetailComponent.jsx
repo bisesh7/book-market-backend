@@ -38,7 +38,7 @@ const BookDetailComponent = (props) => {
   useEffect(() => {
     const book = books.books.find((book) => book.id === bookId);
     setBook(book);
-  }, [books]);
+  }, [books, bookId]);
 
   const addToCardButtonHandler = (e) => {
     e.preventDefault();
@@ -71,7 +71,11 @@ const BookDetailComponent = (props) => {
         <div>
           <Row>
             <Col md="6">
-              <img src={book.image} className="book-image" />
+              <img
+                src={book.image}
+                className="book-image"
+                alt={book["name "]}
+              />
             </Col>
             <Col md="6" className="pl-5">
               <div>

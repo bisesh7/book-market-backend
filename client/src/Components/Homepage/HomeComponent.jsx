@@ -25,7 +25,7 @@ const HomeComponent = (props) => {
           booksDispatch(setBooks(res.data.books));
         }
       });
-  }, []);
+  }, [booksDispatch]);
 
   // Alert
   const [alertVisible, setAlertVisible] = useState(false);

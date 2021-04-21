@@ -7,7 +7,6 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Container,
 } from "reactstrap";
 
 const NavbarComponent = (props) => {

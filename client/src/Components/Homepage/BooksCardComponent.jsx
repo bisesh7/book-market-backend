@@ -5,7 +5,6 @@ import {
   Card,
   Button,
   CardImg,
-  CardTitle,
   CardText,
   CardBody,
   Collapse,
