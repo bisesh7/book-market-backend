@@ -6,11 +6,8 @@ import NavbarComponent from "../NavbarComponent";
 import { Alert } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import axios from "axios";
 import { BooksContext } from "../../Contexts/BooksContext";
-import { setBooks } from "../../Actions/BookActions";
 import { CartContext } from "../../Contexts/CartContext";
-import { setCart } from "../../Actions/CartActions";
 import { populateBooksAndCart } from "../../utils/populateBooksAndCart";
 import BooksCarousel from "./BooksCarousel";
 
@@ -46,7 +43,7 @@ const HomeComponent = (props) => {
         <Alert color="danger" isOpen={alertVisible} toggle={onAlertDismiss}>
           {alertMessage}
         </Alert>
-        <BooksCarousel />
+        <BooksCarousel {...props} />
         <Row>
           <Col md="9">
             <BooksDisplayComponent
@@ -57,11 +54,13 @@ const HomeComponent = (props) => {
             />
           </Col>
           <Col md="3">
-            <strong className="cart-text">
-              <FontAwesomeIcon icon={faShoppingCart} /> Cart
-            </strong>
-            <div className="sticky-top cart">
-              <CartComponent {...props} />
+            <div className="mt-3">
+              <strong className="cart-text">
+                <FontAwesomeIcon icon={faShoppingCart} /> Cart
+              </strong>
+              <div className="sticky-top cart">
+                <CartComponent {...props} />
+              </div>
             </div>
           </Col>
         </Row>

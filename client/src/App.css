@@ -74,5 +74,11 @@
   padding: 28px 0px 10px 0px;
 }
 
-.book-carousel-book-info {
+.book-carousel-image,
+.book-card-title {
+  cursor: pointer;
+}
+
+.book-card-title:hover {
+  text-decoration: underline;
 }

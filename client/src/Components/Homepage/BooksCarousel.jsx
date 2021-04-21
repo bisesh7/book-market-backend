@@ -7,13 +7,33 @@ import Carousel, {
 } from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
 
-const BooksCarousel = () => {
-  const getFeaturedBook = (image, title, author) => {
+const BooksCarousel = (props) => {
+  const showDetailPage = (id) => {
+    props.history.push(`/book/${id}`);
+  };
+
+  const getFeaturedBook = (image, title, author, id) => {
     return (
       <div className="d-flex justify-content-between">
-        <img src={image} alt="Book-Image" />
+        <img
+          src={image}
+          alt={title}
+          onClick={() => {
+            showDetailPage(id);
+          }}
+          className="book-carousel-image"
+        />
         <span className="pl-3 text-white">
-          {title} <br />
+          <span
+            className="book-card-title"
+            onClick={() => {
+              showDetailPage(id);
+            }}
+          >
+            {" "}
+            {title}{" "}
+          </span>
+          <br />
           <span className="text-muted">by</span>&nbsp;{author}
         </span>
       </div>
@@ -21,26 +41,30 @@ const BooksCarousel = () => {
   };
 
   const [value, setValue] = useState(0);
-  const [slides, setSlides] = useState([
+  const [slides] = useState([
     getFeaturedBook(
       "http://dummyimage.com/250x250.png/cc0000/ffffff",
       "Bamity",
-      "Nikos"
+      "Nikos",
+      1
     ),
     getFeaturedBook(
       "http://dummyimage.com/250x250.png/5fa2dd/ffffff",
       "Span",
-      "Adela"
+      "Adela",
+      2
     ),
     getFeaturedBook(
       "http://dummyimage.com/250x250.png/5fa2dd/ffffff",
       "Fixflex",
-      "Lorianna"
+      "Lorianna",
+      3
     ),
     getFeaturedBook(
       "http://dummyimage.com/250x250.png/5fa2dd/ffffff",
       "Y-find",
-      "Catha"
+      "Catha",
+      4
     ),
   ]);
 
@@ -64,7 +88,7 @@ const BooksCarousel = () => {
               {
                 resolve: autoplayPlugin,
                 options: {
-                  interval: 4000,
+                  interval: 3000,
                 },
               },
             ]}

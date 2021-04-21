@@ -57,7 +57,7 @@ const BooksCardComponent = (props) => {
 
   return (
     <Card className={props.className} key={props.id}>
-      <CardImg
+      <img
         top
         width="100%"
         src={props.image}
@@ -66,6 +66,18 @@ const BooksCardComponent = (props) => {
         onClick={showCardDetails}
       />
       <CardBody className="p-2">
+        <small>
+          <strong
+            className={
+              props.stock
+                ? "text-success float-right"
+                : "text-danger float-right"
+            }
+          >
+            {props.stock ? `In Stock` : "Out Of Stock"}
+          </strong>
+        </small>{" "}
+        <br />
         <div tag="h6">
           <div className="d-flex justify-content-between">
             <strong className="book-card-title" onClick={showCardDetails}>
@@ -83,19 +95,18 @@ const BooksCardComponent = (props) => {
           </div>
         </div>
         <small>
-          <span className="text-muted">By</span> {props.author}
+          <span className="text-muted">By</span>{" "}
+          <span className="text-primary">{props.author}</span>
           <br />
-          Price:{" "}
-          <b className="text-primary">
+          <b className="text-danger">
             {getNPRFromDollar(props.price.substring(1, props.price.length))}
           </b>
           <br />
-          Stock: {props.stock}
         </small>
         <Collapse isOpen={isOpen}>
           <CardText>
-            <small>
-              Date Created: &nbsp;
+            <small className="text-muted">
+              Created at&nbsp;
               {getFormattedDate(props.published_date)} <br />
               Genre:{" "}
               {props.genre.includes("|")
