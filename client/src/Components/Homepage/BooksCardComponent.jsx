@@ -106,12 +106,14 @@ const BooksCardComponent = (props) => {
         <Collapse isOpen={isOpen}>
           <CardText>
             <small className="text-muted">
-              Created at&nbsp;
-              {getFormattedDate(props.published_date)} <br />
-              Genre:{" "}
-              {props.genre.includes("|")
-                ? getFormattedGenre(props.genre)
-                : props.genre}
+              <strong>
+                Created at&nbsp;
+                {getFormattedDate(props.published_date)} <br />
+                Genre:{" "}
+                {props.genre.includes("|")
+                  ? getFormattedGenre(props.genre)
+                  : props.genre}
+              </strong>
             </small>
           </CardText>
         </Collapse>
