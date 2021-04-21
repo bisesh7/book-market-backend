@@ -88,14 +88,21 @@ const BooksDisplayComponent = (props) => {
 
   //   Generating cards of books in genre
   useEffect(() => {
-    // This is done to seperate the cards of last deck
+    // This is done to identify the cards of last deck if the last deck has
+    // less than 4 cards
     let finalDeckCardsClassName = "";
+    // This contains the indexes of the cards in the last deck
     let lastCardDeckIndexes = [];
 
+    // If the card deck has less than 4 cards then total number of books when
+    // divided by 4 will produce remainder
     if (booksAccordingToGenre.length % 4 !== 0) {
+      // Total number of card deck minus the last card deck
       const numberOfCardDecks = Math.floor(booksAccordingToGenre.length / 4);
+      // The starting index of the first card in the last deck
       const lastCardDeckStartingIndex = numberOfCardDecks * 4;
 
+      // Pushing all the indexes of the book in last card deck
       for (
         let i = lastCardDeckStartingIndex;
         i < booksAccordingToGenre.length;
@@ -104,6 +111,8 @@ const BooksDisplayComponent = (props) => {
         lastCardDeckIndexes.push(i);
       }
 
+      // Depending upon the number of cards in the last deck
+      // We give classname to them
       switch (lastCardDeckIndexes.length) {
         case 1:
           finalDeckCardsClassName = "book-card last-card-one-card";

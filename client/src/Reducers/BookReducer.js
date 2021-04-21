@@ -40,6 +40,7 @@ export const BooksReducer = (state, action) => {
     case REMOVE_FROM_BOOKS:
       return removeBook(action.bookId, state);
     case SET_BOOKS:
+      sessionStorage.setItem("books", JSON.stringify(action.books));
       return { ...state, books: action.books };
     default:
       return state;
