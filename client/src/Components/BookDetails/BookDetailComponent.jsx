@@ -12,10 +12,18 @@ import { CartContext } from "../../Contexts/CartContext";
 import { removeFromBooks } from "../../Actions/BookActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
+import { populateBooksAndCart } from "../../utils/populateBooksAndCart";
 
 const BookDetailComponent = (props) => {
   const [bookId, setBookId] = useState();
+
   const { cart, cartDispatch } = useContext(CartContext);
+  // Getting the books from context
+  const { books, booksDispatch } = useContext(BooksContext);
+
+  useEffect(() => {
+    populateBooksAndCart(cartDispatch, booksDispatch);
+  }, [booksDispatch, cartDispatch]);
 
   // Alert
   const [alertVisible, setAlertVisible] = useState(false);
@@ -29,9 +37,6 @@ const BookDetailComponent = (props) => {
       props.history.push("/");
     }
   }, []);
-
-  // Getting the books from context
-  const { books, booksDispatch } = useContext(BooksContext);
 
   const [book, setBook] = useState(null);
 

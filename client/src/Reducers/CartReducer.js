@@ -1,4 +1,8 @@
-import { ADD_TO_CART, REMOVE_FROM_CART } from "../Actions/ActionTypes";
+import {
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  SET_CART,
+} from "../Actions/ActionTypes";
 
 const addBookToCart = (bookId, state) => {
   const updatedCart = [...state.books];
@@ -48,6 +52,9 @@ export const CartReducer = (state, action) => {
       return addBookToCart(action.bookId, state);
     case REMOVE_FROM_CART:
       return removeBookFromCart(action.bookId, state);
+    case SET_CART:
+      console.log(action);
+      return { ...state, books: action.books };
     default:
       return state;
   }

@@ -9,23 +9,17 @@ import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { BooksContext } from "../../Contexts/BooksContext";
 import { setBooks } from "../../Actions/BookActions";
+import { CartContext } from "../../Contexts/CartContext";
+import { setCart } from "../../Actions/CartActions";
+import { populateBooksAndCart } from "../../utils/populateBooksAndCart";
 
 const HomeComponent = (props) => {
   const { booksDispatch } = useContext(BooksContext);
+  const { cartDispatch } = useContext(CartContext);
 
   useEffect(() => {
-    axios
-      .get("/api/books", {
-        headers: {
-          Authorization: process.env.REACT_APP_API_KEY,
-        },
-      })
-      .then((res) => {
-        if (res.data.success) {
-          booksDispatch(setBooks(res.data.books));
-        }
-      });
-  }, [booksDispatch]);
+    populateBooksAndCart(cartDispatch, booksDispatch);
+  }, [booksDispatch, cartDispatch]);
 
   // Alert
   const [alertVisible, setAlertVisible] = useState(false);
