@@ -54,7 +54,8 @@ const CartComponent = (props) => {
         </small>
       ) : (
         <Alert color="dark" className="text-center cart-empty-alert">
-          Cart is empty.
+          <strong>Your cart is empty.</strong> <br />
+          <small>Please add the books to the cart</small>
         </Alert>
       )}
     </div>
