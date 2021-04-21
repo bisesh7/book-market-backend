@@ -28,8 +28,6 @@ const BooksDisplayComponent = (props) => {
   // The genre currently being selected
   const [genreSelected, setGenreSelected] = useState("all-genres");
 
-  console.log(props);
-
   // Set the genres
   useEffect(() => {
     setGenres(getGenres(props.books.books));

@@ -1,6 +1,7 @@
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useState } from "react";
+import { connect } from "react-redux";
 import {
   Card,
   Button,
@@ -29,8 +30,9 @@ const BooksCardComponent = (props) => {
   const addToCardButtonHandler = (e) => {
     e.preventDefault();
     const add = () => {
-      cartDispatch(addToCart(props.id));
-      booksDispatch(removeFromBooks(props.id));
+      // cartDispatch(addToCart(props.id));
+      props.addToCart(props.id);
+      props.removeFromBooks(props.id);
     };
     if (props.stock > 0) {
       // Check if there are 5 different books in cart
@@ -134,4 +136,6 @@ const BooksCardComponent = (props) => {
   );
 };
 
-export default BooksCardComponent;
+export default connect(null, { addToCart, removeFromBooks })(
+  BooksCardComponent
+);

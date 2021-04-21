@@ -13,6 +13,7 @@ import { removeFromBooks } from "../../Actions/BookActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { populateBooksAndCart } from "../../utils/populateBooksAndCart";
+import { connect } from "react-redux";
 
 const BookDetailComponent = (props) => {
   const [bookId, setBookId] = useState();
@@ -41,22 +42,28 @@ const BookDetailComponent = (props) => {
   const [book, setBook] = useState(null);
 
   useEffect(() => {
-    const book = books.books.find((book) => book.id === bookId);
+    const book = props.books.books.find((book) => book.id === bookId);
     setBook(book);
-  }, [books, bookId]);
+  }, [props.books, bookId]);
 
   const addToCardButtonHandler = (e) => {
     e.preventDefault();
     const add = () => {
       console.log("add called");
+
+      props.addToCart(book.id);
+      props.removeFromBooks(book.id);
+
       cartDispatch(addToCart(book.id));
       booksDispatch(removeFromBooks(book.id));
     };
     if (book.stock > 0) {
       // Check if there are 5 different books in cart
-      if (cart.books.length === 5) {
+      if (props.cart.cart.length === 5) {
         // If the cart has five book but user has selected book in cart
-        if (cart.books.some((bookInCart) => bookInCart.bookId === book.id)) {
+        if (
+          props.cart.cart.some((bookInCart) => bookInCart.bookId === book.id)
+        ) {
           add();
         } else {
           setAlertMessage(
@@ -142,4 +149,11 @@ const BookDetailComponent = (props) => {
   );
 };
 
-export default BookDetailComponent;
+const mapStateToProps = (state) => ({
+  books: state.books,
+  cart: state.cart,
+});
+
+export default connect(mapStateToProps, { removeFromBooks, addToCart })(
+  BookDetailComponent
+);

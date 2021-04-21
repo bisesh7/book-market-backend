@@ -19,7 +19,7 @@ const HomeComponent = (props) => {
 
   useEffect(() => {
     props.setBooks();
-    populateBooksAndCart(cartDispatch, booksDispatch);
+    // populateBooksAndCart(cartDispatch, booksDispatch);
   }, [booksDispatch, cartDispatch]);
 
   // Alert

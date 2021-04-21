@@ -8,25 +8,22 @@ import { getNPRFromDollar } from "../../utils/getNPRFromDollar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusSquare } from "@fortawesome/free-regular-svg-icons";
 import { faMinusSquare } from "@fortawesome/free-regular-svg-icons";
+import { connect } from "react-redux";
 
 const CartListGroupItem = (props) => {
-  // Getting the cart from context
-  const { cartDispatch } = useContext(CartContext);
-  const { booksDispatch } = useContext(BooksContext);
-
   const quantityDecreaseHandler = (e) => {
     e.preventDefault();
     if (props.quantity > 0) {
-      cartDispatch(removeFromCart(props.id));
-      booksDispatch(addToBooks(props.id));
+      props.removeFromCart(props.id);
+      props.addToBooks(props.id);
     }
   };
 
   const quantityIncreaseHandler = (e) => {
     e.preventDefault();
     if (props.stock > 0) {
-      cartDispatch(addToCart(props.id));
-      booksDispatch(removeFromBooks(props.id));
+      props.addToCart(props.id);
+      props.removeFromBooks(props.id);
     }
   };
 
@@ -73,4 +70,9 @@ const CartListGroupItem = (props) => {
   );
 };
 
-export default CartListGroupItem;
+export default connect(null, {
+  addToCart,
+  removeFromCart,
+  addToBooks,
+  removeFromBooks,
+})(CartListGroupItem);
