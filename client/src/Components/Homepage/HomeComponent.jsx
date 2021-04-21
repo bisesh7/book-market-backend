@@ -10,12 +10,15 @@ import { BooksContext } from "../../Contexts/BooksContext";
 import { CartContext } from "../../Contexts/CartContext";
 import { populateBooksAndCart } from "../../utils/populateBooksAndCart";
 import BooksCarousel from "./BooksCarousel";
+import { connect } from "react-redux";
+import { setBooks } from "../../Actions/actionBook";
 
 const HomeComponent = (props) => {
   const { booksDispatch } = useContext(BooksContext);
   const { cartDispatch } = useContext(CartContext);
 
   useEffect(() => {
+    props.setBooks();
     populateBooksAndCart(cartDispatch, booksDispatch);
   }, [booksDispatch, cartDispatch]);
 
@@ -69,4 +72,4 @@ const HomeComponent = (props) => {
   );
 };
 
-export default HomeComponent;
+export default connect(null, { setBooks })(HomeComponent);

@@ -12,13 +12,14 @@ import {
 import { BooksContext } from "../../Contexts/BooksContext";
 import { getGenres } from "../../utils/getGenres";
 import BooksCardComponent from "./BooksCardComponent";
+import { connect } from "react-redux";
 
 const BooksDisplayComponent = (props) => {
   // Getting the books from context
   const { books } = useContext(BooksContext);
   // Contains the books of particular genre
   const [booksAccordingToGenre, setBooksAccordingToGenre] = useState(
-    books.books
+    props.books.books
   );
   // List of all the genres
   const [genres, setGenres] = useState([]);
@@ -27,10 +28,12 @@ const BooksDisplayComponent = (props) => {
   // The genre currently being selected
   const [genreSelected, setGenreSelected] = useState("all-genres");
 
+  console.log(props);
+
   // Set the genres
   useEffect(() => {
-    setGenres(getGenres(books.books));
-  }, [books]);
+    setGenres(getGenres(props.books.books));
+  }, [props.books]);
 
   // Generating the genres options for selecting genre
   useEffect(() => {
@@ -54,21 +57,21 @@ const BooksDisplayComponent = (props) => {
     let booksAccordingToGenre = [];
     // If there a particular genre is selected
     if (genreSelected !== "all-genres" && genreSelected !== "Others") {
-      booksAccordingToGenre = books.books.filter((book) =>
+      booksAccordingToGenre = props.books.books.filter((book) =>
         // Since book can have different genres
         book.genre.includes(genreSelected)
       );
     } else if (genreSelected === "Others") {
-      booksAccordingToGenre = books.books.filter(
+      booksAccordingToGenre = props.books.books.filter(
         (book) => book.genre === "(no genres listed)"
       );
     } else {
-      booksAccordingToGenre = books.books;
+      booksAccordingToGenre = props.books.books;
     }
 
     setNumberOfCardDecks(3);
     setBooksAccordingToGenre(booksAccordingToGenre);
-  }, [genreSelected, books]);
+  }, [genreSelected, props.books]);
 
   //   All the book cards
   const [bookCards, setBookCards] = useState(null);
@@ -264,4 +267,8 @@ const BooksDisplayComponent = (props) => {
   );
 };
 
-export default BooksDisplayComponent;
+const mapStateToProps = (state) => ({
+  books: state.books,
+});
+
+export default connect(mapStateToProps)(BooksDisplayComponent);
