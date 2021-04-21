@@ -84,19 +84,23 @@ const BookDetailComponent = (props) => {
             </Col>
             <Col md="6" className="pl-5">
               <div>
-                <strong>{book["name "]}</strong> <br />
+                <strong className="text-primary">{book["name "]}</strong> <br />
                 <span className="text-muted">by</span> {book.author} <br />
-                <span>Genre: {getFormattedGenre(book.genre)}</span> <br />
-                <span>
-                  Published Date: {getFormattedDate(book["published_date"])}
-                </span>
+                <div className="text-muted">
+                  <span>Genre: {getFormattedGenre(book.genre)}</span> <br />
+                  <span>
+                    Published Date: {getFormattedDate(book["published_date"])}
+                  </span>
+                </div>
               </div>
               <div className="mt-3">
-                <strong className="text-primary">
+                <strong className="text-danger">
                   {getNPRFromDollar(book.price.substring(1, book.price.length))}
                 </strong>{" "}
                 <br />
-                <span>Stock: {book.stock}</span>
+                <span className={book.stock ? "text-success" : "text-danger"}>
+                  {book.stock ? "In Stock" : "Out Of Stock"}
+                </span>
                 <br />
                 <Button
                   size="sm"
