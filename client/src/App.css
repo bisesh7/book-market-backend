@@ -68,3 +68,11 @@
 .cart-empty-alert {
   border-radius: 0 !important;
 }
+
+.books-carousel {
+  background-color: #124d6c;
+  padding: 28px 0px 10px 0px;
+}
+
+.book-carousel-book-info {
+}

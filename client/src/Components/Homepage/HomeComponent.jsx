@@ -12,6 +12,7 @@ import { setBooks } from "../../Actions/BookActions";
 import { CartContext } from "../../Contexts/CartContext";
 import { setCart } from "../../Actions/CartActions";
 import { populateBooksAndCart } from "../../utils/populateBooksAndCart";
+import BooksCarousel from "./BooksCarousel";
 
 const HomeComponent = (props) => {
   const { booksDispatch } = useContext(BooksContext);
@@ -45,6 +46,7 @@ const HomeComponent = (props) => {
         <Alert color="danger" isOpen={alertVisible} toggle={onAlertDismiss}>
           {alertMessage}
         </Alert>
+        <BooksCarousel />
         <Row>
           <Col md="9">
             <BooksDisplayComponent
