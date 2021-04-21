@@ -17,6 +17,8 @@ const addBookToCart = (bookId, state) => {
     updatedItem.quantity++;
     updatedCart[updatedItemIndex] = updatedItem;
   }
+
+  sessionStorage.setItem("cart", JSON.stringify(updatedCart));
   return { ...state, books: updatedCart };
 };
 
@@ -35,6 +37,8 @@ const removeBookFromCart = (bookId, state) => {
   } else {
     updatedCart[updatedItemIndex] = updatedItem;
   }
+
+  sessionStorage.setItem("cart", JSON.stringify(updatedCart));
   return { ...state, books: updatedCart };
 };
 

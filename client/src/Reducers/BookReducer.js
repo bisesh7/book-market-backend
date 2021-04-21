@@ -15,6 +15,8 @@ const addBook = (bookId, state) => {
     updatedBook.stock++;
     updatedBooks[updatedBookIndex] = updatedBook;
   }
+
+  sessionStorage.setItem("books", JSON.stringify(updatedBooks));
   return { ...state, books: updatedBooks };
 };
 
@@ -30,6 +32,8 @@ const removeBook = (bookId, state) => {
   if (updatedBook.stock >= 0) {
     updatedBooks[updatedBookIndex] = updatedBook;
   }
+
+  sessionStorage.setItem("books", JSON.stringify(updatedBooks));
   return { ...state, books: updatedBooks };
 };
 
