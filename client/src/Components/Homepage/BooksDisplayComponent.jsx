@@ -1,6 +1,6 @@
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   CardDeck,
   Button,
@@ -9,14 +9,11 @@ import {
   InputGroupAddon,
   InputGroupText,
 } from "reactstrap";
-import { BooksContext } from "../../Contexts/BooksContext";
 import { getGenres } from "../../utils/getGenres";
 import BooksCardComponent from "./BooksCardComponent";
 import { connect } from "react-redux";
 
 const BooksDisplayComponent = (props) => {
-  // Getting the books from context
-  const { books } = useContext(BooksContext);
   // Contains the books of particular genre
   const [booksAccordingToGenre, setBooksAccordingToGenre] = useState(
     props.books.books

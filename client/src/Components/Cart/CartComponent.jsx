@@ -1,7 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, ListGroup } from "reactstrap";
-import { CartContext } from "../../Contexts/CartContext";
-import { BooksContext } from "../../Contexts/BooksContext";
 import CartListGroupItem from "./CartListGroupItemComponent";
 import { getNPRFromDollar } from "../../utils/getNPRFromDollar";
 import { connect } from "react-redux";

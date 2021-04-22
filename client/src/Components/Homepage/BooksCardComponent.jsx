@@ -1,28 +1,15 @@
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
-import {
-  Card,
-  Button,
-  CardImg,
-  CardText,
-  CardBody,
-  Collapse,
-} from "reactstrap";
+import { Card, Button, CardText, CardBody, Collapse } from "reactstrap";
 import { removeFromBooks } from "../../Actions/BookActions";
 import { addToCart } from "../../Actions/CartActions";
-import { BooksContext } from "../../Contexts/BooksContext";
-import { CartContext } from "../../Contexts/CartContext";
 import { getFormattedDate } from "../../utils/getFormattedDate";
 import { getFormattedGenre } from "../../utils/getFormattedGenre";
 import { getNPRFromDollar } from "../../utils/getNPRFromDollar";
 
 const BooksCardComponent = (props) => {
-  // Getting the cart from context
-  const { cart, cartDispatch } = useContext(CartContext);
-  const { booksDispatch } = useContext(BooksContext);
-
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);

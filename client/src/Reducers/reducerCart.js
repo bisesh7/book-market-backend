@@ -50,7 +50,7 @@ const removeBookFromCart = (bookId, state) => {
   return { ...state, cart: updatedCart };
 };
 
-export default (state = initState, action) => {
+const cartReducer = (state = initState, action) => {
   switch (action.type) {
     case ADD_TO_CART:
       return addBookToCart(action.bookId, state);
@@ -62,3 +62,5 @@ export default (state = initState, action) => {
       return state;
   }
 };
+
+export default cartReducer;

@@ -41,7 +41,7 @@ const removeBook = (bookId, state) => {
   return { ...state, books: updatedBooks };
 };
 
-export default (state = initState, action) => {
+const bookReducer = (state = initState, action) => {
   switch (action.type) {
     case ADD_TO_BOOKS:
       return addBook(action.bookId, state);
@@ -54,3 +54,5 @@ export default (state = initState, action) => {
       return state;
   }
 };
+
+export default bookReducer;

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "reactstrap";
 import BooksDisplayComponent from "./BooksDisplayComponent";
 import CartComponent from "../Cart/CartComponent";
@@ -6,21 +6,16 @@ import NavbarComponent from "../NavbarComponent";
 import { Alert } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import { BooksContext } from "../../Contexts/BooksContext";
-import { CartContext } from "../../Contexts/CartContext";
-import { populateBooksAndCart } from "../../utils/populateBooksAndCart";
 import BooksCarousel from "./BooksCarousel";
 import { connect } from "react-redux";
 import { setBooks } from "../../Actions/actionBook";
 import { setCart } from "../../Actions/actionCart";
 
 const HomeComponent = (props) => {
-  const { booksDispatch } = useContext(BooksContext);
-  const { cartDispatch } = useContext(CartContext);
-
   useEffect(() => {
     props.setBooks();
-  }, [booksDispatch, cartDispatch]);
+    //eslint-disable-next-line
+  }, [props.setBooks]);
 
   // Alert
   const [alertVisible, setAlertVisible] = useState(false);
