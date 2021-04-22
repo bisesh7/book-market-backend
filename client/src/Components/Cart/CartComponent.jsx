@@ -44,10 +44,8 @@ const CartComponent = (props) => {
 
   return (
     <div className={props.className}>
-      <ListGroup className="mt-3 mb-3 cart-list">
-        {cartListGroupItems}
-      </ListGroup>
-      {props.cart.length ? (
+      <ListGroup className="mb-3 cart-list">{cartListGroupItems}</ListGroup>
+      {props.cart.cart.length ? (
         <small className="float-right">
           Total: {getNPRFromDollar(totalAmount)}
         </small>

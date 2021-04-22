@@ -57,12 +57,16 @@ const HomeComponent = (props) => {
             />
           </Col>
           <Col md="3">
-            <div className="mt-3">
+            <div className="sticky-top">
+              {/* To create a space above the cart */}
+              <span>
+                <br />
+              </span>
               <strong className="cart-text">
                 <FontAwesomeIcon icon={faShoppingCart} /> Cart
               </strong>
-              <div className="sticky-top cart">
-                <CartComponent {...props} />
+              <div>
+                <CartComponent {...props} className="cart mt-3" />
               </div>
             </div>
           </Col>

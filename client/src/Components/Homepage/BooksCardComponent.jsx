@@ -36,9 +36,11 @@ const BooksCardComponent = (props) => {
     };
     if (props.stock > 0) {
       // Check if there are 5 different books in cart
-      if (cart.books.length === 5) {
+      if (props.cart.cart.length === 5) {
         // If the cart has five book but user has selected book in cart
-        if (cart.books.some((bookInCart) => bookInCart.bookId === props.id)) {
+        if (
+          props.cart.cart.some((bookInCart) => bookInCart.bookId === props.id)
+        ) {
           add();
         } else {
           props.setAlertMessage(
@@ -136,6 +138,12 @@ const BooksCardComponent = (props) => {
   );
 };
 
-export default connect(null, { addToCart, removeFromBooks })(
+const mapStateToProps = (state) => {
+  return {
+    cart: state.cart,
+  };
+};
+
+export default connect(mapStateToProps, { addToCart, removeFromBooks })(
   BooksCardComponent
 );
