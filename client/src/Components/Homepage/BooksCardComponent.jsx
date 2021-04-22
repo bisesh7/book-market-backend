@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Card, Button, CardText, CardBody, Collapse } from "reactstrap";
-import { removeFromBooks } from "../../Actions/BookActions";
-import { addToCart } from "../../Actions/CartActions";
+import { removeFromBooks } from "../../Actions/actionBook";
+import { addBookToCart } from "../../Actions/actionCart";
 import { getFormattedDate } from "../../utils/getFormattedDate";
 import { getFormattedGenre } from "../../utils/getFormattedGenre";
 import { getNPRFromDollar } from "../../utils/getNPRFromDollar";
@@ -18,7 +18,7 @@ const BooksCardComponent = (props) => {
     e.preventDefault();
     const add = () => {
       // cartDispatch(addToCart(props.id));
-      props.addToCart(props.id);
+      props.addBookToCart(props.id);
       props.removeFromBooks(props.id);
     };
     if (props.stock > 0) {
@@ -131,6 +131,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { addToCart, removeFromBooks })(
+export default connect(mapStateToProps, { addBookToCart, removeFromBooks })(
   BooksCardComponent
 );

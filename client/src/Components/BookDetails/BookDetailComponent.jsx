@@ -6,8 +6,8 @@ import { getNPRFromDollar } from "../../utils/getNPRFromDollar";
 import { getNumberFromString } from "../../utils/getNumberFromString";
 import CartComponent from "../Cart/CartComponent";
 import NavbarComponent from "../NavbarComponent";
-import { addToCart } from "../../Actions/CartActions";
-import { removeFromBooks } from "../../Actions/BookActions";
+import { addBookToCart } from "../../Actions/actionCart";
+import { removeFromBooks } from "../../Actions/actionBook";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
@@ -46,7 +46,7 @@ const BookDetailComponent = (props) => {
     const add = () => {
       console.log("add called");
 
-      props.addToCart(book.id);
+      props.addBookToCart(book.id);
       props.removeFromBooks(book.id);
     };
     if (book.stock > 0) {
@@ -148,6 +148,6 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   removeFromBooks,
-  addToCart,
+  addBookToCart,
   setBooks,
 })(BookDetailComponent);

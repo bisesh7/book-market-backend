@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, ListGroupItem, Row } from "reactstrap";
-import { addToBooks, removeFromBooks } from "../../Actions/BookActions";
-import { addToCart, removeFromCart } from "../../Actions/CartActions";
+import { addToBooks, removeFromBooks } from "../../Actions/actionBook";
+import { addBookToCart, removeBookFromCart } from "../../Actions/actionCart";
 import { getNPRFromDollar } from "../../utils/getNPRFromDollar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusSquare } from "@fortawesome/free-regular-svg-icons";
@@ -12,7 +12,7 @@ const CartListGroupItem = (props) => {
   const quantityDecreaseHandler = (e) => {
     e.preventDefault();
     if (props.quantity > 0) {
-      props.removeFromCart(props.id);
+      props.removeBookFromCart(props.id);
       props.addToBooks(props.id);
     }
   };
@@ -20,7 +20,7 @@ const CartListGroupItem = (props) => {
   const quantityIncreaseHandler = (e) => {
     e.preventDefault();
     if (props.stock > 0) {
-      props.addToCart(props.id);
+      props.addBookToCart(props.id);
       props.removeFromBooks(props.id);
     }
   };
@@ -69,8 +69,8 @@ const CartListGroupItem = (props) => {
 };
 
 export default connect(null, {
-  addToCart,
-  removeFromCart,
+  addBookToCart,
+  removeBookFromCart,
   addToBooks,
   removeFromBooks,
 })(CartListGroupItem);
