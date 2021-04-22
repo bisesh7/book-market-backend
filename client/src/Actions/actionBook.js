@@ -8,20 +8,36 @@ import axios from "axios";
 
 export const setBooks = () => {
   return (dispatch) => {
-    axios
-      .get("/api/books", {
-        headers: {
-          Authorization: process.env.REACT_APP_API_KEY,
-        },
-      })
-      .then((res) => {
-        if (res.data.success) {
-          dispatch({
-            type: SET_BOOKS,
-            books: res.data.books,
-          });
-        }
+    const setBooksAndCart = (books) => {
+      dispatch({
+        type: SET_BOOKS,
+        books,
       });
+      const cart = JSON.parse(sessionStorage.getItem("cart"));
+      if (cart) {
+        dispatch({
+          type: SET_CART,
+          cart,
+        });
+      }
+    };
+
+    const books = JSON.parse(sessionStorage.getItem("books"));
+    if (!books) {
+      axios
+        .get("/api/books", {
+          headers: {
+            Authorization: process.env.REACT_APP_API_KEY,
+          },
+        })
+        .then((res) => {
+          if (res.data.success) {
+            setBooksAndCart(res.data.books);
+          }
+        });
+    } else {
+      setBooksAndCart(books);
+    }
   };
 };
 

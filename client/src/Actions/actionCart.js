@@ -21,3 +21,13 @@ export const removeBookFromCart = (bookId) => {
     });
   };
 };
+
+export const setCart = (cart) => {
+  console.log(cart);
+  return (dispatch) => {
+    dispatch({
+      type: SET_CART,
+      cart,
+    });
+  };
+};

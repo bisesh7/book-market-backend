@@ -57,7 +57,6 @@ export default (state = initState, action) => {
     case REMOVE_FROM_CART:
       return removeBookFromCart(action.bookId, state);
     case SET_CART:
-      sessionStorage.setItem("books", JSON.stringify(action.books));
       return { ...state, cart: action.cart };
     default:
       return state;

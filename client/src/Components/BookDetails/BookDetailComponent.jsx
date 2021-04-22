@@ -12,19 +12,15 @@ import { CartContext } from "../../Contexts/CartContext";
 import { removeFromBooks } from "../../Actions/BookActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
-import { populateBooksAndCart } from "../../utils/populateBooksAndCart";
 import { connect } from "react-redux";
+import { setBooks } from "../../Actions/actionBook";
 
 const BookDetailComponent = (props) => {
   const [bookId, setBookId] = useState();
 
-  const { cart, cartDispatch } = useContext(CartContext);
-  // Getting the books from context
-  const { books, booksDispatch } = useContext(BooksContext);
-
   useEffect(() => {
-    populateBooksAndCart(cartDispatch, booksDispatch);
-  }, [booksDispatch, cartDispatch]);
+    props.setBooks();
+  }, [props.setBooks]);
 
   // Alert
   const [alertVisible, setAlertVisible] = useState(false);
@@ -53,9 +49,6 @@ const BookDetailComponent = (props) => {
 
       props.addToCart(book.id);
       props.removeFromBooks(book.id);
-
-      cartDispatch(addToCart(book.id));
-      booksDispatch(removeFromBooks(book.id));
     };
     if (book.stock > 0) {
       // Check if there are 5 different books in cart
@@ -154,6 +147,8 @@ const mapStateToProps = (state) => ({
   cart: state.cart,
 });
 
-export default connect(mapStateToProps, { removeFromBooks, addToCart })(
-  BookDetailComponent
-);
+export default connect(mapStateToProps, {
+  removeFromBooks,
+  addToCart,
+  setBooks,
+})(BookDetailComponent);
