@@ -1,3 +1,4 @@
 {
-  "API_KEY": "6D1AC1DBDDC2D9EA"
+  "API_KEY": "6D1AC1DBDDC2D9EA",
+  "MONGO_URI": "mongodb+srv://donna:donna@cluster0.1ncmg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 }
