@@ -48,10 +48,11 @@ const CartComponent = (props) => {
         <div>
           <small className="float-right">
             Total: {getNPRFromDollar(totalAmount)}
-          </small>
+          </small>{" "}
+          <br />{" "}
           <LoginSignupModal
             className="modal-dialog-centered"
-            buttonLabel="Checkout"
+            buttonLabel={"Checkout"}
           />
         </div>
       ) : (

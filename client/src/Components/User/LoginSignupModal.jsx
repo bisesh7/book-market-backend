@@ -12,7 +12,7 @@ const LoginSignupModal = (props) => {
 
   return (
     <div>
-      <Button color="secondary" size="sm" onClick={toggle}>
+      <Button color="primary" size="sm" onClick={toggle} block>
         {props.buttonLabel}
       </Button>
       <Modal isOpen={modal} toggle={toggle} className={props.className}>
