@@ -4,7 +4,6 @@ import { Field, reduxForm } from "redux-form";
 import { renderField } from "./renderField";
 import {
   email,
-  maxLength10,
   minLength8,
   number,
   oneLowercase,
@@ -12,6 +11,7 @@ import {
   oneSpecialCharacter,
   required,
   oneUppercase,
+  length10,
 } from "./validation";
 
 const SignUpBody = (props) => {
@@ -49,7 +49,7 @@ const SignUpBody = (props) => {
           name="phoneNumberField"
           component={renderField}
           type="number"
-          validate={[required, maxLength10, number]}
+          validate={[required, length10, number]}
           label="Phone Number"
           bsSize="sm"
           className="mt-3"

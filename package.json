@@ -17,6 +17,7 @@
     "@brainhubeu/react-carousel": "^2.0.3",
     "config": "^3.3.6",
     "express": "^4.17.1",
+    "mongoose": "^5.12.5",
     "redux-form": "^8.3.7"
   },
   "devDependencies": {
