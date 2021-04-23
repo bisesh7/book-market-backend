@@ -22,7 +22,8 @@ const SignUpBody = (props) => {
 
   const [passwordType, setPasswordType] = useState("password");
 
-  const changePasswordType = () => {
+  const changePasswordType = (e) => {
+    e.preventDefault();
     passwordType === "password"
       ? setPasswordType("text")
       : setPasswordType("password");
