@@ -13,6 +13,7 @@ import {
   oneUppercase,
   length10,
 } from "./validation";
+import axios from "axios";
 
 const SignUpBody = (props) => {
   const loginLinkPressed = (e) => {
@@ -30,6 +31,35 @@ const SignUpBody = (props) => {
   };
 
   const { handleSubmit, pristine, reset, submitting } = props;
+
+  const [formIsBeingSubmitted, setFormIsBeingSubmitted] = useState(false);
+
+  const signUpButtonHandler = (values) => {
+    const { emailField, passwordField, phoneNumberField } = values;
+    setFormIsBeingSubmitted(true);
+    axios
+      .post(
+        "/api/user",
+        {
+          email: emailField,
+          password: passwordField,
+          phoneNumber: phoneNumberField,
+        },
+        {
+          headers: {
+            authorization: process.env.REACT_APP_API_KEY,
+          },
+        }
+      )
+      .then((res) => {
+        setFormIsBeingSubmitted(false);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        setFormIsBeingSubmitted(false);
+        console.log(err.response.data);
+      });
+  };
 
   return (
     <ModalBody>
@@ -78,9 +108,8 @@ const SignUpBody = (props) => {
           size="sm"
           color="primary"
           block
-          onClick={handleSubmit((values) => {
-            console.log(values);
-          })}
+          onClick={handleSubmit(signUpButtonHandler)}
+          disabled={submitting || formIsBeingSubmitted}
         >
           Sign Up
         </Button>

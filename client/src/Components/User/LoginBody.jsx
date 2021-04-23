@@ -18,8 +18,7 @@ import {
   oneUppercase,
   required,
 } from "./validation";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
+import axios from "axios";
 
 const LoginBody = (props) => {
   const signUpLinkPressed = (e) => {
@@ -34,6 +33,10 @@ const LoginBody = (props) => {
     passwordType === "password"
       ? setPasswordType("text")
       : setPasswordType("password");
+  };
+
+  const signUpButtonHandler = (values) => {
+    console.log(values);
   };
 
   const { handleSubmit, pristine, reset, submitting } = props;
@@ -76,9 +79,7 @@ const LoginBody = (props) => {
           size="sm"
           color="primary"
           block
-          onClick={handleSubmit((values) => {
-            console.log(values);
-          })}
+          onClick={handleSubmit(signUpButtonHandler)}
         >
           Login
         </Button>
