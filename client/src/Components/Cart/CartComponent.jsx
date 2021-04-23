@@ -3,6 +3,7 @@ import { Alert, ListGroup } from "reactstrap";
 import CartListGroupItem from "./CartListGroupItemComponent";
 import { getNPRFromDollar } from "../../utils/getNPRFromDollar";
 import { connect } from "react-redux";
+import LoginSignupModal from "../User/LoginSignupModal";
 
 const CartComponent = (props) => {
   const [cartListGroupItems, setCartListGroupItems] = useState([]);
@@ -44,9 +45,15 @@ const CartComponent = (props) => {
     <div className={props.className}>
       <ListGroup className="mb-3 cart-list">{cartListGroupItems}</ListGroup>
       {props.cart.cart.length ? (
-        <small className="float-right">
-          Total: {getNPRFromDollar(totalAmount)}
-        </small>
+        <div>
+          <small className="float-right">
+            Total: {getNPRFromDollar(totalAmount)}
+          </small>
+          <LoginSignupModal
+            className="modal-dialog-centered"
+            buttonLabel="Checkout"
+          />
+        </div>
       ) : (
         <Alert color="dark" className="text-center cart-empty-alert">
           <strong>Your cart is empty.</strong> <br />

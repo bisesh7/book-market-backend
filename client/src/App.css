@@ -79,6 +79,11 @@
   cursor: pointer;
 }
 
-.book-card-title:hover {
+.book-card-title:hover,
+.show-password:hover {
   text-decoration: underline;
+}
+
+.error-text {
+  color: red;
 }
