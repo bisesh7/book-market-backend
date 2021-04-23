@@ -30,7 +30,7 @@ const SignUpBody = (props) => {
       : setPasswordType("password");
   };
 
-  const { handleSubmit, pristine, reset, submitting } = props;
+  const { handleSubmit, submitting } = props;
 
   const [formIsBeingSubmitted, setFormIsBeingSubmitted] = useState(false);
 
