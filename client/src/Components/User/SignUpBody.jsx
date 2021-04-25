@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, ModalBody, Input } from "reactstrap";
+import { Button, ModalBody } from "reactstrap";
 import { Field, reduxForm } from "redux-form";
 import { renderField } from "./renderField";
 import {
