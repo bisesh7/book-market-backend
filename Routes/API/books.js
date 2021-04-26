@@ -1,13 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const books = require("../../data/book_set.json");
-const config = require("config");
-const checkAuth = require("../../middlewares/checkAuth");
+const checkAPIKey = require("../../middlewares/checkAPIKey");
 
 // @route   GET /api/books/
 // @desc    Get the list of books.
 // @access  public
-router.get("/", checkAuth, (req, res) => {
+router.get("/", checkAPIKey, (req, res) => {
   return res.json({ success: true, books });
 });
 

@@ -5,4 +5,8 @@ module.exports = {
   emailError: "emailError",
   phoneNumberError: "phoneNumberError",
   passwordError: "passwordError",
+  credentialError: "credentialError",
+  tokenError: "tokenError",
+  tokenExpiredError: "tokenExpiredError",
+  invalidTokenError: "invalidTokenError",
 };

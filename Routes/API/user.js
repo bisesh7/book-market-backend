@@ -1,15 +1,16 @@
 const express = require("express");
-const checkAuth = require("../../middlewares/checkAuth");
+const checkAPIKey = require("../../middlewares/checkAPIKey");
 const User = require("../../models/User");
 const userValidation = require("../../utils/userValidation");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const { userExistsError, serverError } = require("../../utils/errors");
+const { checkAccessRights } = require("../../middlewares/checkAccessRights");
 
 // @route   POST /api/user/
 // @desc    Create a new user.
 // @access  public
-router.post("/", checkAuth, (req, res) => {
+router.post("/", checkAPIKey, (req, res) => {
   const { email, password, phoneNumber } = req.body;
 
   const validation = userValidation(email, password, phoneNumber);
@@ -70,6 +71,15 @@ router.post("/", checkAuth, (req, res) => {
         err: serverError,
       });
     });
+});
+
+// @route   GET /api/user/:id
+// @desc    Get the user with given id.
+// @access  Private
+router.get("/:id", [checkAPIKey, checkAccessRights], (req, res) => {
+  const { id } = req.params;
+  console.log(req.user);
+  return res.json({ success: true });
 });
 
 module.exports = router;

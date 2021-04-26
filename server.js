@@ -4,10 +4,15 @@ const auth = require("./Routes/API/auth");
 const user = require("./Routes/API/user");
 const mongoose = require("mongoose");
 const config = require("config");
+const cookieParser = require("cookie-parser");
+
 const app = express();
 
 // Body parser
 app.use(express.json());
+
+// Cookie-Parser
+app.use(cookieParser());
 
 // get the mongo uri from config
 const db = config.get("MONGO_URI");

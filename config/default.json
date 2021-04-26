@@ -1,4 +1,6 @@
 {
   "API_KEY": "6D1AC1DBDDC2D9EA",
-  "MONGO_URI": "mongodb+srv://donna:donna@cluster0.1ncmg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+  "MONGO_URI": "mongodb+srv://donna:donna@cluster0.1ncmg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  "ACCESS_TOKEN_SECRET": "CBCE4BA87E457656",
+  "REFRESH_TOKEN_SECRET": "EF49121CA5D4A772"
 }
