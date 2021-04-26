@@ -31,7 +31,7 @@ const SignUpBody = (props) => {
       : setPasswordType("password");
   };
 
-  const { handleSubmit, submitting, pristine, reset } = props;
+  const { handleSubmit, submitting, reset } = props;
 
   const [formIsBeingSubmitted, setFormIsBeingSubmitted] = useState(false);
 
@@ -40,6 +40,12 @@ const SignUpBody = (props) => {
   const onAlertDismiss = () => setAlertVisible(false);
   const [alertColor, setAlertColor] = useState("info");
   const [alertMessage, setAlertMessage] = useState("");
+
+  const showAlert = (alertColor, alertMessage) => {
+    setAlertColor(alertColor);
+    setAlertMessage(alertMessage);
+    setAlertVisible(true);
+  };
 
   const signUpButtonHandler = (values) => {
     const { emailField, passwordField, phoneNumberField } = values;
@@ -60,25 +66,24 @@ const SignUpBody = (props) => {
       )
       .then((res) => {
         setFormIsBeingSubmitted(false);
-        setAlertColor("info");
-        setAlertMessage(res.data.msg);
-        setAlertVisible(true);
-        reset();
+        showAlert("info", res.data.msg);
+        // Change the modal to login after 1.5 secs
+        setTimeout(() => {
+          props.setPage("login");
+        }, 1500);
       })
       .catch((err) => {
         setFormIsBeingSubmitted(false);
-        setAlertColor("warning");
-        setAlertMessage(err.response.data.msg);
-        setAlertVisible(true);
-        console.log(err.response.data.err);
+        showAlert("warning", err.response.data.msg);
 
         switch (err.response.data.err) {
           case userExistsError:
           case serverError:
+            // Reset the form fields
             reset();
             break;
           default:
-            console.log(err.response.data.err);
+            // If form fields has errors then we should not reset UX
             break;
         }
       });
