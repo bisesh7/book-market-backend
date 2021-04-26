@@ -20,7 +20,7 @@ router.post("/", checkAuth, (req, res) => {
       if (user) {
         return res.status(400).json({
           success: false,
-          msg: "User already exists.",
+          msg: "User already exists, please login.",
           err: userExistsError,
         });
       }

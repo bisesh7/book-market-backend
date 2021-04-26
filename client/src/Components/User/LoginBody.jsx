@@ -31,6 +31,10 @@ const LoginBody = (props) => {
     console.log(values);
   };
 
+  const forgotPasswordHandler = (e) => {
+    e.preventDefault();
+  };
+
   const { handleSubmit, pristine, reset, submitting } = props;
 
   return (
@@ -76,14 +80,23 @@ const LoginBody = (props) => {
           Login
         </Button>
       </div>
-      <div className="d-flex justify-content-center mt-2">
+      <div className="d-flex flex-column  mt-2">
+        <small>
+          Forgot Password?&nbsp;
+          <a href="#" onClick={forgotPasswordHandler}>
+            Reset
+          </a>
+          .
+        </small>{" "}
         <small>
           Don't have an account?{" "}
           <a href="#signUp" onClick={signUpLinkPressed}>
-            Sign Up.
+            Sign Up
           </a>
+          .
         </small>
       </div>
+      <div className="d-flex justify-content-center mt-1"></div>
     </ModalBody>
   );
 };

@@ -154,7 +154,7 @@ const SignUpBody = (props) => {
           ) : null}
         </Button>
       </div>
-      <div className="d-flex justify-content-center mt-2">
+      <div className="mt-2">
         <small>
           Already have an account?{" "}
           <a href="#login" onClick={loginLinkPressed}>
