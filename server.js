@@ -9,7 +9,7 @@ const app = express();
 // Body parser
 app.use(express.json());
 
-// get the mongouri from config
+// get the mongo uri from config
 const db = config.get("MONGO_URI");
 
 // Connect to mongo

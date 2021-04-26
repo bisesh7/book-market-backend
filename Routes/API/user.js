@@ -6,6 +6,9 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const { userExistsError, serverError } = require("../../utils/errors");
 
+// @route   POST /api/user/
+// @desc    Create a new user.
+// @access  public
 router.post("/", checkAuth, (req, res) => {
   const { email, password, phoneNumber } = req.body;
 
