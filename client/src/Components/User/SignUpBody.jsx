@@ -14,6 +14,7 @@ import {
   length10,
 } from "./validation";
 import axios from "axios";
+import { userExistsError, serverError } from "../../utils/errors";
 
 const SignUpBody = (props) => {
   const loginLinkPressed = (e) => {
@@ -69,8 +70,11 @@ const SignUpBody = (props) => {
         setAlertColor("warning");
         setAlertMessage(err.response.data.msg);
         setAlertVisible(true);
+        console.log(err.response.data.err);
+
         switch (err.response.data.err) {
-          case "userExistsError":
+          case userExistsError:
+          case serverError:
             reset();
             break;
           default:

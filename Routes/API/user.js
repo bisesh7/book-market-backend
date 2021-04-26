@@ -17,6 +17,7 @@ router.post("/", checkAuth, (req, res) => {
   }
   User.findOne({ email })
     .then((user) => {
+      console.log(userExistsError);
       if (user) {
         return res.status(400).json({
           success: false,
