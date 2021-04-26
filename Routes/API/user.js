@@ -1,7 +1,7 @@
 const express = require("express");
 const checkAuth = require("../../middlewares/checkAuth");
 const User = require("../../models/User");
-const userSignUpValidation = require("../../utils/userSignUpValidation");
+const userValidation = require("../../utils/userValidation");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const { userExistsError, serverError } = require("../../utils/errors");
@@ -12,7 +12,7 @@ const { userExistsError, serverError } = require("../../utils/errors");
 router.post("/", checkAuth, (req, res) => {
   const { email, password, phoneNumber } = req.body;
 
-  const validation = userSignUpValidation(email, password, phoneNumber);
+  const validation = userValidation(email, password, phoneNumber);
   if (!validation.valid) {
     return res
       .status(400)

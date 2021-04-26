@@ -30,20 +30,22 @@ module.exports = (email, password, phoneNumber) => {
     return { valid, msg: "Invalid email address.", err: errors[1] };
   }
 
-  if (!stringIsNumber(phoneNumber)) {
-    return {
-      valid,
-      msg: "Phone number must be a number.",
-      err: errors[2],
-    };
-  }
+  if (phoneNumber) {
+    if (!stringIsNumber(phoneNumber)) {
+      return {
+        valid,
+        msg: "Phone number must be a number.",
+        err: errors[2],
+      };
+    }
 
-  if (!lengthIsEqualTo10(phoneNumber)) {
-    return {
-      valid,
-      msg: "Phone number length is not equal to 10.",
-      err: errors[2],
-    };
+    if (!lengthIsEqualTo10(phoneNumber)) {
+      return {
+        valid,
+        msg: "Phone number length is not equal to 10.",
+        err: errors[2],
+      };
+    }
   }
 
   if (lengthIsLessThan8(password)) {
