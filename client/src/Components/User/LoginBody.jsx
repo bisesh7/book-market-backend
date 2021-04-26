@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  Button,
-  ModalBody,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-} from "reactstrap";
+import { Button, ModalBody } from "reactstrap";
 import { Field, reduxForm } from "redux-form";
 import { renderField } from "./renderField";
 import {
@@ -18,7 +11,6 @@ import {
   oneUppercase,
   required,
 } from "./validation";
-import axios from "axios";
 
 const LoginBody = (props) => {
   const signUpLinkPressed = (e) => {

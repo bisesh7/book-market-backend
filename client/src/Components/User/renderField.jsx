@@ -29,6 +29,7 @@ export const renderField = ({
           </a>
         </small>
       ) : null}
+
       {touched &&
         ((error && <small className="error-text">{error}</small>) ||
           (warning && <small className="error-text">{warning}</small>))}

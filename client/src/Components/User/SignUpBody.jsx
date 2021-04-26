@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, ModalBody } from "reactstrap";
+import { Alert, Button, ModalBody, Spinner } from "reactstrap";
 import { Field, reduxForm } from "redux-form";
 import { renderField } from "./renderField";
 import {
@@ -30,9 +30,15 @@ const SignUpBody = (props) => {
       : setPasswordType("password");
   };
 
-  const { handleSubmit, submitting } = props;
+  const { handleSubmit, submitting, pristine, reset } = props;
 
   const [formIsBeingSubmitted, setFormIsBeingSubmitted] = useState(false);
+
+  // Alert
+  const [alertVisible, setAlertVisible] = useState(false);
+  const onAlertDismiss = () => setAlertVisible(false);
+  const [alertColor, setAlertColor] = useState("info");
+  const [alertMessage, setAlertMessage] = useState("");
 
   const signUpButtonHandler = (values) => {
     const { emailField, passwordField, phoneNumberField } = values;
@@ -53,11 +59,24 @@ const SignUpBody = (props) => {
       )
       .then((res) => {
         setFormIsBeingSubmitted(false);
-        console.log(res.data);
+        setAlertColor("info");
+        setAlertMessage(res.data.msg);
+        setAlertVisible(true);
+        reset();
       })
       .catch((err) => {
         setFormIsBeingSubmitted(false);
-        console.log(err.response.data);
+        setAlertColor("warning");
+        setAlertMessage(err.response.data.msg);
+        setAlertVisible(true);
+        switch (err.response.data.err) {
+          case "userExistsError":
+            reset();
+            break;
+          default:
+            console.log(err.response.data.err);
+            break;
+        }
       });
   };
 
@@ -66,6 +85,15 @@ const SignUpBody = (props) => {
       <div className="d-flex justify-content-center">
         <strong className="text-primary">Sign Up</strong>
       </div>
+      <Alert
+        className="mt-3"
+        color={alertColor}
+        isOpen={alertVisible}
+        toggle={onAlertDismiss}
+        size="sm"
+      >
+        <small>{alertMessage}</small>
+      </Alert>
       <div className="mt-3">
         <Field
           name="emailField"
@@ -111,7 +139,10 @@ const SignUpBody = (props) => {
           onClick={handleSubmit(signUpButtonHandler)}
           disabled={submitting || formIsBeingSubmitted}
         >
-          Sign Up
+          Sign Up{" "}
+          {formIsBeingSubmitted ? (
+            <Spinner size="sm" color="secondary" />
+          ) : null}
         </Button>
       </div>
       <div className="d-flex justify-content-center mt-2">
