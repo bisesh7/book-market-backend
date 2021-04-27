@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, ModalBody } from "reactstrap";
+import { Alert, Button, ModalBody, Spinner } from "reactstrap";
 import { Field, reduxForm } from "redux-form";
 import { renderField } from "./renderField";
 import {
@@ -11,6 +11,8 @@ import {
   oneUppercase,
   required,
 } from "./validation";
+import { connect } from "react-redux";
+import { loginUser } from "../../Actions/actionUser";
 
 const LoginBody = (props) => {
   const signUpLinkPressed = (e) => {
@@ -27,21 +29,44 @@ const LoginBody = (props) => {
       : setPasswordType("password");
   };
 
-  const signUpButtonHandler = (values) => {
-    console.log(values);
+  const [formIsBeingSubmitted, setFormIsBeingSubmitted] = useState(false);
+
+  // Alert
+  const [alertVisible, setAlertVisible] = useState(false);
+  const onAlertDismiss = () => setAlertVisible(false);
+  const [alertColor, setAlertColor] = useState("info");
+  const [alertMessage, setAlertMessage] = useState("");
+
+  const showAlert = (alertColor, alertMessage) => {
+    setAlertColor(alertColor);
+    setAlertMessage(alertMessage);
+    setAlertVisible(true);
+  };
+
+  const { handleSubmit, reset, submitting } = props;
+
+  const loginButtonHandler = (values) => {
+    props.loginUser(values, setFormIsBeingSubmitted, showAlert, reset);
   };
 
   const forgotPasswordHandler = (e) => {
     e.preventDefault();
   };
 
-  const { handleSubmit, pristine, reset, submitting } = props;
-
   return (
     <ModalBody>
       <div className="d-flex justify-content-center">
         <strong className="text-primary">Log In</strong>
       </div>
+      <Alert
+        className="mt-3"
+        color={alertColor}
+        isOpen={alertVisible}
+        toggle={onAlertDismiss}
+        size="sm"
+      >
+        <small>{alertMessage}</small>
+      </Alert>
       <div className="mt-3">
         <Field
           name="emailField"
@@ -75,15 +100,20 @@ const LoginBody = (props) => {
           size="sm"
           color="primary"
           block
-          onClick={handleSubmit(signUpButtonHandler)}
+          type="button"
+          onClick={handleSubmit(loginButtonHandler)}
+          disabled={submitting || formIsBeingSubmitted}
         >
-          Login
+          Login{" "}
+          {formIsBeingSubmitted ? (
+            <Spinner size="sm" color="secondary" />
+          ) : null}
         </Button>
       </div>
       <div className="d-flex flex-column  mt-2">
         <small>
           Forgot Password?&nbsp;
-          <a href="#" onClick={forgotPasswordHandler}>
+          <a href="#resetPassword" onClick={forgotPasswordHandler}>
             Reset
           </a>
           .
@@ -101,6 +131,12 @@ const LoginBody = (props) => {
   );
 };
 
-export default reduxForm({
-  form: "loginForm",
-})(LoginBody);
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps, { loginUser })(
+  reduxForm({
+    form: "loginForm",
+  })(LoginBody)
+);

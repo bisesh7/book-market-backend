@@ -4,3 +4,4 @@ export const detailsError = "detailsError";
 export const emailError = "emailError";
 export const phoneNumberError = "phoneNumberError";
 export const passwordError = "passwordError";
+export const credentialError = "credentialError";

@@ -20,7 +20,7 @@ exports.checkAccessRights = (req, res, next) => {
     next();
   } catch (err) {
     if (err.name === "TokenExpiredError") {
-      return res.status(401).json({
+      return res.status(403).json({
         success: false,
         msg: "Session expired, please login again.",
         err: tokenExpiredError,

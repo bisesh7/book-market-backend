@@ -5,7 +5,15 @@ body {
 }
 
 .navbar {
-  height: 4.5em;
+  height: 4em;
+}
+
+.nav-item:hover {
+  background: cadetblue;
+}
+
+.nav-link:hover {
+  color: white !important;
 }
 
 .nav-brand {

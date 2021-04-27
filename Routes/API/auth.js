@@ -60,7 +60,11 @@ router.post("/", checkAPIKey, (req, res) => {
               });
               res.json({
                 success: true,
-                msg: "Cookie has been added.",
+                msg: "You have been logged in.",
+                user: {
+                  email: user.email,
+                  _id: user._id,
+                },
               });
             } catch (err) {
               return res.status(500).json({

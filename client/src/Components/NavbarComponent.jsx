@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import {
   Collapse,
   Navbar,
@@ -50,11 +51,14 @@ const NavbarComponent = (props) => {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
             <NavItem>
-              <NavLink href="https://github.com/bisesh7/book-market-backend">
+              <NavLink
+                className="nav-link"
+                href="https://github.com/bisesh7/book-market-backend"
+              >
                 Github
               </NavLink>
             </NavItem>
-            {guestLinks}
+            {props.user.user ? authLinks : guestLinks}
           </Nav>
         </Collapse>
       </Navbar>
@@ -62,4 +66,8 @@ const NavbarComponent = (props) => {
   );
 };
 
-export default NavbarComponent;
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps, null)(NavbarComponent);
