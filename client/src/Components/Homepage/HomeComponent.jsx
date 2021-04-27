@@ -10,11 +10,8 @@ import BooksCarousel from "./BooksCarousel";
 import { connect } from "react-redux";
 import { setBooks } from "../../Actions/actionBook";
 import { setCart } from "../../Actions/actionCart";
-import { useToasts } from "react-toast-notifications";
 
 const HomeComponent = (props) => {
-  const { addToast } = useToasts();
-
   // useEffect(() => {
   //   addToast("Test toast", { appearance: "success" });
   // }, []);

@@ -68,7 +68,7 @@ export const logoutUser = (setAndShowToast, setLoggingOut) => {
       })
       .catch((err) => {
         if (err.response) {
-          setAndShowToast("danger", err.response.data.msg);
+          setAndShowToast("error", err.response.data.msg);
         } else {
           console.log(err);
         }

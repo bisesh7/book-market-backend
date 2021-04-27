@@ -6,7 +6,7 @@ import { ToastProvider } from "react-toast-notifications";
 
 function App() {
   return (
-    <ToastProvider placement="bottom-center">
+    <ToastProvider placement="bottom-center" autoDismissTimeout={4000}>
       <BrowserRouter>
         <div className="App">
           <Switch>

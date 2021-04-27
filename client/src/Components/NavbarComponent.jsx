@@ -15,25 +15,17 @@ import {
 } from "reactstrap";
 import { logoutUser, checkUser } from "../Actions/actionUser";
 import LoginSignupModal from "./User/LoginSignupModal";
+import { useToasts } from "react-toast-notifications";
 
 const NavbarComponent = (props) => {
+  const { addToast } = useToasts();
+
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
 
-  // Toast shown after user logout
-  const [showToast, setShowToast] = useState(false);
-  const toggleToast = () => setShowToast(!showToast);
-  const [toastIcon, setToastIcon] = useState("primary");
-  const [toastMessage, setToastMessage] = useState("");
-
-  const setAndShowToast = (toastIcon, toastMessage) => {
-    setToastIcon(toastIcon);
-    setToastMessage(toastMessage);
-    setShowToast(true);
-    setTimeout(() => {
-      setShowToast(false);
-    }, 2000);
+  const setAndShowToast = (toastColor, toastMessage) => {
+    addToast(toastMessage, { appearance: toastColor, autoDismiss: true });
   };
 
   useEffect(() => {
@@ -45,7 +37,8 @@ const NavbarComponent = (props) => {
   const [loggingOut, setLoggingOut] = useState(false);
   const logoutHandler = (e) => {
     e.preventDefault();
-    setAndShowToast(<Spinner size="sm" />, "Logging out.");
+
+    addToast("Logging out", { appearance: "info", autoDismiss: true });
     props.logoutUser(setAndShowToast, setLoggingOut);
   };
 
@@ -95,11 +88,6 @@ const NavbarComponent = (props) => {
           </Nav>
         </Collapse>
       </Navbar>
-      <Toast className="logout-alert-toast" isOpen={showToast}>
-        <ToastHeader icon={toastIcon} toggle={toggleToast} />
-
-        <ToastBody>{toastMessage}</ToastBody>
-      </Toast>
     </div>
   );
 };
