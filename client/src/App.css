@@ -45,9 +45,9 @@ body {
 }
 
 .book-card-image {
-  opacity: 0.7;
   cursor: pointer;
   border-radius: 0 !important;
+  opacity: 0.7;
 }
 
 .book-card-image:hover {
