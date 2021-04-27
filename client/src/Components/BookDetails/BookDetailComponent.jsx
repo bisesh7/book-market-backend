@@ -17,7 +17,7 @@ const BookDetailComponent = (props) => {
   const [bookId, setBookId] = useState();
 
   useEffect(() => {
-    props.setBooks();
+    props.setBooks(null);
     // eslint-disable-next-line
   }, [props.setBooks]);
 

@@ -140,8 +140,6 @@ const BooksDisplayComponent = (props) => {
             genre={book.genre}
             published_date={book.published_date}
             key={book.id}
-            setAlertVisible={props.setAlertVisible}
-            setAlertMessage={props.setAlertMessage}
             {...props}
             className={
               lastCardDeckIndexes.includes(index)

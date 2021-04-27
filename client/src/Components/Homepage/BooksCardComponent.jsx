@@ -8,8 +8,11 @@ import { addBookToCart } from "../../Actions/actionCart";
 import { getFormattedDate } from "../../utils/getFormattedDate";
 import { getFormattedGenre } from "../../utils/getFormattedGenre";
 import { getNPRFromDollar } from "../../utils/getNPRFromDollar";
+import { useToasts } from "react-toast-notifications";
 
 const BooksCardComponent = (props) => {
+  const { addToast } = useToasts();
+
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -30,10 +33,13 @@ const BooksCardComponent = (props) => {
         ) {
           add();
         } else {
-          props.setAlertMessage(
-            "5 different books is in the cart. You cannot select more than 5 different books."
+          addToast(
+            "5 different books is in the cart. You cannot select any more.",
+            {
+              appearance: "error",
+              autoDismiss: true,
+            }
           );
-          props.setAlertVisible(true);
         }
       } else {
         add();

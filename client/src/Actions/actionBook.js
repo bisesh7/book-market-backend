@@ -8,7 +8,9 @@ import axios from "axios";
 
 export const setBooks = (setBooksLoading) => {
   return (dispatch) => {
-    setBooksLoading(true);
+    if (setBooksLoading) {
+      setBooksLoading(true);
+    }
     const setBooksAndCart = (books) => {
       dispatch({
         type: SET_BOOKS,
@@ -21,7 +23,9 @@ export const setBooks = (setBooksLoading) => {
           cart,
         });
       }
-      setBooksLoading(false);
+      if (setBooksLoading) {
+        setBooksLoading(false);
+      }
     };
 
     const books = JSON.parse(sessionStorage.getItem("books"));

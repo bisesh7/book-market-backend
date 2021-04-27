@@ -10,8 +10,15 @@ import BooksCarousel from "./BooksCarousel";
 import { connect } from "react-redux";
 import { setBooks } from "../../Actions/actionBook";
 import { setCart } from "../../Actions/actionCart";
+import { useToasts } from "react-toast-notifications";
 
 const HomeComponent = (props) => {
+  const { addToast } = useToasts();
+
+  // useEffect(() => {
+  //   addToast("Test toast", { appearance: "success" });
+  // }, []);
+
   const [booksLoading, setBooksLoading] = useState(false);
 
   useEffect(() => {
@@ -19,30 +26,10 @@ const HomeComponent = (props) => {
     //eslint-disable-next-line
   }, [props.setBooks]);
 
-  // Alert
-  const [alertVisible, setAlertVisible] = useState(false);
-  const onAlertDismiss = () => setAlertVisible(false);
-  const [alertMessage, setAlertMessage] = useState("");
-
-  //   Function to scroll to the alert
-  const scrollToAlert = () => {
-    window.scrollTo(0, 0);
-  };
-
-  // Whenever alert is shown we slide to the top, since alert is in the top
-  useEffect(() => {
-    if (alertVisible) {
-      scrollToAlert();
-    }
-  }, [alertVisible]);
-
   return (
     <div>
       <NavbarComponent {...props} />
       <Container fluid={true}>
-        <Alert color="danger" isOpen={alertVisible} toggle={onAlertDismiss}>
-          {alertMessage}
-        </Alert>
         <BooksCarousel {...props} />
         <Row>
           <Col md="9">
@@ -51,12 +38,7 @@ const HomeComponent = (props) => {
                 <Spinner color="info" />
               </div>
             ) : (
-              <BooksDisplayComponent
-                {...props}
-                setAlertVisible={setAlertVisible}
-                setAlertMessage={setAlertMessage}
-                className="mt-3 mb-4"
-              />
+              <BooksDisplayComponent {...props} className="mt-3 mb-4" />
             )}
           </Col>
           <Col md="3">
