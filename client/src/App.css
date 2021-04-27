@@ -110,3 +110,10 @@ body {
 .error-text {
   color: red;
 }
+
+.logout-alert-toast {
+  position: absolute;
+  top: 4.4em;
+  right: 1em;
+  z-index: 1;
+}

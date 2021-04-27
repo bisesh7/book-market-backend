@@ -8,13 +8,37 @@ import {
   Nav,
   NavItem,
   NavLink,
+  Toast,
+  ToastHeader,
+  ToastBody,
+  Spinner,
 } from "reactstrap";
+import { logoutUser } from "../Actions/actionUser";
 import LoginSignupModal from "./User/LoginSignupModal";
 
 const NavbarComponent = (props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
+
+  // Toast shown after user logout
+  const [showToast, setShowToast] = useState(false);
+  const toggleToast = () => setShowToast(!showToast);
+  const [toastIcon, setToastIcon] = useState("primary");
+  const [toastMessage, setToastMessage] = useState("");
+
+  const setAndShowToast = (toastIcon, toastMessage) => {
+    setToastIcon(toastIcon);
+    setToastMessage(toastMessage);
+    setShowToast(true);
+  };
+
+  const [loggingOut, setLoggingOut] = useState(false);
+  const logoutHandler = (e) => {
+    e.preventDefault();
+    setAndShowToast(<Spinner size="sm" />, "Logging out.");
+    props.logoutUser(setAndShowToast, setLoggingOut);
+  };
 
   const guestLinks = (
     <NavItem>
@@ -28,7 +52,7 @@ const NavbarComponent = (props) => {
   );
   const authLinks = (
     <NavItem>
-      <NavLink href="https://github.com/bisesh7/book-market-backend">
+      <NavLink href="/logout" onClick={logoutHandler} disabled={loggingOut}>
         Logout
       </NavLink>
     </NavItem>
@@ -62,6 +86,11 @@ const NavbarComponent = (props) => {
           </Nav>
         </Collapse>
       </Navbar>
+      <Toast className="logout-alert-toast" isOpen={showToast}>
+        <ToastHeader icon={toastIcon} toggle={toggleToast} />
+
+        <ToastBody>{toastMessage}</ToastBody>
+      </Toast>
     </div>
   );
 };
@@ -70,4 +99,4 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps, null)(NavbarComponent);
+export default connect(mapStateToProps, { logoutUser })(NavbarComponent);

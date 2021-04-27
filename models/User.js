@@ -59,7 +59,6 @@ UserSchema.methods = {
           expiresIn: "1d",
         }
       );
-
       await new Token({ token: refreshToken }).save();
       return refreshToken;
     } catch (err) {

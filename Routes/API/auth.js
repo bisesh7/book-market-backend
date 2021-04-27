@@ -89,7 +89,7 @@ router.post("/", checkAPIKey, (req, res) => {
 // @route   POST /api/auth/refresh_token
 // @desc    Generates new access-token
 // @access  PRIVATE
-router.post("/refresh_token", (req, res) => {
+router.post("/refresh_token", checkAPIKey, (req, res) => {
   try {
     const refreshToken = req.cookies["refresh-token"];
     if (!refreshToken) {
@@ -147,4 +147,39 @@ router.post("/refresh_token", (req, res) => {
   }
 });
 
+// @route   DELETE /api/auth
+// @desc    Logout the user
+// @access  PRIVATE
+router.delete("/", [checkAPIKey], (req, res) => {
+  try {
+    const refreshToken = req.cookies["refresh-token"];
+    Token.findOneAndDelete({ token: refreshToken })
+      .then(() => {
+        // Delete the cookie in the browser
+        res.cookie("x-auth-token", ``, {
+          httpOnly: true,
+          // secure: true // only use https
+          maxAge: 1,
+        });
+        res.cookie("refresh-token", ``, {
+          httpOnly: true,
+          // secure: true // only use https
+          maxAge: 1,
+        });
+        return res.json({ success: true, msg: "You have logged out." });
+      })
+      .catch((err) => {
+        return res.status(500).json({
+          success: false,
+          msg: "Server error while finding the refresh token in the db.",
+          err: serverError,
+        });
+      });
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ success: false, msg: "Internal server error", err: serverError });
+  }
+});
 module.exports = router;

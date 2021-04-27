@@ -1,5 +1,5 @@
 import { credentialError, serverError } from "../utils/errors";
-import { LOGIN_USER } from "./ActionTypes";
+import { LOGIN_USER, LOGOUT_USER } from "./ActionTypes";
 import axios from "axios";
 
 export const loginUser = (
@@ -10,6 +10,7 @@ export const loginUser = (
 ) => {
   const { emailField, passwordField } = values;
   setFormIsBeingSubmitted(true);
+  console.log("login user called");
   return (dispatch) => {
     axios
       .post(
@@ -43,6 +44,35 @@ export const loginUser = (
             // If form fields has errors then we should not reset UX
             break;
         }
+      });
+  };
+};
+
+export const logoutUser = (setAndShowToast, setLoggingOut) => {
+  setLoggingOut(true);
+  return (dispatch) => {
+    axios
+      .delete("/api/auth", {
+        headers: {
+          authorization: process.env.REACT_APP_API_KEY,
+        },
+      })
+      .then((res) => {
+        if (res.data.success) {
+          dispatch({
+            type: LOGOUT_USER,
+          });
+          setAndShowToast("success", res.data.msg);
+          setLoggingOut(false);
+        }
+      })
+      .catch((err) => {
+        if (err.response) {
+          setAndShowToast("danger", err.response.data.msg);
+        } else {
+          console.log(err);
+        }
+        setLoggingOut(false);
       });
   };
 };
