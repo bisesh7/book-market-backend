@@ -53,6 +53,8 @@ const CartComponent = (props) => {
           <LoginSignupModal
             className="modal-dialog-centered"
             buttonLabel={"Checkout"}
+            navLinkHidden={true}
+            buttonHidden={false}
           />
         </div>
       ) : (

@@ -1,3 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Bangers&family=Roboto&display=swap");
+
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+.navbar {
+  height: 4.5em;
+}
+
+.nav-brand {
+  font-family: "Bangers", cursive;
+  font-size: 2em !important;
+}
+
 .book-card {
   min-width: 16vw;
   max-width: 16vw;
