@@ -31,6 +31,9 @@ const NavbarComponent = (props) => {
     setToastIcon(toastIcon);
     setToastMessage(toastMessage);
     setShowToast(true);
+    setTimeout(() => {
+      setShowToast(false);
+    }, 2000);
   };
 
   const [loggingOut, setLoggingOut] = useState(false);
