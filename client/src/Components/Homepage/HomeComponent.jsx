@@ -12,10 +12,6 @@ import { setBooks } from "../../Actions/actionBook";
 import { setCart } from "../../Actions/actionCart";
 
 const HomeComponent = (props) => {
-  // useEffect(() => {
-  //   addToast("Test toast", { appearance: "success" });
-  // }, []);
-
   const [booksLoading, setBooksLoading] = useState(false);
 
   useEffect(() => {
