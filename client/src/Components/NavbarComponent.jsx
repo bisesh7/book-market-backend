@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import {
   Collapse,
@@ -13,7 +13,7 @@ import {
   ToastBody,
   Spinner,
 } from "reactstrap";
-import { logoutUser } from "../Actions/actionUser";
+import { logoutUser, checkUser } from "../Actions/actionUser";
 import LoginSignupModal from "./User/LoginSignupModal";
 
 const NavbarComponent = (props) => {
@@ -35,6 +35,12 @@ const NavbarComponent = (props) => {
       setShowToast(false);
     }, 2000);
   };
+
+  useEffect(() => {
+    if (!props.user.user) {
+      props.checkUser();
+    }
+  }, []);
 
   const [loggingOut, setLoggingOut] = useState(false);
   const logoutHandler = (e) => {
@@ -102,4 +108,6 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps, { logoutUser })(NavbarComponent);
+export default connect(mapStateToProps, { logoutUser, checkUser })(
+  NavbarComponent
+);

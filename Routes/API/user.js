@@ -73,13 +73,11 @@ router.post("/", checkAPIKey, (req, res) => {
     });
 });
 
-// @route   GET /api/user/:id
-// @desc    Get the user with given id.
+// @route   GET /api/user
+// @desc    Gets the current user.
 // @access  Private
-router.get("/:id", [checkAPIKey, checkAccessRights], (req, res) => {
-  const { id } = req.params;
-  console.log(req.user);
-  return res.json({ success: true });
+router.get("/", [checkAPIKey, checkAccessRights], (req, res) => {
+  return res.json({ success: true, user: req.user });
 });
 
 module.exports = router;

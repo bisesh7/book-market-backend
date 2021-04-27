@@ -1,6 +1,7 @@
 import { credentialError, serverError } from "../utils/errors";
 import { LOGIN_USER, LOGOUT_USER } from "./ActionTypes";
 import axios from "axios";
+import getUserData from "../config/userDataAPI";
 
 export const loginUser = (
   values,
@@ -10,7 +11,6 @@ export const loginUser = (
 ) => {
   const { emailField, passwordField } = values;
   setFormIsBeingSubmitted(true);
-  console.log("login user called");
   return (dispatch) => {
     axios
       .post(
@@ -73,6 +73,21 @@ export const logoutUser = (setAndShowToast, setLoggingOut) => {
           console.log(err);
         }
         setLoggingOut(false);
+      });
+  };
+};
+
+export const checkUser = () => {
+  return (dispatch) => {
+    getUserData()
+      .then((res) => {
+        dispatch({
+          type: LOGIN_USER,
+          user: res.data.user,
+        });
+      })
+      .catch((err) => {
+        console.log(err.response.data.msg);
       });
   };
 };
