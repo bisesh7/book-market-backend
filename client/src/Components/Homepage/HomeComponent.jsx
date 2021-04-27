@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Col, Container, Row } from "reactstrap";
+import { Col, Container, Row, Spinner } from "reactstrap";
 import BooksDisplayComponent from "./BooksDisplayComponent";
 import CartComponent from "../Cart/CartComponent";
 import NavbarComponent from "../NavbarComponent";
@@ -12,8 +12,10 @@ import { setBooks } from "../../Actions/actionBook";
 import { setCart } from "../../Actions/actionCart";
 
 const HomeComponent = (props) => {
+  const [booksLoading, setBooksLoading] = useState(false);
+
   useEffect(() => {
-    props.setBooks();
+    props.setBooks(setBooksLoading);
     //eslint-disable-next-line
   }, [props.setBooks]);
 
@@ -44,12 +46,18 @@ const HomeComponent = (props) => {
         <BooksCarousel {...props} />
         <Row>
           <Col md="9">
-            <BooksDisplayComponent
-              {...props}
-              setAlertVisible={setAlertVisible}
-              setAlertMessage={setAlertMessage}
-              className="mt-3 mb-4"
-            />
+            {booksLoading ? (
+              <div className="d-flex justify-content-center mt-4">
+                <Spinner color="info" />
+              </div>
+            ) : (
+              <BooksDisplayComponent
+                {...props}
+                setAlertVisible={setAlertVisible}
+                setAlertMessage={setAlertMessage}
+                className="mt-3 mb-4"
+              />
+            )}
           </Col>
           <Col md="3">
             <div className="sticky-top">

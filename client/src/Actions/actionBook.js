@@ -6,8 +6,9 @@ import {
 } from "../Actions/ActionTypes";
 import axios from "axios";
 
-export const setBooks = () => {
+export const setBooks = (setBooksLoading) => {
   return (dispatch) => {
+    setBooksLoading(true);
     const setBooksAndCart = (books) => {
       dispatch({
         type: SET_BOOKS,
@@ -20,6 +21,7 @@ export const setBooks = () => {
           cart,
         });
       }
+      setBooksLoading(false);
     };
 
     const books = JSON.parse(sessionStorage.getItem("books"));
