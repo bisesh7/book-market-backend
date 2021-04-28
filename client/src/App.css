@@ -100,6 +100,12 @@ body {
   background-color: #c0c0c0 !important;
 }
 
+.add-to-cart-button:active,
+.add-to-cart-button:focus {
+  border-color: #c0c0c0 !important;
+  box-shadow: none !important;
+}
+
 .cart-empty-alert {
   border-radius: 0 !important;
 }
