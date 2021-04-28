@@ -62,7 +62,7 @@ const BooksCardComponent = (props) => {
         className="book-card-image"
         onClick={showCardDetails}
       />
-      <CardBody className="p-2">
+      <CardBody className="p-2 card-body">
         <small>
           <strong
             className={

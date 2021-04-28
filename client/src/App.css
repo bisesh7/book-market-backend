@@ -54,6 +54,11 @@ body {
   opacity: 1;
 }
 
+.card-body {
+  background-color: #f8f3f3;
+  letter-spacing: 1px;
+}
+
 .genre-select {
   max-width: 14vw;
 }
@@ -85,8 +90,14 @@ body {
 }
 
 .add-to-cart-button {
-  color: black;
+  border-color: #d4cdcd !important;
   border-radius: 0 !important;
+}
+
+.add-to-cart-button:hover {
+  border-color: #d4cdcd !important;
+  border-radius: 0 !important;
+  background-color: #c0c0c0 !important;
 }
 
 .cart-empty-alert {

@@ -92,6 +92,8 @@ const BooksDisplayComponent = (props) => {
     // This contains the indexes of the cards in the last deck
     let lastCardDeckIndexes = [];
 
+    let className = "book-card shadow";
+
     // If the card deck has less than 4 cards then total number of books when
     // divided by 4 will produce remainder
     if (booksAccordingToGenre.length % 4 !== 0) {
@@ -110,16 +112,19 @@ const BooksDisplayComponent = (props) => {
       }
 
       // Depending upon the number of cards in the last deck
-      // We give classname to them
+      // We give class name to them
       switch (lastCardDeckIndexes.length) {
         case 1:
-          finalDeckCardsClassName = "book-card last-card-one-card";
+          className += " last-card-one-card";
+          finalDeckCardsClassName = className;
           break;
         case 2:
-          finalDeckCardsClassName = "book-card last-card-two-cards";
+          className += " last-card-two-card";
+          finalDeckCardsClassName = className;
           break;
         case 3:
-          finalDeckCardsClassName = "book-card last-card-three-cards";
+          className += " last-card-three-card";
+          finalDeckCardsClassName = className;
           break;
         default:
           break;
@@ -144,7 +149,7 @@ const BooksDisplayComponent = (props) => {
             className={
               lastCardDeckIndexes.includes(index)
                 ? finalDeckCardsClassName
-                : "book-card"
+                : className
             }
           />
         ),
