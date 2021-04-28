@@ -51,7 +51,7 @@ router.post("/", checkAPIKey, (req, res) => {
               res.cookie("x-auth-token", `bearer ${accessToken}`, {
                 httpOnly: true,
                 // secure: true // only use https
-                maxAge: 600000,
+                maxAge: 24 * 60 * 60 * 1000, //24 hours,
               });
               res.cookie("refresh-token", refreshToken, {
                 httpOnly: true,

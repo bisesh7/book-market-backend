@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import {
   Collapse,
@@ -39,6 +39,11 @@ const NavbarComponent = (props) => {
     props.logoutUser(setAndShowToast, setLoggingOut);
   };
 
+  const profileClickHandler = (e) => {
+    e.preventDefault();
+    props.history.push("/profile#details");
+  };
+
   const guestLinks = (
     <NavItem>
       <LoginSignupModal
@@ -50,11 +55,22 @@ const NavbarComponent = (props) => {
     </NavItem>
   );
   const authLinks = (
-    <NavItem>
-      <NavLink href="/logout" onClick={logoutHandler} disabled={loggingOut}>
-        Logout
-      </NavLink>
-    </NavItem>
+    <Fragment>
+      <NavItem>
+        <NavLink
+          href="/profile"
+          onClick={profileClickHandler}
+          disabled={loggingOut}
+        >
+          Profile
+        </NavLink>
+      </NavItem>
+      <NavItem>
+        <NavLink href="/logout" onClick={logoutHandler} disabled={loggingOut}>
+          Logout
+        </NavLink>
+      </NavItem>
+    </Fragment>
   );
 
   return (

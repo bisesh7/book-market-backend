@@ -10,6 +10,7 @@ axios.interceptors.response.use(
     const originalRequest = err.config;
     const errorCode = err.response.data.err;
     console.log(err);
+    console.log(errorCode);
     if (
       (errorCode === tokenExpiredError || errorCode === invalidTokenError) &&
       !originalRequest._retry

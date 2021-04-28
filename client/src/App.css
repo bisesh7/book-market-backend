@@ -8,15 +8,15 @@ body {
   height: 4em;
 }
 
-.nav-item:hover {
+.navbar .nav-item:hover {
   background: cadetblue;
 }
 
-.nav-link:hover {
+.navbar .nav-link:hover {
   color: white !important;
 }
 
-.nav-brand {
+.navbar .nav-brand {
   font-family: "Bangers", cursive;
   font-size: 2em !important;
 }
@@ -142,4 +142,36 @@ body {
   top: 4.4em;
   right: 1em;
   z-index: 1;
+}
+
+.profile-picture {
+  width: 80%;
+  border-radius: 100%;
+}
+
+.profile-tabs-links {
+  width: 100%;
+}
+
+.profile-tab {
+  padding: 5px 0 5px 8px !important;
+  border-radius: none !important;
+}
+
+.profile-tab.active {
+  background-color: cadetblue !important;
+}
+
+.profile-tab {
+  color: #4d4e4e;
+}
+
+.profile-tab:hover {
+  color: #303030;
+}
+
+.profile-detail {
+  padding: 20px 20px;
+  box-sizing: border-box !important;
+  font-size: 0.9em;
 }
