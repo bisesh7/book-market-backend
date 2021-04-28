@@ -56,7 +56,7 @@ body {
 
 .card-body {
   background-color: #f8f3f3;
-  letter-spacing: 1px;
+  letter-spacing: 0.6px;
 }
 
 .genre-select {
@@ -90,12 +90,12 @@ body {
 }
 
 .add-to-cart-button {
-  border-color: #d4cdcd !important;
+  border-color: #c0c0c0 !important;
   border-radius: 0 !important;
 }
 
 .add-to-cart-button:hover {
-  border-color: #d4cdcd !important;
+  border-color: #c0c0c0 !important;
   border-radius: 0 !important;
   background-color: #c0c0c0 !important;
 }
@@ -105,13 +105,21 @@ body {
 }
 
 .books-carousel {
-  background-color: #124d6c;
+  background-color: #1483cd;
   padding: 28px 0px 10px 0px;
 }
 
 .book-carousel-image,
 .book-card-title {
   cursor: pointer;
+}
+
+.carousel-book {
+  box-sizing: border-box;
+}
+
+.text-black {
+  color: #4d4e4e !important;
 }
 
 .book-card-title:hover,

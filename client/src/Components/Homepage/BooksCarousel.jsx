@@ -14,7 +14,7 @@ const BooksCarousel = (props) => {
 
   const getFeaturedBook = (image, title, author, id) => {
     return (
-      <div className="d-flex justify-content-between">
+      <div className="d-flex justify-content-between carousel-book">
         <img
           src={image}
           alt={title}
@@ -23,19 +23,21 @@ const BooksCarousel = (props) => {
           }}
           className="book-carousel-image"
         />
-        <span className="pl-3 text-white">
-          <span
-            className="book-card-title"
-            onClick={() => {
-              showDetailPage(id);
-            }}
-          >
-            {" "}
-            {title}{" "}
-          </span>
-          <br />
-          <span className="text-muted">by</span>&nbsp;{author}
-        </span>
+        <div className="pl-3 text-white carousel-book-body">
+          <div className="carousel-book-info">
+            <span
+              className="book-card-title"
+              onClick={() => {
+                showDetailPage(id);
+              }}
+            >
+              {" "}
+              {title}{" "}
+            </span>
+            <br />
+            <span className="text-black">by</span>&nbsp;{author}
+          </div>
+        </div>
       </div>
     );
   };
@@ -73,7 +75,7 @@ const BooksCarousel = (props) => {
   };
 
   return (
-    <div className="books-carousel">
+    <div className="books-carousel shadow">
       <Container>
         <div>
           <Carousel
