@@ -34,7 +34,7 @@ const BooksCardComponent = (props) => {
           add();
         } else {
           addToast(
-            "5 different books is in the cart. You cannot add any more.",
+            "5 different books are in the cart. You cannot add any more.",
             {
               appearance: "error",
               autoDismiss: true,

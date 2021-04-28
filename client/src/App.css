@@ -183,3 +183,22 @@ body {
 .purchase-history-table-img {
   width: 100%;
 }
+
+.purchase-history-table-container .btn.active {
+  background-color: cadetblue !important;
+  border-color: cadetblue !important;
+}
+
+.purchase-history-table-container .btn {
+  background-color: rgb(85, 139, 141) !important;
+  border-color: rgb(85, 139, 141) !important;
+}
+
+.purchase-history-table-container .btn:active,
+.purchase-history-table-container .btn:focus {
+  box-shadow: none !important;
+}
+
+.clear-search-button {
+  color: white !important;
+}

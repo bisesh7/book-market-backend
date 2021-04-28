@@ -1,6 +1,19 @@
 import React from "react";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import BootstrapTable from "react-bootstrap-table-next";
+import ToolkitProvider, {
+  ColumnToggle,
+  Search,
+} from "react-bootstrap-table2-toolkit";
+import { Col, Row } from "reactstrap";
+
+function priceFormatter(cell, row) {
+  return <span>NPR {cell}</span>;
+}
+
+function footerPriceFormatter(column, colIndex, { text }) {
+  return <span>NPR {text}</span>;
+}
 
 const products = [
   {
@@ -52,30 +65,38 @@ const columns = [
     dataField: "id",
     text: "ID",
     sort: true,
+    // footer: "",
   },
   {
     dataField: "bookId",
     text: "Book ID",
     sort: true,
+    // footer: "",
   },
   {
     dataField: "name",
     text: "Name",
     sort: true,
+    // footer: "",
   },
   {
     dataField: "image",
     text: "Image",
+    // footer: "",
   },
   {
     dataField: "quantity",
     text: "Quantity",
     sort: true,
+    // footer: "",
   },
   {
     dataField: "total",
     text: "Total",
     sort: true,
+    // formatter: priceFormatter,
+    // footer: (columnData) => columnData.reduce((acc, item) => acc + item, 0),
+    // footerFormatter: footerPriceFormatter,
   },
 ];
 
@@ -87,19 +108,48 @@ const defaultSorted = [
 ];
 
 const PurchaseHistoryPage = () => {
+  const { ToggleList } = ColumnToggle;
+  const { SearchBar, ClearSearchButton } = Search;
+
   return (
-    <div className="purchase-history-table shadow">
-      <BootstrapTable
+    <div className="purchase-history-table-container">
+      <ToolkitProvider
         keyField="id"
         data={products}
         columns={columns}
+        columnToggle
+        defaultSorted={defaultSorted}
+        search
         bootstrap4
         striped
         hover
         condensed
         noDataIndication="Table is Empty"
-        defaultSorted={defaultSorted}
-      />
+      >
+        {(props) => (
+          <div>
+            <Row>
+              <Col>
+                <ToggleList {...props.columnToggleProps} /> <br />
+              </Col>
+              <Col>
+                <div className="purchase-history-filter float-right">
+                  <SearchBar {...props.searchProps} />
+                  <ClearSearchButton
+                    {...props.searchProps}
+                    className="clear-search-button ml-3"
+                  />
+                </div>
+              </Col>
+            </Row>
+
+            <BootstrapTable
+              classes="purchase-history-table shadow"
+              {...props.baseProps}
+            />
+          </div>
+        )}
+      </ToolkitProvider>
     </div>
   );
 };

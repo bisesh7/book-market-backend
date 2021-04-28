@@ -14,15 +14,12 @@
   "author": "bisesh shakya",
   "license": "ISC",
   "dependencies": {
-    "@brainhubeu/react-carousel": "^2.0.3",
     "bcryptjs": "^2.4.3",
     "config": "^3.3.6",
     "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.12.5",
-    "react-bootstrap-table-next": "^4.0.3",
-    "redux-form": "^8.3.7"
+    "mongoose": "^5.12.5"
   },
   "devDependencies": {
     "chai": "^4.3.4",
