@@ -8,10 +8,6 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Toast,
-  ToastHeader,
-  ToastBody,
-  Spinner,
 } from "reactstrap";
 import { logoutUser, checkUser } from "../Actions/actionUser";
 import LoginSignupModal from "./User/LoginSignupModal";
@@ -32,6 +28,7 @@ const NavbarComponent = (props) => {
     if (!props.user.user) {
       props.checkUser();
     }
+    // eslint-disable-next-line
   }, []);
 
   const [loggingOut, setLoggingOut] = useState(false);

@@ -3,7 +3,6 @@ import { Col, Container, Row, Spinner } from "reactstrap";
 import BooksDisplayComponent from "./BooksDisplayComponent";
 import CartComponent from "../Cart/CartComponent";
 import NavbarComponent from "../NavbarComponent";
-import { Alert } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import BooksCarousel from "./BooksCarousel";
