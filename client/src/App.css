@@ -175,3 +175,11 @@ body {
   box-sizing: border-box !important;
   font-size: 0.9em;
 }
+
+.purchase-history-table {
+  font-size: 0.9em;
+}
+
+.purchase-history-table-img {
+  width: 100%;
+}
