@@ -112,7 +112,7 @@ router.post("/refresh_token", checkAPIKey, (req, res) => {
               config.get("REFRESH_TOKEN_SECRET")
             );
             const accessToken = jwt.sign(
-              { user: payLoad },
+              { user: payLoad.user },
               config.get("ACCESS_TOKEN_SECRET"),
               {
                 expiresIn: "10m",

@@ -8,6 +8,7 @@ import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
 import rootReducer from "./Reducers/rootReducer";
+import { ToastProvider } from "react-toast-notifications";
 
 const middleware = [thunk];
 
@@ -27,7 +28,9 @@ store.subscribe(() => {
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <ToastProvider placement="bottom-center" autoDismissTimeout={4000}>
+        <App />
+      </ToastProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

@@ -12,16 +12,22 @@ const ProtectedRoute = (props) => {
         if (user.user) {
           return <Component {...rest} {...props} />;
         } else {
-          return (
-            <Redirect
-              to={{
-                pathname: "/",
-                state: {
-                  from: props.location,
-                },
-              }}
-            />
-          );
+          setTimeout(() => {
+            if (!user.user) {
+              return (
+                <Redirect
+                  to={{
+                    pathname: "/",
+                    state: {
+                      from: props.location,
+                    },
+                  }}
+                />
+              );
+            } else {
+              return <Component {...rest} {...props} />;
+            }
+          }, 1000);
         }
       }}
     />
