@@ -219,3 +219,12 @@ body {
 .purchase-history-table-container .pagination {
   float: right;
 }
+
+.purchase-history-table-container .pagination li.active a {
+  background-color: var(--navItemColor) !important;
+  border-color: var(--navItemColor) !important;
+}
+
+.purchase-history-table-container .pagination li:focus {
+  box-shadow: none !important;
+}
