@@ -115,14 +115,21 @@ const PurchaseHistoryPage = () => {
           <div>
             <Row>
               <Col>
-                <ToggleList {...props.columnToggleProps} /> <br />
+                <ToggleList
+                  className="btn-group-sm"
+                  {...props.columnToggleProps}
+                />{" "}
+                <br />
               </Col>
               <Col>
                 <div className="purchase-history-filter float-right">
-                  <SearchBar {...props.searchProps} />
+                  <SearchBar
+                    className="form-control-sm"
+                    {...props.searchProps}
+                  />
                   <ClearSearchButton
                     {...props.searchProps}
-                    className="clear-search-button ml-3"
+                    className="clear-search-button ml-3 btn-sm"
                   />
                 </div>
               </Col>

@@ -199,6 +199,7 @@ body {
 }
 
 .purchase-history-table-container .btn {
+  font-size: 0.9em;
   background-color: rgb(85, 139, 141) !important;
   border-color: rgb(85, 139, 141) !important;
 }
@@ -206,6 +207,10 @@ body {
 .purchase-history-table-container .btn:active,
 .purchase-history-table-container .btn:focus {
   box-shadow: none !important;
+}
+
+.purchase-history-search-bar {
+  height: 0.9em;
 }
 
 .clear-search-button {
@@ -218,6 +223,7 @@ body {
 
 .purchase-history-table-container .pagination {
   float: right;
+  font-size: 0.9em;
 }
 
 .purchase-history-table-container .pagination li.active a {
@@ -227,4 +233,8 @@ body {
 
 .purchase-history-table-container .pagination li:focus {
   box-shadow: none !important;
+}
+
+.react-bootstrap-table-pagination-total {
+  font-size: 0.9em;
 }
