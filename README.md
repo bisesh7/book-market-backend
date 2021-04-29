@@ -6,7 +6,6 @@ shows a list of selected books.
 
 React Features:
 
-Contexts:
 Redux
 
     Redux is used for the state management for this application.
