@@ -1,5 +1,10 @@
 import { credentialError, serverError } from "../utils/errors";
-import { LOGIN_USER, LOGOUT_USER } from "./ActionTypes";
+import {
+  LOADING_USER,
+  LOGIN_USER,
+  LOGOUT_USER,
+  USER_LOADED,
+} from "./ActionTypes";
 import axios from "axios";
 import getUserData from "../config/userDataAPI";
 
@@ -95,6 +100,7 @@ export const logoutUser = (addToast, updateToast, setLoggingOut) => {
 };
 
 export const checkUser = (addToast, removeToast) => {
+  // id of the toast to be generated
   let checkingSessionToastId = null;
   addToast(
     "Checking Session.",

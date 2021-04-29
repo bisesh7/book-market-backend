@@ -19,22 +19,24 @@ const ProfileDetailsPage = (props) => {
       <div className="shadow profile-detail">
         <Row>
           <Col md={leftSpace}>ID</Col>
-          <Col md={rightSpace}>{user._id}</Col>
+          <Col md={rightSpace}>{user ? user._id : null}</Col>
         </Row>
         <hr />
         <Row>
           <Col md={leftSpace}>Email</Col>
-          <Col md={rightSpace}>{user.email}</Col>
+          <Col md={rightSpace}>{user ? user.email : null}</Col>
         </Row>
         <hr />
         <Row>
           <Col md={leftSpace}>Phone Number</Col>
-          <Col md={rightSpace}>{user.phoneNumber}</Col>
+          <Col md={rightSpace}>{user ? user.phoneNumber : null}</Col>
         </Row>
         <hr />
         <Row>
           <Col md={leftSpace}>Joined</Col>
-          <Col md={rightSpace}>{getFormattedDate(user.registerDate)}</Col>
+          <Col md={rightSpace}>
+            {user ? getFormattedDate(user.registerDate) : null}
+          </Col>
         </Row>
       </div>
     </Fragment>

@@ -23,6 +23,7 @@
     "react-redux": "^7.2.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "react-timer-hook": "^3.0.2",
     "react-toast-notifications": "^2.4.4",
     "reactstrap": "^8.9.0",
     "redux": "^4.0.5",

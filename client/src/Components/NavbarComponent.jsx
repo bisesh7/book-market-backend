@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import {
   Collapse,
@@ -14,7 +14,14 @@ import LoginSignupModal from "./User/LoginSignupModal";
 import { useToasts } from "react-toast-notifications";
 
 const NavbarComponent = (props) => {
-  const { addToast, updateToast } = useToasts();
+  const { addToast, removeToast, updateToast } = useToasts();
+
+  useEffect(() => {
+    if (!props.user.user) {
+      props.checkUser(addToast, removeToast);
+    }
+    // eslint-disable-next-line
+  }, [props.checkUser]);
 
   const [isOpen, setIsOpen] = useState(false);
 
