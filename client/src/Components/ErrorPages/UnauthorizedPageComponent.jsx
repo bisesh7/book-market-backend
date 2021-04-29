@@ -23,6 +23,7 @@ const UnauthorizedPageComponent = (props) => {
             onExpire={() => {
               props.history.push("/");
             }}
+            {...props}
           />
         ) : null}
       </Jumbotron>

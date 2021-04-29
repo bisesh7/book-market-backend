@@ -1,7 +1,7 @@
 import React from "react";
 import { useTimer } from "react-timer-hook";
 
-const RedirectTimerComponent = ({ expiryTimestamp, onExpire }) => {
+const RedirectTimerComponent = ({ expiryTimestamp, onExpire, history }) => {
   const { seconds } = useTimer({
     expiryTimestamp,
     autoStart: true,
@@ -10,7 +10,17 @@ const RedirectTimerComponent = ({ expiryTimestamp, onExpire }) => {
 
   return (
     <div>
-      Redirecting in <span>{seconds}</span> secs.
+      Redirecting in <span>{seconds}</span> secs. Click{" "}
+      <a
+        href="/"
+        onClick={(e) => {
+          e.preventDefault();
+          history.push("/");
+        }}
+      >
+        here
+      </a>{" "}
+      to save your time.
     </div>
   );
 };
