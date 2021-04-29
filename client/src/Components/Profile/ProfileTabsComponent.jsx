@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Nav, NavItem, NavLink } from "reactstrap";
 import defaultProfilePicture from "../../statics/images/default-profile.png";
 
@@ -15,6 +15,7 @@ function ProfileTabsComponent(props) {
 
   useEffect(() => {
     props.setHash(props.location.hash);
+    //eslint-disable-next-line
   }, [props.location.hash]);
 
   return (

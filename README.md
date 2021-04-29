@@ -7,10 +7,9 @@ shows a list of selected books.
 React Features:
 
 Contexts:
-BooksContext.js
-CartContext.js
+Redux
 
-    Context and Hooks are used for the state management for this application.
+    Redux is used for the state management for this application.
 
 Reactstrap:
 Bootstrap:
