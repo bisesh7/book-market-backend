@@ -6,59 +6,20 @@ import ToolkitProvider, {
   Search,
 } from "react-bootstrap-table2-toolkit";
 import { Col, Row } from "reactstrap";
+import products from "../../data/products.json";
+import paginationFactory from "react-bootstrap-table2-paginator";
 
-function priceFormatter(cell, row) {
-  return <span>NPR {cell}</span>;
-}
+// function priceFormatter(cell, row) {
+//   return <span>NPR {cell}</span>;
+// }
 
-function footerPriceFormatter(column, colIndex, { text }) {
-  return <span>NPR {text}</span>;
-}
+// function footerPriceFormatter(column, colIndex, { text }) {
+//   return <span>NPR {text}</span>;
+// }
 
-const products = [
-  {
-    id: 1,
-    bookId: 1,
-    name: "Bamity",
-    image: (
-      <img
-        className="purchase-history-table-img"
-        src="http://dummyimage.com/250x250.png/cc0000/ffffff"
-        alt="bamity"
-      />
-    ),
-    quantity: 1,
-    total: 400,
-  },
-  {
-    id: 2,
-    bookId: 3,
-    name: "Fixflex",
-    image: (
-      <img
-        className="purchase-history-table-img"
-        src="http://dummyimage.com/250x250.png/5fa2dd/ffffff"
-        alt="fixflex"
-      />
-    ),
-    quantity: 2,
-    total: 645,
-  },
-  {
-    id: 3,
-    bookId: 6,
-    name: "Fix San",
-    image: (
-      <img
-        className="purchase-history-table-img"
-        src="http://dummyimage.com/250x250.png/dddddd/000000"
-        alt="fixflex"
-      />
-    ),
-    quantity: 8,
-    total: 2457,
-  },
-];
+const imageFormatter = (cell, row) => {
+  return <img className="purchase-history-table-img" src={cell} alt={cell} />;
+};
 
 const columns = [
   {
@@ -66,6 +27,7 @@ const columns = [
     text: "ID",
     sort: true,
     // footer: "",
+    classes: "purchase-history-id",
   },
   {
     dataField: "bookId",
@@ -83,6 +45,8 @@ const columns = [
     dataField: "image",
     text: "Image",
     // footer: "",
+    formatter: imageFormatter,
+    classes: "purchase-history-image-column",
   },
   {
     dataField: "quantity",
@@ -110,6 +74,27 @@ const defaultSorted = [
 const PurchaseHistoryPage = () => {
   const { ToggleList } = ColumnToggle;
   const { SearchBar, ClearSearchButton } = Search;
+
+  const customTotal = (from, to, size) => (
+    <span className="react-bootstrap-table-pagination-total">
+      Showing {from} to {to} of {size} Results
+    </span>
+  );
+
+  const paginationOptions = {
+    // pageStartIndex: 0,
+    sizePerPage: 5,
+    hideSizePerPage: true,
+    // hidePageListOnlyOnePage: true,
+    paginationSize: 3,
+    firstPageText: "First",
+    prePageText: "Back",
+    nextPageText: "Next",
+    lastPageText: "Last",
+    disablePageTitle: true,
+    showTotal: true,
+    paginationTotalRenderer: customTotal,
+  };
 
   return (
     <div className="purchase-history-table-container">
@@ -144,7 +129,8 @@ const PurchaseHistoryPage = () => {
             </Row>
 
             <BootstrapTable
-              classes="purchase-history-table shadow"
+              classes="purchase-history-table shadow mt-2"
+              pagination={paginationFactory(paginationOptions)}
               {...props.baseProps}
             />
           </div>

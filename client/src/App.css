@@ -1,5 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Bangers&family=Roboto&display=swap");
 
+:root {
+  --navItemColor: cadetblue;
+  --addToCartButtonColor: #c0c0c0;
+  --textBlack: #4d4e4e;
+  --textBlackDarker: #303030;
+}
+
 body {
   font-family: "Roboto", sans-serif;
 }
@@ -9,7 +16,7 @@ body {
 }
 
 .navbar .nav-item:hover {
-  background: cadetblue;
+  background: var(--navItemColor);
 }
 
 .navbar .nav-link:hover {
@@ -90,19 +97,19 @@ body {
 }
 
 .add-to-cart-button {
-  border-color: #c0c0c0 !important;
+  border-color: var(--addToCartButtonColor) !important;
   border-radius: 0 !important;
 }
 
 .add-to-cart-button:hover {
-  border-color: #c0c0c0 !important;
+  border-color: var(--addToCartButtonColor) !important;
   border-radius: 0 !important;
-  background-color: #c0c0c0 !important;
+  background-color: var(--addToCartButtonColor) !important;
 }
 
 .add-to-cart-button:active,
 .add-to-cart-button:focus {
-  border-color: #c0c0c0 !important;
+  border-color: var(--addToCartButtonColor) !important;
   box-shadow: none !important;
 }
 
@@ -125,7 +132,7 @@ body {
 }
 
 .text-black {
-  color: #4d4e4e !important;
+  color: var(--textBlack) !important;
 }
 
 .book-card-title:hover,
@@ -133,6 +140,7 @@ body {
   text-decoration: underline;
 }
 
+/* Login signup error text */
 .error-text {
   color: red;
 }
@@ -159,15 +167,15 @@ body {
 }
 
 .profile-tab.active {
-  background-color: cadetblue !important;
+  background-color: var(--navItemColor) !important;
 }
 
 .profile-tab {
-  color: #4d4e4e;
+  color: var(--textBlack);
 }
 
 .profile-tab:hover {
-  color: #303030;
+  color: var(--textBlackDarker);
 }
 
 .profile-detail {
@@ -181,12 +189,13 @@ body {
 }
 
 .purchase-history-table-img {
-  width: 100%;
+  width: 60%;
+  min-width: 90px;
 }
 
 .purchase-history-table-container .btn.active {
-  background-color: cadetblue !important;
-  border-color: cadetblue !important;
+  background-color: var(--navItemColor) !important;
+  border-color: var(--navItemColor) !important;
 }
 
 .purchase-history-table-container .btn {
@@ -201,4 +210,12 @@ body {
 
 .clear-search-button {
   color: white !important;
+}
+
+.purchase-history-table-container table {
+  table-layout: auto !important;
+}
+
+.purchase-history-table-container .pagination {
+  float: right;
 }
