@@ -231,6 +231,10 @@ body {
   border-color: var(--navItemColor) !important;
 }
 
+.purchase-history-table-container .pagination li a {
+  color: var(--textBlack);
+}
+
 .purchase-history-table-container .pagination li:focus {
   box-shadow: none !important;
 }
