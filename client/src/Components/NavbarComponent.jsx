@@ -31,7 +31,9 @@ const NavbarComponent = (props) => {
   const logoutHandler = (e) => {
     e.preventDefault();
 
-    props.logoutUser(addToast, updateToast, setLoggingOut);
+    props.logoutUser(addToast, updateToast, setLoggingOut, () => {
+      props.history.push("/");
+    });
   };
 
   const profileClickHandler = (e) => {

@@ -53,7 +53,7 @@ export const loginUser = (
   };
 };
 
-export const logoutUser = (addToast, updateToast, setLoggingOut) => {
+export const logoutUser = (addToast, updateToast, setLoggingOut, cb) => {
   let loggingOutToastID = null;
   addToast("Logging out", { appearance: "info", autoDismiss: false }, (id) => {
     loggingOutToastID = id;
@@ -77,6 +77,7 @@ export const logoutUser = (addToast, updateToast, setLoggingOut) => {
             autoDismiss: true,
           });
           setLoggingOut(false);
+          cb();
         }
       })
       .catch((err) => {
