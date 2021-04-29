@@ -77,7 +77,22 @@ router.post("/", checkAPIKey, (req, res) => {
 // @desc    Gets the current user.
 // @access  Private
 router.get("/", [checkAPIKey, checkAccessRights], (req, res) => {
-  return res.json({ success: true, user: req.user });
+  User.findById(req.user._id)
+    .then((user) => {
+      const userData = user;
+      userData.password = undefined;
+      return res.json({ success: true, user: userData });
+    })
+    .catch((err) => {
+      console.log(err);
+      return res
+        .status(500)
+        .json({
+          success: false,
+          msg: "Server error while finding the user",
+          err: serverError,
+        });
+    });
 });
 
 module.exports = router;
