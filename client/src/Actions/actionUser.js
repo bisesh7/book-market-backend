@@ -48,7 +48,11 @@ export const loginUser = (
   };
 };
 
-export const logoutUser = (setAndShowToast, setLoggingOut) => {
+export const logoutUser = (addToast, updateToast, setLoggingOut) => {
+  let loggingOutToastID = null;
+  addToast("Logging out", { appearance: "info", autoDismiss: false }, (id) => {
+    loggingOutToastID = id;
+  });
   setLoggingOut(true);
   return (dispatch) => {
     axios
@@ -62,14 +66,27 @@ export const logoutUser = (setAndShowToast, setLoggingOut) => {
           dispatch({
             type: LOGOUT_USER,
           });
-          setAndShowToast("success", res.data.msg);
+          updateToast(loggingOutToastID, {
+            content: "Logged out.",
+            appearance: "success",
+            autoDismiss: true,
+          });
           setLoggingOut(false);
         }
       })
       .catch((err) => {
         if (err.response) {
-          setAndShowToast("error", err.response.data.msg);
+          updateToast(loggingOutToastID, {
+            content: err.response.data.msg,
+            appearance: "error",
+            autoDismiss: true,
+          });
         } else {
+          updateToast(loggingOutToastID, {
+            content: "Server error while logging out.",
+            appearance: "error",
+            autoDismiss: true,
+          });
           console.log(err);
         }
         setLoggingOut(false);
@@ -77,16 +94,34 @@ export const logoutUser = (setAndShowToast, setLoggingOut) => {
   };
 };
 
-export const checkUser = () => {
+export const checkUser = (addToast, removeToast) => {
+  let checkingSessionToastId = null;
+  addToast(
+    "Checking Session.",
+    { appearance: "info", autoDismiss: false },
+    (id) => {
+      checkingSessionToastId = id;
+    }
+  );
   return (dispatch) => {
-    getUserData()
+    getUserData(addToast)
       .then((res) => {
         dispatch({
           type: LOGIN_USER,
           user: res.data.user,
         });
+        removeToast(checkingSessionToastId);
+        addToast("Session resumed.", {
+          appearance: "success",
+          autoDismiss: true,
+        });
       })
       .catch((err) => {
+        removeToast(checkingSessionToastId);
+        addToast("Session unavailable.", {
+          appearance: "warning",
+          autoDismiss: true,
+        });
         console.log(err.response.data.msg);
       });
   };

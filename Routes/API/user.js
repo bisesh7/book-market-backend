@@ -85,13 +85,11 @@ router.get("/", [checkAPIKey, checkAccessRights], (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      return res
-        .status(500)
-        .json({
-          success: false,
-          msg: "Server error while finding the user",
-          err: serverError,
-        });
+      return res.status(500).json({
+        success: false,
+        msg: "Server error while finding the user",
+        err: serverError,
+      });
     });
 });
 

@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 import { setBooks } from "../../Actions/actionBook";
+import { Helmet } from "react-helmet";
 
 const BookDetailComponent = (props) => {
   const [bookId, setBookId] = useState();
@@ -120,6 +121,12 @@ const BookDetailComponent = (props) => {
 
   return (
     <div>
+      {book ? (
+        <Helmet>
+          <title>{book["name "]} | Book-Market </title>
+        </Helmet>
+      ) : null}
+
       <NavbarComponent {...props} />
       <Container fluid={true}>
         <Alert color="danger" isOpen={alertVisible} toggle={onAlertDismiss}>

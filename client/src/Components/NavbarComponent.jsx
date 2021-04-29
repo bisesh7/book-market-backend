@@ -14,19 +14,15 @@ import LoginSignupModal from "./User/LoginSignupModal";
 import { useToasts } from "react-toast-notifications";
 
 const NavbarComponent = (props) => {
-  const { addToast } = useToasts();
+  const { addToast, removeToast, updateToast } = useToasts();
 
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
 
-  const setAndShowToast = (toastColor, toastMessage) => {
-    addToast(toastMessage, { appearance: toastColor, autoDismiss: true });
-  };
-
   useEffect(() => {
     if (!props.user.user) {
-      props.checkUser();
+      props.checkUser(addToast, removeToast);
     }
     // eslint-disable-next-line
   }, []);
@@ -35,8 +31,7 @@ const NavbarComponent = (props) => {
   const logoutHandler = (e) => {
     e.preventDefault();
 
-    addToast("Logging out", { appearance: "info", autoDismiss: true });
-    props.logoutUser(setAndShowToast, setLoggingOut);
+    props.logoutUser(addToast, updateToast, setLoggingOut);
   };
 
   const profileClickHandler = (e) => {

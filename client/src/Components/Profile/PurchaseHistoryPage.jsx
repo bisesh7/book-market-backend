@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, {
@@ -71,7 +71,12 @@ const defaultSorted = [
   },
 ];
 
-const PurchaseHistoryPage = () => {
+const PurchaseHistoryPage = (props) => {
+  useEffect(() => {
+    props.setPageTitle("Purchase History | Book-Market");
+    // eslint-disable-next-line
+  }, [props.setPageTitle]);
+
   const { ToggleList } = ColumnToggle;
   const { SearchBar, ClearSearchButton } = Search;
 
