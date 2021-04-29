@@ -58,13 +58,13 @@ router.post("/", checkAPIKey, (req, res) => {
                 // secure: true
                 maxAge: 24 * 60 * 60 * 1000, //24 hours,
               });
+              const userData = user;
+              // Deleting password from user data
+              userData.password = undefined;
               res.json({
                 success: true,
                 msg: "You have been logged in.",
-                user: {
-                  email: user.email,
-                  _id: user._id,
-                },
+                user: userData,
               });
             } catch (err) {
               return res.status(500).json({

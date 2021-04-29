@@ -22,7 +22,7 @@ const ProfileComponent = (props) => {
           </Col>
           <Col md="9">
             {hash === "#details" ? (
-              <ProfileDetailsPage />
+              <ProfileDetailsPage {...props} />
             ) : hash === "#purchase_history" ? (
               <PurchaseHistoryPage />
             ) : (

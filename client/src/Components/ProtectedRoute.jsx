@@ -9,7 +9,7 @@ const ProtectedRoute = (props) => {
     <Route
       {...rest}
       render={(props) => {
-        if (!user.user) {
+        if (user.user) {
           return <Component {...rest} {...props} />;
         } else {
           return (
