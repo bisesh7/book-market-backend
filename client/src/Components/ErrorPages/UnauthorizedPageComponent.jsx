@@ -9,7 +9,8 @@ const UnauthorizedPageComponent = (props) => {
   // Set the page title to unauthorized page
   useEffect(() => {
     props.setPageTitle("401 Unauthorized | Book-Market");
-  }, []);
+    // eslint-disable-next-line
+  }, [props.setPageTitle]);
 
   return (
     <div>

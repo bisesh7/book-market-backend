@@ -7,7 +7,7 @@ import { Fragment } from "react";
 import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
 import { checkUser } from "./Actions/actionUser";
-import CheckoutComponent from "./Components/Cart/CheckoutComponent";
+import CheckoutCartComponent from "./Components/Cart/CheckoutCartComponent";
 
 function App(props) {
   return (
@@ -21,7 +21,7 @@ function App(props) {
             <Route exact path="/" component={HomeComponent} />
             <Route exact path="/book/:book" component={BookDetailComponent} />
             <Route exact path="/profile" component={ProfileComponent} />
-            <Route exact path="/checkout" component={CheckoutComponent} />
+            <Route exact path="/checkout" component={CheckoutCartComponent} />
           </Switch>
         </div>
       </BrowserRouter>

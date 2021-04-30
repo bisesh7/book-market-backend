@@ -248,3 +248,31 @@ body {
   right: 17px;
   top: 15px;
 }
+
+.checkout-cart {
+  padding: 0;
+}
+
+.checkout-cart-img {
+  max-width: 8.6em;
+}
+
+.checkout-cart-item {
+  font-size: 0.9em;
+}
+
+.checkout-cart-item .author {
+  font-size: 0.6em;
+}
+
+.checkout-cart-item-info {
+  margin-bottom: 0;
+}
+
+.price-checkout-note {
+  font-size: 0.7em;
+}
+
+.order-summary-details {
+  font-size: 0.9em;
+}
