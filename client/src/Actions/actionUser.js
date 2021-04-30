@@ -122,10 +122,10 @@ export const checkUser = (addToast, removeToast) => {
       })
       .catch((err) => {
         removeToast(checkingSessionToastId);
-        addToast("Session unavailable.", {
-          appearance: "warning",
-          autoDismiss: true,
-        });
+        // addToast("Session unavailable.", {
+        //   appearance: "warning",
+        //   autoDismiss: true,
+        // });
         console.log(err.response.data.msg);
       });
   };

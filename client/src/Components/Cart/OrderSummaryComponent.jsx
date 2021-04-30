@@ -24,7 +24,8 @@ const OrderSummaryComponent = ({
       <div className="order-summary-details">
         <dl class="row">
           <dd class="col-sm-6">
-            {length} {length > 1 ? "Items" : "Item"} Subtotal
+            {length ? length : null}{" "}
+            {length > 1 ? "Items" : length ? "Item" : null} Subtotal
           </dd>
           <dt class="col-sm-6">{getNPRFromDollar(totalAmount)}</dt>
 

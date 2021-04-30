@@ -278,5 +278,5 @@ body {
 }
 
 .checkout-cart-empty-jumbotron {
-  padding-top: 0 !important;
+  padding-top: 16px !important;
 }

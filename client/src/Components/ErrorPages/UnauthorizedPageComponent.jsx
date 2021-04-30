@@ -1,3 +1,5 @@
+import { faCog } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect } from "react";
 import { Jumbotron } from "reactstrap";
 import RedirectTimerComponent from "../Timer/RedirectTimerComponent";
@@ -15,7 +17,10 @@ const UnauthorizedPageComponent = (props) => {
   return (
     <div>
       <Jumbotron>
-        <h1 className="display-3">Hello, there!</h1>
+        <h1 className="display-3">
+          <FontAwesomeIcon icon={faCog} spin />
+          Hello, there!
+        </h1>
         <p className="lead">
           Since this is a protected route, we are checking the session before we
           show the page. You will be redirected to the homepage, if no session

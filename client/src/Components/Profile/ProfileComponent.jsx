@@ -5,9 +5,9 @@ import ProfileDetailsPage from "./ProfileDetailsPage";
 import ProfileTabsComponent from "./ProfileTabsComponent";
 import PurchaseHistoryPage from "./PurchaseHistoryPage";
 import { Helmet } from "react-helmet";
-import axios from "axios";
 import { connect } from "react-redux";
 import UnauthorizedPageComponent from "../ErrorPages/UnauthorizedPageComponent";
+import getUserData from "../../config/userDataAPI";
 
 const ProfileComponent = (props) => {
   // To know which tab user needs
@@ -34,12 +34,7 @@ const ProfileComponent = (props) => {
     // So we check here if user is null, while we are checking the session, we show an spinner.
     // If no session exists, we redirect to home
     if (!user) {
-      axios
-        .get("/api/user", {
-          headers: {
-            authorization: process.env.REACT_APP_API_KEY,
-          },
-        })
+      getUserData()
         .then((res) => {
           // Response given only if session exist i.e tokens are valid
           setShowProfile(true);
@@ -53,7 +48,7 @@ const ProfileComponent = (props) => {
       // If page is not refreshed user exists.
       setShowProfile(true);
     }
-  }, [user, showProfile]);
+  }, [user]);
 
   return (
     <div>
