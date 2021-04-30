@@ -242,3 +242,9 @@ body {
 .react-bootstrap-table-pagination-total {
   font-size: 0.9em;
 }
+
+.modal-close-button {
+  position: absolute;
+  right: 17px;
+  top: 15px;
+}

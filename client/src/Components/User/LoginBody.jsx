@@ -14,6 +14,8 @@ import {
 import { connect } from "react-redux";
 import { loginUser } from "../../Actions/actionUser";
 
+import ModalCloseButton from "./ModalCloseButton";
+
 const LoginBody = (props) => {
   const signUpLinkPressed = (e) => {
     e.preventDefault();
@@ -46,7 +48,13 @@ const LoginBody = (props) => {
   const { handleSubmit, reset, submitting } = props;
 
   const loginButtonHandler = (values) => {
-    props.loginUser(values, setFormIsBeingSubmitted, showAlert, reset);
+    props.loginUser(values, setFormIsBeingSubmitted, showAlert, reset, () => {
+      if (props.navLinkHidden) {
+        setTimeout(() => {
+          props.setModal(false);
+        }, 1500);
+      }
+    });
   };
 
   const forgotPasswordHandler = (e) => {
@@ -58,6 +66,7 @@ const LoginBody = (props) => {
       <div className="d-flex justify-content-center">
         <strong className="text-primary">Log In</strong>
       </div>
+      <ModalCloseButton setModal={props.setModal} />
       <Alert
         className="mt-3"
         color={alertColor}

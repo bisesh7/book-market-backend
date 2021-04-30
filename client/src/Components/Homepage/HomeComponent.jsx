@@ -11,18 +11,6 @@ import { setBooks } from "../../Actions/actionBook";
 import { setCart } from "../../Actions/actionCart";
 
 const HomeComponent = (props) => {
-  const { state } = props.location;
-  // useEffect(() => {
-  //   if (state) {
-  //     const { hash, pathname } = state.from;
-  //     const redirectTo = `${pathname}${hash}`;
-
-  //     if (props.user) {
-  //       props.history.push(redirectTo);
-  //     }
-  //   }
-  // }, [state, props.user]);
-
   const [booksLoading, setBooksLoading] = useState(false);
 
   useEffect(() => {

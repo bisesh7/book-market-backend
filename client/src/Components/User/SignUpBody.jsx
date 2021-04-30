@@ -15,6 +15,7 @@ import {
 } from "./validation";
 import axios from "axios";
 import { userExistsError, serverError } from "../../utils/errors";
+import ModalCloseButton from "./ModalCloseButton";
 
 const SignUpBody = (props) => {
   const loginLinkPressed = (e) => {
@@ -94,6 +95,7 @@ const SignUpBody = (props) => {
       <div className="d-flex justify-content-center">
         <strong className="text-primary">Sign Up</strong>
       </div>
+      <ModalCloseButton setModal={props.setModal} />
       <Alert
         className="mt-3"
         color={alertColor}

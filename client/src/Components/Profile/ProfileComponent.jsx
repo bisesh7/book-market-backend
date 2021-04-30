@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Col, Container, Jumbotron, Row } from "reactstrap";
+import { Col, Container, Row } from "reactstrap";
 import NavbarComponent from "../NavbarComponent";
 import ProfileDetailsPage from "./ProfileDetailsPage";
 import ProfileTabsComponent from "./ProfileTabsComponent";

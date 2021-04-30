@@ -1,9 +1,4 @@
-import {
-  LOGIN_USER,
-  LOGOUT_USER,
-  LOADING_USER,
-  USER_LOADED,
-} from "../Actions/ActionTypes";
+import { LOGIN_USER, LOGOUT_USER } from "../Actions/ActionTypes";
 
 const initState = {
   user: null,

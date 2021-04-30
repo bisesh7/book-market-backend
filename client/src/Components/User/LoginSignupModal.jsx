@@ -29,9 +29,13 @@ const LoginSignupModal = (props) => {
       </Button>
       <Modal isOpen={modal} toggle={toggle} className={props.className}>
         {page === "login" ? (
-          <LoginBody setPage={setPage} />
+          <LoginBody
+            setModal={setModal}
+            navLinkHidden={props.navLinkHidden}
+            setPage={setPage}
+          />
         ) : (
-          <SignUpBody setPage={setPage} />
+          <SignUpBody setModal={setModal} setPage={setPage} />
         )}
       </Modal>
     </div>
