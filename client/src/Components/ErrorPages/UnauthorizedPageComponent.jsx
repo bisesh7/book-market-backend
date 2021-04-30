@@ -6,6 +6,7 @@ const UnauthorizedPageComponent = (props) => {
   const time = new Date();
   time.setSeconds(time.getSeconds() + 10);
 
+  // Set the page title to unauthorized page
   useEffect(() => {
     props.setPageTitle("401 Unauthorized | Book-Market");
   }, []);

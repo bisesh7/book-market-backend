@@ -9,6 +9,7 @@ const ModalCloseButton = (props) => {
         href="#close"
         className="modal-close-button"
         onClick={(e) => {
+          e.preventDefault();
           props.setModal(false);
         }}
       >

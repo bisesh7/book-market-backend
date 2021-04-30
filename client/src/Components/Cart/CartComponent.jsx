@@ -6,8 +6,6 @@ import { connect } from "react-redux";
 import LoginSignupModal from "../User/LoginSignupModal";
 
 const CartComponent = (props) => {
-  console.log(props.user);
-
   const [cartListGroupItems, setCartListGroupItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
 
@@ -45,7 +43,7 @@ const CartComponent = (props) => {
 
   const checkoutHandler = (e) => {
     e.preventDefault();
-    console.log("Checkout clicked");
+    props.history.push("/checkout");
   };
 
   return (
