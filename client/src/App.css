@@ -189,7 +189,7 @@ body {
 }
 
 .purchase-history-table-img {
-  width: 60%;
+  max-width: 48%;
   min-width: 90px;
 }
 
