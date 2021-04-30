@@ -8,17 +8,14 @@ import ToolkitProvider, {
 import { Col, Row } from "reactstrap";
 import products from "../../data/products.json";
 import paginationFactory from "react-bootstrap-table2-paginator";
-
-// function priceFormatter(cell, row) {
-//   return <span>NPR {cell}</span>;
-// }
-
-// function footerPriceFormatter(column, colIndex, { text }) {
-//   return <span>NPR {text}</span>;
-// }
+import { getNPRFromDollar } from "../../utils/getNPRFromDollar";
 
 const imageFormatter = (cell, row) => {
   return <img className="purchase-history-table-img" src={cell} alt={cell} />;
+};
+
+const priceFormatter = (cell, row) => {
+  return <span>{getNPRFromDollar(cell.substring(1, cell.length))}</span>;
 };
 
 const columns = [
@@ -26,25 +23,21 @@ const columns = [
     dataField: "id",
     text: "ID",
     sort: true,
-    // footer: "",
     classes: "purchase-history-id",
   },
   {
     dataField: "bookId",
     text: "Book ID",
     sort: true,
-    // footer: "",
   },
   {
     dataField: "name",
     text: "Name",
     sort: true,
-    // footer: "",
   },
   {
     dataField: "image",
     text: "Image",
-    // footer: "",
     formatter: imageFormatter,
     classes: "purchase-history-image-column",
   },
@@ -52,15 +45,12 @@ const columns = [
     dataField: "quantity",
     text: "Quantity",
     sort: true,
-    // footer: "",
   },
   {
     dataField: "total",
     text: "Total",
     sort: true,
-    // formatter: priceFormatter,
-    // footer: (columnData) => columnData.reduce((acc, item) => acc + item, 0),
-    // footerFormatter: footerPriceFormatter,
+    formatter: priceFormatter,
   },
 ];
 
