@@ -2,7 +2,12 @@ import React from "react";
 import { Button, Input, InputGroup, InputGroupAddon } from "reactstrap";
 import { getNPRFromDollar } from "../../utils/getNPRFromDollar";
 
-const OrderSummaryComponent = ({ length, totalAmount, discount }) => {
+const OrderSummaryComponent = ({
+  length,
+  totalAmount,
+  discount,
+  className,
+}) => {
   const proceedToCheckoutHandler = (e) => {
     e.preventDefault();
   };
@@ -12,7 +17,7 @@ const OrderSummaryComponent = ({ length, totalAmount, discount }) => {
   };
 
   return (
-    <div>
+    <div className={className}>
       <h5>
         <strong>Order Summary</strong>
       </h5>
@@ -37,6 +42,7 @@ const OrderSummaryComponent = ({ length, totalAmount, discount }) => {
         size="sm"
         type="button"
         onClick={proceedToCheckoutHandler}
+        disabled={length === 0}
       >
         Proceed To Checkout
       </Button>
@@ -45,13 +51,14 @@ const OrderSummaryComponent = ({ length, totalAmount, discount }) => {
       </small>
       <div className="price-checkout-coupon-code mt-3">
         <span>Have a coupon code?</span>
-        <InputGroup size="sm">
-          <Input placeholder="Coupon" />
+        <InputGroup size="sm" className="mt-1">
+          <Input placeholder="Coupon" disabled={length === 0} />
           <InputGroupAddon addonType="append">
             <Button
               color="secondary"
               type="button"
               onClick={couponApplyHandler}
+              disabled={length === 0}
             >
               Apply
             </Button>

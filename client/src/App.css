@@ -82,7 +82,7 @@ body {
 
 .disabled-button {
   opacity: 0.5;
-  cursor: pointer;
+  cursor: not-allowed;
 }
 
 .cart {
@@ -275,4 +275,8 @@ body {
 
 .order-summary-details {
   font-size: 0.9em;
+}
+
+.checkout-cart-empty-jumbotron {
+  padding-top: 0 !important;
 }
