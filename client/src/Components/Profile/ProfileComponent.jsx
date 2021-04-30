@@ -79,7 +79,11 @@ const ProfileComponent = (props) => {
           </Row>
         </Container>
       ) : (
-        <UnauthorizedPageComponent {...props} redirect={redirect} />
+        <UnauthorizedPageComponent
+          {...props}
+          setPageTitle={setPageTitle}
+          redirect={redirect}
+        />
       )}
     </div>
   );

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Alert, ListGroup } from "reactstrap";
+import { Alert, Button, ListGroup } from "reactstrap";
 import CartListGroupItem from "./CartListGroupItemComponent";
 import { getNPRFromDollar } from "../../utils/getNPRFromDollar";
 import { connect } from "react-redux";
 import LoginSignupModal from "../User/LoginSignupModal";
 
 const CartComponent = (props) => {
+  console.log(props.user);
+
   const [cartListGroupItems, setCartListGroupItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
 
@@ -41,6 +43,11 @@ const CartComponent = (props) => {
     setTotalAmount(totalAmount);
   }, [props.cart, props.books]);
 
+  const checkoutHandler = (e) => {
+    e.preventDefault();
+    console.log("Checkout clicked");
+  };
+
   return (
     <div className={props.className}>
       <ListGroup className="mb-3 cart-list">{cartListGroupItems}</ListGroup>
@@ -50,12 +57,18 @@ const CartComponent = (props) => {
             Total: {getNPRFromDollar(totalAmount)}
           </small>{" "}
           <br />{" "}
-          <LoginSignupModal
-            className="modal-dialog-centered"
-            buttonLabel={"Checkout"}
-            navLinkHidden={true}
-            buttonHidden={false}
-          />
+          {!props.user.user ? (
+            <LoginSignupModal
+              className="modal-dialog-centered"
+              buttonLabel={"Checkout"}
+              navLinkHidden={true}
+              buttonHidden={false}
+            />
+          ) : (
+            <Button color="primary" block size="sm" onClick={checkoutHandler}>
+              Checkout
+            </Button>
+          )}
         </div>
       ) : (
         <Alert color="dark" className="text-center cart-empty-alert">
@@ -70,6 +83,7 @@ const CartComponent = (props) => {
 const mapStateToProps = (state) => ({
   books: state.books,
   cart: state.cart,
+  user: state.user,
 });
 
 export default connect(mapStateToProps)(CartComponent);

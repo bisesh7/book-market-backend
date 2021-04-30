@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Jumbotron } from "reactstrap";
 import RedirectTimerComponent from "../Timer/RedirectTimerComponent";
 
 const UnauthorizedPageComponent = (props) => {
   const time = new Date();
   time.setSeconds(time.getSeconds() + 10);
+
+  useEffect(() => {
+    props.setPageTitle("401 Unauthorized | Book-Market");
+  }, []);
 
   return (
     <div>
