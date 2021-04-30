@@ -43,7 +43,7 @@ const CartComponent = (props) => {
 
   const checkoutHandler = (e) => {
     e.preventDefault();
-    props.history.push("/checkout");
+    props.history.push("/checkout_cart");
   };
 
   return (

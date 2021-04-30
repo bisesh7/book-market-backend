@@ -21,7 +21,11 @@ function App(props) {
             <Route exact path="/" component={HomeComponent} />
             <Route exact path="/book/:book" component={BookDetailComponent} />
             <Route exact path="/profile" component={ProfileComponent} />
-            <Route exact path="/checkout" component={CheckoutCartComponent} />
+            <Route
+              exact
+              path="/checkout_cart"
+              component={CheckoutCartComponent}
+            />
           </Switch>
         </div>
       </BrowserRouter>
