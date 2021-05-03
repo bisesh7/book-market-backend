@@ -8,6 +8,7 @@ import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
 import { checkUser } from "./Actions/actionUser";
 import CheckoutCartComponent from "./Components/Cart/CheckoutCartComponent";
+import NotFoundPageComponent from "./Components/ErrorPages/NotFoundPageComponent";
 
 function App(props) {
   return (
@@ -26,6 +27,8 @@ function App(props) {
               path="/checkout_cart"
               component={CheckoutCartComponent}
             />
+            {/* 404 route is always at the bottom */}
+            <Route component={NotFoundPageComponent} />
           </Switch>
         </div>
       </BrowserRouter>

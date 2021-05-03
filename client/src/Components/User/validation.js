@@ -30,7 +30,7 @@ export const oneSpecialCharacter = (value) =>
     : null;
 
 export const oneLowercase = (value) =>
-  !/[a-z]/.test(value) ? "Should contail at least 1 lowercase letter" : null;
+  !/[a-z]/.test(value) ? "Should contain at least 1 lowercase letter" : null;
 
 export const oneUppercase = (value) =>
-  !/[A-Z]/.test(value) ? "Should contail at least 1 uppercase letter" : null;
+  !/[A-Z]/.test(value) ? "Should contain at least 1 uppercase letter" : null;

@@ -15,7 +15,15 @@ const ProfileComponent = (props) => {
 
   // To change the tab
   useEffect(() => {
-    setHash(props.location.hash);
+    switch (props.location.hash) {
+      case "#purchase_history":
+      case "#details":
+        setHash(props.location.hash);
+        break;
+
+      default:
+        props.history.push("/not_found");
+    }
   }, [props.location.hash]);
 
   // Page title differs according to the tabs

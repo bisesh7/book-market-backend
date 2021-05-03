@@ -1,4 +1,4 @@
-import { faCog } from "@fortawesome/free-solid-svg-icons";
+import { faBan, faCog } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect } from "react";
 import { Jumbotron } from "reactstrap";
@@ -10,15 +10,23 @@ const UnauthorizedPageComponent = (props) => {
 
   // Set the page title to unauthorized page
   useEffect(() => {
-    props.setPageTitle("401 Unauthorized | Book-Market");
+    if (props.redirect) {
+      props.setPageTitle("401 Unauthorized | Book-Market");
+    } else {
+      props.setPageTitle("Checking Authorization | Book-Market");
+    }
     // eslint-disable-next-line
-  }, [props.setPageTitle]);
+  }, [props.setPageTitle, props.redirect]);
 
   return (
     <div>
       <Jumbotron>
         <h1 className="display-3">
-          <FontAwesomeIcon icon={faCog} spin />
+          {props.redirect ? (
+            <FontAwesomeIcon icon={faBan} />
+          ) : (
+            <FontAwesomeIcon icon={faCog} spin />
+          )}
           Hello, there!
         </h1>
         <p className="lead">
