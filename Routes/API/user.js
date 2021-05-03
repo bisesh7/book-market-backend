@@ -8,7 +8,8 @@ const {
   userExistsError,
   serverError,
   credentialError,
-  invalidResetCode,
+  invalidResetCodeError,
+  samePasswordError,
 } = require("../../utils/errors");
 const { checkAccessRights } = require("../../middlewares/checkAccessRights");
 const { v4: uuidv4 } = require("uuid");
@@ -164,7 +165,6 @@ router.post("/reset_password/validate_code", [checkAPIKey], (req, res) => {
   const { email, code } = req.body;
 
   ResetPasswordCode.findOne({ userEmail: email }).then((document) => {
-    console.log(document);
     bcrypt.compare(code, document.code).then((valid) => {
       if (!valid) {
         return res.status(400).json({
@@ -173,7 +173,19 @@ router.post("/reset_password/validate_code", [checkAPIKey], (req, res) => {
           err: invalidResetCode,
         });
       }
-      return res.json({ success: true });
+      document.validated = true;
+      document
+        .save()
+        .then(() => {
+          return res.json({ success: true });
+        })
+        .catch((err) => {
+          return res.status(500).json({
+            success: false,
+            msg: "Server error while saving the document",
+            err: serverError,
+          });
+        });
     });
   });
 });
@@ -181,7 +193,66 @@ router.post("/reset_password/validate_code", [checkAPIKey], (req, res) => {
 router.put("/reset_password/change_password", [checkAPIKey], (req, res) => {
   const { email, password } = req.body;
 
-  return res.json({ success: false });
+  ResetPasswordCode.findOne({ userEmail: email }).then((document) => {
+    if (!document) {
+      return res.status(400).json({
+        success: false,
+        msg: "Credential Error",
+        err: credentialError,
+      });
+    }
+
+    if (!document.validated) {
+      return res.status(400).json({
+        success: false,
+        msg: "Please validate the code.",
+        err: invalidResetCodeError,
+      });
+    }
+
+    User.findOne({ email }).then((user) => {
+      if (!user) {
+        return res.status(400).json({
+          success: false,
+          msg: "Credential Error",
+          err: credentialError,
+        });
+      }
+      bcrypt.compare(password, user.password).then((same) => {
+        if (same) {
+          return res.status(400).json({
+            success: false,
+            msg: "Please enter a different password from before.",
+            err: samePasswordError,
+          });
+        }
+        user.password = getHash(password);
+        user
+          .save()
+          .then(() => {
+            document
+              .remove()
+              .then(() => {
+                return res.json({ success: true });
+              })
+              .catch((err) => {
+                return res.status(500).json({
+                  success: false,
+                  msg: "Server error while deleting the reset password code.",
+                  err: serverError,
+                });
+              });
+          })
+          .catch((err) => {
+            return res.status(500).json({
+              success: false,
+              msg: "Server error while finding the user",
+              err: serverError,
+            });
+          });
+      });
+    });
+  });
 });
 
 module.exports = router;

@@ -115,7 +115,38 @@ const ForgotPasswordModal = (props) => {
   };
 
   const changePasswordButtonHandler = (values) => {
-    console.log(values);
+    const { emailField, passwordField } = values;
+
+    setFormIsBeingSubmitted(true);
+
+    axios
+      .put(
+        "/api/user/reset_password/change_password",
+        {
+          email: emailField,
+          password: passwordField,
+        },
+        {
+          headers: {
+            authorization: process.env.REACT_APP_API_KEY,
+          },
+        }
+      )
+      .then((res) => {
+        setFormIsBeingSubmitted(false);
+        showAlert("success", "You password has been changed.");
+        setTimeout(() => {
+          props.setPage("login");
+        }, 1500);
+      })
+      .catch((err) => {
+        setFormIsBeingSubmitted(false);
+        if (err.response) {
+          showAlert("danger", err.response.data.msg);
+        } else {
+          showAlert("danger", "Unexpected server error");
+        }
+      });
   };
 
   return (

@@ -9,5 +9,6 @@ module.exports = {
   tokenError: "tokenError",
   tokenExpiredError: "tokenExpiredError",
   invalidTokenError: "invalidTokenError",
-  invalidResetCode: "invalidResetCode",
+  invalidResetCodeError: "invalidResetCodeError",
+  samePasswordError: "samePasswordError",
 };
