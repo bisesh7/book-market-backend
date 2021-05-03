@@ -126,22 +126,25 @@ router.post("/forget_password/", [checkAPIKey], async (req, res) => {
       }
 
       let code = uuidv4();
-
-      sendMail(email, `Your code: ${uuidv4()}`)
-        .then((info) => {
-          // console.log("Message Sent", info);
-          return res.json({
-            success: true,
+      let newResetPasswordCode = new ResetPasswordCode({
+        code: getHash(code),
+      });
+      newResetPasswordCode.save().then(() => {
+        sendMail(email, `Your code: ${uuidv4()}`)
+          .then((info) => {
+            return res.json({
+              success: true,
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+            return res.status(500).json({
+              success: false,
+              msg: "Server error while sending the user email.",
+              err: serverError,
+            });
           });
-        })
-        .catch((err) => {
-          console.log(err);
-          return res.status(500).json({
-            success: false,
-            msg: "Server error while sending the user email.",
-            err: serverError,
-          });
-        });
+      });
     })
     .catch((err) => {
       console.log(err);
