@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { Button, Modal, NavLink } from "reactstrap";
+import ForgotPasswordModal from "./ForgotPasswordBody";
 import LoginBody from "./LoginBody";
 import SignUpBody from "./SignUpBody";
 
 const LoginSignupModal = (props) => {
   const [modal, setModal] = useState(false);
+  const [page, setPage] = useState("login");
 
   const toggle = (e) => {
     e.preventDefault();
+    if (modal) {
+      setPage("login");
+    }
     setModal(!modal);
   };
-
-  const [page, setPage] = useState("login");
 
   return (
     <div>
@@ -34,8 +37,10 @@ const LoginSignupModal = (props) => {
             navLinkHidden={props.navLinkHidden}
             setPage={setPage}
           />
-        ) : (
+        ) : page === "signup" ? (
           <SignUpBody setModal={setModal} setPage={setPage} />
+        ) : (
+          <ForgotPasswordModal setModal={setModal} setPage={setPage} />
         )}
       </Modal>
     </div>

@@ -93,4 +93,18 @@ router.get("/", [checkAPIKey, checkAccessRights], (req, res) => {
     });
 });
 
+// @route   PUT /api/user/forget_password
+// @desc    Updates the user.
+// @access  Public
+router.put("/", [checkAPIKey], (req, res) => {
+  const { email } = req.body;
+  console.log(email);
+  User.findOne({ email }).then((user) => {
+    console.log(user);
+    return res.json({
+      success: true,
+    });
+  });
+});
+
 module.exports = router;

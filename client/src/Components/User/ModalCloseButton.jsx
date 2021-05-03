@@ -10,6 +10,7 @@ const ModalCloseButton = (props) => {
         className="modal-close-button"
         onClick={(e) => {
           e.preventDefault();
+          props.setPage("login");
           props.setModal(false);
         }}
       >

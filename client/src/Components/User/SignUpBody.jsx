@@ -95,7 +95,7 @@ const SignUpBody = (props) => {
       <div className="d-flex justify-content-center">
         <strong className="text-primary">Sign Up</strong>
       </div>
-      <ModalCloseButton setModal={props.setModal} />
+      <ModalCloseButton setModal={props.setModal} setPage={props.setPage} />
       <Alert
         className="mt-3"
         color={alertColor}

@@ -59,6 +59,7 @@ const LoginBody = (props) => {
 
   const forgotPasswordHandler = (e) => {
     e.preventDefault();
+    props.setPage("forgot_password");
   };
 
   return (
@@ -66,7 +67,7 @@ const LoginBody = (props) => {
       <div className="d-flex justify-content-center">
         <strong className="text-primary">Log In</strong>
       </div>
-      <ModalCloseButton setModal={props.setModal} />
+      <ModalCloseButton setModal={props.setModal} setPage={props.setPage} />
       <Alert
         className="mt-3"
         color={alertColor}
@@ -135,7 +136,6 @@ const LoginBody = (props) => {
           .
         </small>
       </div>
-      <div className="d-flex justify-content-center mt-1"></div>
     </ModalBody>
   );
 };
