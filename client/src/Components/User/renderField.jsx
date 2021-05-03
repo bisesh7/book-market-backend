@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { Input } from "reactstrap";
 
 export const renderField = ({
@@ -8,31 +9,38 @@ export const renderField = ({
   className,
   changePasswordType,
   meta: { touched, error, warning },
-}) => (
-  <div>
-    <div>
-      <Input
-        {...input}
-        placeholder={label}
-        bsSize={bsSize}
-        type={type}
-        className={className}
-      />
-      {label === "Password" ? (
-        <small>
-          <a
-            href="#showPassword"
-            onClick={changePasswordType}
-            className="float-right show-password mt-1"
-          >
-            {type === "text" ? "Hide Password" : "Show Password"}
-          </a>
-        </small>
-      ) : null}
+}) => {
+  const passwordInput = label === "Password" || label === "Enter New Password";
 
-      {touched &&
-        ((error && <small className="error-text">{error}</small>) ||
-          (warning && <small className="error-text">{warning}</small>))}
+  return (
+    <div>
+      <div>
+        <Input
+          {...input}
+          placeholder={label}
+          bsSize={bsSize}
+          type={type}
+          className={className}
+        />
+        {passwordInput ? (
+          <Fragment>
+            <small>
+              <a
+                href="#showPassword"
+                onClick={changePasswordType}
+                className="float-right show-password mt-1"
+              >
+                {type === "text" ? "Hide Password" : "Show Password"}
+              </a>
+            </small>
+          </Fragment>
+        ) : null}
+
+        {touched &&
+          ((error && <small className="error-text">{error}</small>) ||
+            (warning && <small className="error-text">{warning}</small>))}
+      </div>{" "}
+      {passwordInput ? <br /> : null}
     </div>
-  </div>
-);
+  );
+};

@@ -104,7 +104,6 @@ const LoginBody = (props) => {
           className="mt-3"
         />
       </div>{" "}
-      <br />
       <div className="d-flex justify-content-center mt-3">
         <Button
           size="sm"

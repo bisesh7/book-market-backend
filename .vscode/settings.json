@@ -6,7 +6,9 @@
         "collpase",
         "fontawesome",
         "fortawesome",
+        "mailjet",
         "middlewares",
-        "signup"
+        "signup",
+        "uuidv"
     ]
 }

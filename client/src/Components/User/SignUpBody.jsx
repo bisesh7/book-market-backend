@@ -140,7 +140,6 @@ const SignUpBody = (props) => {
           bsSize="sm"
           className="mt-3"
         />{" "}
-        <br />
       </div>
       <div className="d-flex justify-content-center mt-3">
         <Button

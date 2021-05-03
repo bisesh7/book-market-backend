@@ -4,7 +4,17 @@ import { ModalBody, Alert, Button, Spinner } from "reactstrap";
 import ModalCloseButton from "./ModalCloseButton";
 import { useState } from "react";
 import { renderField } from "./renderField";
-import { email, required } from "./validation";
+import {
+  email,
+  length10,
+  minLength8,
+  number,
+  oneLowercase,
+  oneNumber,
+  oneSpecialCharacter,
+  oneUppercase,
+  required,
+} from "./validation";
 import axios from "axios";
 
 const ForgotPasswordModal = (props) => {
@@ -28,7 +38,41 @@ const ForgotPasswordModal = (props) => {
   const { handleSubmit, reset, submitting } = props;
   const [formIsBeingSubmitted, setFormIsBeingSubmitted] = useState(false);
 
-  const resetButtonHandler = (values) => {
+  const [passwordType, setPasswordType] = useState("password");
+
+  const changePasswordType = (e) => {
+    e.preventDefault();
+    passwordType === "password"
+      ? setPasswordType("text")
+      : setPasswordType("password");
+  };
+
+  const [passwordHidden, setPasswordHidden] = useState(true);
+
+  const resetPasswordButtonHandler = (values) => {
+    const { emailField } = values;
+    axios
+      .get(`/api/user/${emailField}`, {
+        headers: {
+          Authorization: process.env.REACT_APP_API_KEY,
+        },
+      })
+      .then((res) => {
+        if (res.data.success) {
+          setPasswordHidden(false);
+          showAlert("success", "Please enter you new password.");
+        }
+      })
+      .catch((err) => {
+        if (err.response) {
+          showAlert("danger", err.response.data.msg);
+        } else {
+          showAlert("danger", "Unexpected server error.");
+        }
+      });
+  };
+
+  const passwordSubmitHandler = (values) => {
     console.log(values);
   };
 
@@ -57,6 +101,25 @@ const ForgotPasswordModal = (props) => {
             label="Email"
             bsSize="sm"
           />
+          {!passwordHidden ? (
+            <Field
+              name="passwordField"
+              component={renderField}
+              validate={[
+                required,
+                minLength8,
+                oneNumber,
+                oneSpecialCharacter,
+                oneLowercase,
+                oneUppercase,
+              ]}
+              changePasswordType={changePasswordType}
+              type={passwordType}
+              label="Enter New Password"
+              bsSize="sm"
+              className="mt-3"
+            />
+          ) : null}
         </div>{" "}
         <div className="d-flex justify-content-center mt-3">
           <Button
@@ -64,10 +127,14 @@ const ForgotPasswordModal = (props) => {
             color="primary"
             block
             type="button"
-            onClick={handleSubmit(resetButtonHandler)}
+            onClick={
+              passwordHidden
+                ? handleSubmit(resetPasswordButtonHandler)
+                : handleSubmit(passwordSubmitHandler)
+            }
             disabled={submitting || formIsBeingSubmitted}
           >
-            Reset Password{" "}
+            {passwordHidden ? "Reset Password" : "Submit"}
             {formIsBeingSubmitted ? (
               <Spinner size="sm" color="secondary" />
             ) : null}

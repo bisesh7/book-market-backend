@@ -4,8 +4,14 @@ const User = require("../../models/User");
 const userValidation = require("../../utils/userValidation");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
-const { userExistsError, serverError } = require("../../utils/errors");
+const {
+  userExistsError,
+  serverError,
+  credentialError,
+} = require("../../utils/errors");
 const { checkAccessRights } = require("../../middlewares/checkAccessRights");
+const nodemailer = require("nodemailer");
+const { v4: uuidv4 } = require("uuid");
 
 // @route   POST /api/user/
 // @desc    Create a new user.
@@ -93,18 +99,63 @@ router.get("/", [checkAPIKey, checkAccessRights], (req, res) => {
     });
 });
 
-// @route   PUT /api/user/forget_password
-// @desc    Updates the user.
+// @route   post /api/user/forget_password/:email
+// @desc    Checks the user and sends OTP to the user
 // @access  Public
-router.put("/", [checkAPIKey], (req, res) => {
+router.post("/forget_password/", [checkAPIKey], async (req, res) => {
   const { email } = req.body;
   console.log(email);
-  User.findOne({ email }).then((user) => {
-    console.log(user);
-    return res.json({
-      success: true,
+  User.findOne({ email })
+    .then((user) => {
+      if (!user) {
+        return res.status(400).json({
+          success: false,
+          msg: "Credential Error",
+          err: credentialError,
+        });
+      }
+
+      let transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true,
+        auth: {
+          user: "bookmarketadmeen@gmail.com",
+          pass: "l>%Ww09itcu~6$",
+        },
+      });
+
+      // send mail with defined transport object
+      transporter
+        .sendMail({
+          from: '"Admin" <book_market_admin@bookmarket.com>', // sender address
+          to: email, // receiver
+          subject: "Password Reset", // Subject line
+          text: `Your code: ${uuidv4()}`, // plain text body
+        })
+        .then((info) => {
+          console.log("Message Sent", info);
+          return res.json({
+            success: true,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          return res.status(500).json({
+            success: false,
+            msg: "Server error while sending the user email.",
+            err: serverError,
+          });
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+      return res.status(500).json({
+        success: false,
+        msg: "Server error while finding the user email.",
+        err: serverError,
+      });
     });
-  });
 });
 
 module.exports = router;
