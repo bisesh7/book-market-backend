@@ -10,8 +10,10 @@ const {
   credentialError,
 } = require("../../utils/errors");
 const { checkAccessRights } = require("../../middlewares/checkAccessRights");
-const nodemailer = require("nodemailer");
 const { v4: uuidv4 } = require("uuid");
+const sendMail = require("../../utils/sendEmail");
+const ResetPasswordCode = require("../../models/ResetPasswordCode");
+const getHash = require("../../utils/getHash");
 
 // @route   POST /api/user/
 // @desc    Create a new user.
@@ -49,25 +51,33 @@ router.post("/", checkAPIKey, (req, res) => {
             err: serverError,
           });
         }
-        bcrypt.hash(newUser.password, salt, (err, passwordHash) => {
-          if (err) {
-            console.log(err);
-            return res.status(500).json({
-              success: false,
-              msg: "Server error while generating password hash",
-              err: serverError,
-            });
-          }
 
-          newUser.password = passwordHash;
+        try {
+          const hash = getHash(newUser.password);
+          newUser.password = hash;
 
-          newUser.save().then(() => {
-            return res.json({
-              success: true,
-              msg: "New user has been created.",
+          newUser
+            .save()
+            .then(() => {
+              return res.json({
+                success: true,
+                msg: "New user has been created.",
+              });
+            })
+            .catch((err) => {
+              return res.status(500).json({
+                success: false,
+                msg: "Server error while saving the user.",
+                err: serverError,
+              });
             });
+        } catch (err) {
+          return res.status(500).json({
+            success: false,
+            msg: "Server error while hashing the password.",
+            err: serverError,
           });
-        });
+        }
       });
     })
     .catch((err) => {
@@ -115,26 +125,11 @@ router.post("/forget_password/", [checkAPIKey], async (req, res) => {
         });
       }
 
-      let transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 465,
-        secure: true,
-        auth: {
-          user: "bookmarketadmeen@gmail.com",
-          pass: "l>%Ww09itcu~6$",
-        },
-      });
+      let code = uuidv4();
 
-      // send mail with defined transport object
-      transporter
-        .sendMail({
-          from: '"Admin" <book_market_admin@bookmarket.com>', // sender address
-          to: email, // receiver
-          subject: "Password Reset", // Subject line
-          text: `Your code: ${uuidv4()}`, // plain text body
-        })
+      sendMail(email, `Your code: ${uuidv4()}`)
         .then((info) => {
-          console.log("Message Sent", info);
+          // console.log("Message Sent", info);
           return res.json({
             success: true,
           });
