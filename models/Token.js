@@ -8,7 +8,7 @@ const TokenSchema = new mongoose.Schema({
   },
   dateCreated: {
     type: Date,
-    value: Date.now(),
+    default: Date.now(),
   },
 });
 

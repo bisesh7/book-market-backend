@@ -48,22 +48,33 @@ const ForgotPasswordModal = (props) => {
   };
 
   const [passwordHidden, setPasswordHidden] = useState(true);
+  const [codeHidden, setCodeHidden] = useState(true);
 
   const resetPasswordButtonHandler = (values) => {
     const { emailField } = values;
+    setFormIsBeingSubmitted(true);
     axios
-      .get(`/api/user/${emailField}`, {
-        headers: {
-          Authorization: process.env.REACT_APP_API_KEY,
-        },
-      })
+      .post(
+        "/api/user/reset_password/",
+        { email: emailField },
+        {
+          headers: {
+            Authorization: process.env.REACT_APP_API_KEY,
+          },
+        }
+      )
       .then((res) => {
+        setFormIsBeingSubmitted(false);
         if (res.data.success) {
-          setPasswordHidden(false);
-          showAlert("success", "Please enter you new password.");
+          setCodeHidden(false);
+          showAlert(
+            "success",
+            "Please input the code that has been sent to your email."
+          );
         }
       })
       .catch((err) => {
+        setFormIsBeingSubmitted(false);
         if (err.response) {
           showAlert("danger", err.response.data.msg);
         } else {
@@ -72,7 +83,38 @@ const ForgotPasswordModal = (props) => {
       });
   };
 
-  const passwordSubmitHandler = (values) => {
+  const sendCodeButtonHandler = (values) => {
+    const { emailField, codeField } = values;
+    setFormIsBeingSubmitted(true);
+    axios
+      .post(
+        "/api/user/reset_password/validate_code",
+        {
+          email: emailField,
+          code: codeField,
+        },
+        {
+          headers: {
+            authorization: process.env.REACT_APP_API_KEY,
+          },
+        }
+      )
+      .then((res) => {
+        setPasswordHidden(false);
+        setFormIsBeingSubmitted(false);
+        showAlert("success", "Enter your new password.");
+      })
+      .catch((err) => {
+        setFormIsBeingSubmitted(false);
+        if (err.response) {
+          showAlert("danger", err.response.data.msg);
+        } else {
+          showAlert("danger", "Unexpected server error.");
+        }
+      });
+  };
+
+  const changePasswordButtonHandler = (values) => {
     console.log(values);
   };
 
@@ -100,7 +142,20 @@ const ForgotPasswordModal = (props) => {
             type="email"
             label="Email"
             bsSize="sm"
+            disabled={!codeHidden || formIsBeingSubmitted}
           />
+          {!codeHidden ? (
+            <Field
+              name="codeField"
+              component={renderField}
+              validate={[required]}
+              type="text"
+              label="Code"
+              bsSize="sm"
+              className="mt-3"
+              disabled={!passwordHidden || formIsBeingSubmitted}
+            />
+          ) : null}
           {!passwordHidden ? (
             <Field
               name="passwordField"
@@ -118,6 +173,7 @@ const ForgotPasswordModal = (props) => {
               label="Enter New Password"
               bsSize="sm"
               className="mt-3"
+              disabled={formIsBeingSubmitted}
             />
           ) : null}
         </div>{" "}
@@ -128,22 +184,33 @@ const ForgotPasswordModal = (props) => {
             block
             type="button"
             onClick={
-              passwordHidden
+              passwordHidden && codeHidden
                 ? handleSubmit(resetPasswordButtonHandler)
-                : handleSubmit(passwordSubmitHandler)
+                : !codeHidden && passwordHidden
+                ? handleSubmit(sendCodeButtonHandler)
+                : handleSubmit(changePasswordButtonHandler)
             }
             disabled={submitting || formIsBeingSubmitted}
           >
-            {passwordHidden ? "Reset Password" : "Submit"}
+            {passwordHidden && codeHidden
+              ? "Reset Password"
+              : !codeHidden && passwordHidden
+              ? "Submit Code"
+              : "Change Password"}
+            &nbsp;
             {formIsBeingSubmitted ? (
               <Spinner size="sm" color="secondary" />
             ) : null}
           </Button>
         </div>
-        <div className="d-flex flex-column  mt-2">
+        <div className="d-flex flex-column mt-2">
           <small>
             Login?&nbsp;
-            <a href="#login" onClick={loginLinkPressed}>
+            <a
+              href="#login"
+              onClick={loginLinkPressed}
+              disabled={formIsBeingSubmitted}
+            >
               Login
             </a>
             .

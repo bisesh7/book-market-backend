@@ -8,6 +8,7 @@ const {
   userExistsError,
   serverError,
   credentialError,
+  invalidResetCode,
 } = require("../../utils/errors");
 const { checkAccessRights } = require("../../middlewares/checkAccessRights");
 const { v4: uuidv4 } = require("uuid");
@@ -109,12 +110,11 @@ router.get("/", [checkAPIKey, checkAccessRights], (req, res) => {
     });
 });
 
-// @route   post /api/user/forget_password/:email
+// @route   post /api/user/reset_password/
 // @desc    Checks the user and sends OTP to the user
 // @access  Public
-router.post("/forget_password/", [checkAPIKey], async (req, res) => {
+router.post("/reset_password/", [checkAPIKey], (req, res) => {
   const { email } = req.body;
-  console.log(email);
   User.findOne({ email })
     .then((user) => {
       if (!user) {
@@ -128,9 +128,10 @@ router.post("/forget_password/", [checkAPIKey], async (req, res) => {
       let code = uuidv4();
       let newResetPasswordCode = new ResetPasswordCode({
         code: getHash(code),
+        userEmail: email,
       });
       newResetPasswordCode.save().then(() => {
-        sendMail(email, `Your code: ${uuidv4()}`)
+        sendMail(email, `Your code: ${code}`)
           .then((info) => {
             return res.json({
               success: true,
@@ -154,6 +155,33 @@ router.post("/forget_password/", [checkAPIKey], async (req, res) => {
         err: serverError,
       });
     });
+});
+
+// @route   post /api/user/reset_password/validate_code
+// @desc    Compare the code given by user and code in the db
+// @access  Public
+router.post("/reset_password/validate_code", [checkAPIKey], (req, res) => {
+  const { email, code } = req.body;
+
+  ResetPasswordCode.findOne({ userEmail: email }).then((document) => {
+    console.log(document);
+    bcrypt.compare(code, document.code).then((valid) => {
+      if (!valid) {
+        return res.status(400).json({
+          success: false,
+          msg: "Code is invalid",
+          err: invalidResetCode,
+        });
+      }
+      return res.json({ success: true });
+    });
+  });
+});
+
+router.put("/reset_password/change_password", [checkAPIKey], (req, res) => {
+  const { email, password } = req.body;
+
+  return res.json({ success: false });
 });
 
 module.exports = router;

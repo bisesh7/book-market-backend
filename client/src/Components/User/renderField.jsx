@@ -8,6 +8,7 @@ export const renderField = ({
   bsSize,
   className,
   changePasswordType,
+  disabled,
   meta: { touched, error, warning },
 }) => {
   const passwordInput = label === "Password" || label === "Enter New Password";
@@ -21,6 +22,7 @@ export const renderField = ({
           bsSize={bsSize}
           type={type}
           className={className}
+          disabled={disabled}
         />
         {passwordInput ? (
           <Fragment>

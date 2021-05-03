@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const User = require("./User");
 
 const ResetPasswordCodeSchema = new mongoose.Schema({
   code: {
@@ -6,9 +7,18 @@ const ResetPasswordCodeSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  userEmail: {
+    type: String,
+    ref: "user",
+    required: true,
+  },
   dateCreated: {
     type: Date,
-    value: Date.now(),
+    default: Date.now(),
+  },
+  validated: {
+    type: Boolean,
+    default: false,
   },
 });
 
