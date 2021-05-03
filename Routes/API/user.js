@@ -20,6 +20,7 @@ const getHash = require("../../utils/getHash");
 // @route   POST /api/user/
 // @desc    Create a new user.
 // @access  public
+// FIXME: separate validations for email, password and phoneNumber
 router.post("/", checkAPIKey, (req, res) => {
   const { email, password, phoneNumber } = req.body;
 
@@ -114,6 +115,8 @@ router.get("/", [checkAPIKey, checkAccessRights], (req, res) => {
 // @route   post /api/user/reset_password/
 // @desc    Checks the user and sends OTP to the user
 // @access  Public
+// TODO: Email validation, When new request comes check if token for
+//  the user is already in the database
 router.post("/reset_password/", [checkAPIKey], (req, res) => {
   const { email } = req.body;
   User.findOne({ email })
@@ -161,6 +164,7 @@ router.post("/reset_password/", [checkAPIKey], (req, res) => {
 // @route   post /api/user/reset_password/validate_code
 // @desc    Compare the code given by user and code in the db
 // @access  Public
+// TODO: Email validation, Code validation
 router.post("/reset_password/validate_code", [checkAPIKey], (req, res) => {
   const { email, code } = req.body;
 
@@ -170,7 +174,7 @@ router.post("/reset_password/validate_code", [checkAPIKey], (req, res) => {
         return res.status(400).json({
           success: false,
           msg: "Code is invalid",
-          err: invalidResetCode,
+          err: invalidResetCodeError,
         });
       }
       document.validated = true;
@@ -190,6 +194,11 @@ router.post("/reset_password/validate_code", [checkAPIKey], (req, res) => {
   });
 });
 
+// @route   put /api/user/reset_password/change_password
+// @desc    Change the password of the user if the code is validated
+// @access  Public
+// TODO: Email validation, Code validation
+// FIXME: Validate Code as well
 router.put("/reset_password/change_password", [checkAPIKey], (req, res) => {
   const { email, password } = req.body;
 
