@@ -16,6 +16,7 @@ import {
   required,
 } from "./validation";
 import axios from "axios";
+import { resetCodeAlreadySentError } from "../../utils/errors";
 
 const ForgotPasswordModal = (props) => {
   // Alert
@@ -76,7 +77,12 @@ const ForgotPasswordModal = (props) => {
       .catch((err) => {
         setFormIsBeingSubmitted(false);
         if (err.response) {
-          showAlert("danger", err.response.data.msg);
+          if (err.response.data.err === resetCodeAlreadySentError) {
+            showAlert("info", err.response.data.msg);
+            setCodeHidden(false);
+          } else {
+            showAlert("danger", err.response.data.msg);
+          }
         } else {
           showAlert("danger", "Unexpected server error.");
         }
@@ -115,7 +121,7 @@ const ForgotPasswordModal = (props) => {
   };
 
   const changePasswordButtonHandler = (values) => {
-    const { emailField, passwordField } = values;
+    const { emailField, codeField, passwordField } = values;
 
     setFormIsBeingSubmitted(true);
 
@@ -125,6 +131,7 @@ const ForgotPasswordModal = (props) => {
         {
           email: emailField,
           password: passwordField,
+          code: codeField,
         },
         {
           headers: {

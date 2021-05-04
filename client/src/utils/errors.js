@@ -7,3 +7,4 @@ export const passwordError = "passwordError";
 export const credentialError = "credentialError";
 export const tokenExpiredError = "tokenExpiredError";
 export const invalidTokenError = "invalidTokenError";
+export const resetCodeAlreadySentError = "resetCodeAlreadySentError";

@@ -10,26 +10,50 @@ const {
   credentialError,
   invalidResetCodeError,
   samePasswordError,
+  resetCodeAlreadySentError,
 } = require("../../utils/errors");
 const { checkAccessRights } = require("../../middlewares/checkAccessRights");
-const { v4: uuidv4 } = require("uuid");
+const { v4: uuidv4, validate: uuidv4Validate } = require("uuid");
 const sendMail = require("../../utils/sendEmail");
 const ResetPasswordCode = require("../../models/ResetPasswordCode");
 const getHash = require("../../utils/getHash");
+const emailValidation = require("../../utils/emailValidation");
+const passwordValidation = require("../../utils/passwordValidation");
+const phoneNumberValidation = require("../../utils/phoneNumberValidation");
 
 // @route   POST /api/user/
 // @desc    Create a new user.
 // @access  public
-// FIXME: separate validations for email, password and phoneNumber
 router.post("/", checkAPIKey, (req, res) => {
   const { email, password, phoneNumber } = req.body;
 
-  const validation = userValidation(email, password, phoneNumber);
-  if (!validation.valid) {
-    return res
-      .status(400)
-      .json({ success: false, msg: validation.msg, err: validation.err });
+  const emailValidationDetails = emailValidation(email);
+  if (!emailValidationDetails.success) {
+    return res.status(400).json({
+      success: false,
+      msg: emailValidationDetails.msg,
+      err: emailValidationDetails.err,
+    });
   }
+
+  const passwordValidationDetails = passwordValidation(password);
+  if (!passwordValidationDetails.success) {
+    return res.status(400).json({
+      success: false,
+      msg: passwordValidationDetails.msg,
+      err: passwordValidationDetails.err,
+    });
+  }
+
+  const phoneNumberValidationDetails = phoneNumberValidation(phoneNumber);
+  if (!phoneNumberValidationDetails.success) {
+    return res.status(400).json({
+      success: false,
+      msg: phoneNumberValidationDetails.msg,
+      err: phoneNumberValidationDetails.err,
+    });
+  }
+
   User.findOne({ email })
     .then((user) => {
       if (user) {
@@ -115,65 +139,102 @@ router.get("/", [checkAPIKey, checkAccessRights], (req, res) => {
 // @route   post /api/user/reset_password/
 // @desc    Checks the user and sends OTP to the user
 // @access  Public
-// TODO: Email validation, When new request comes check if token for
+// TODO: When new request comes check if token for
 //  the user is already in the database
 router.post("/reset_password/", [checkAPIKey], (req, res) => {
   const { email } = req.body;
-  User.findOne({ email })
-    .then((user) => {
-      if (!user) {
-        return res.status(400).json({
-          success: false,
-          msg: "Credential Error",
-          err: credentialError,
-        });
-      }
 
-      let code = uuidv4();
-      let newResetPasswordCode = new ResetPasswordCode({
-        code: getHash(code),
-        userEmail: email,
-      });
-      newResetPasswordCode.save().then(() => {
-        sendMail(email, `Your code: ${code}`)
-          .then((info) => {
-            return res.json({
-              success: true,
-            });
-          })
-          .catch((err) => {
-            console.log(err);
-            return res.status(500).json({
-              success: false,
-              msg: "Server error while sending the user email.",
-              err: serverError,
-            });
-          });
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-      return res.status(500).json({
-        success: false,
-        msg: "Server error while finding the user email.",
-        err: serverError,
-      });
+  const emailValidationDetails = emailValidation(email);
+  if (!emailValidationDetails.success) {
+    return res.status(400).json({
+      success: false,
+      msg: emailValidationDetails.msg,
+      err: emailValidationDetails.err,
     });
+  }
+
+  ResetPasswordCode.findOne({ userEmail: email }).then((document) => {
+    if (document) {
+      return res.status(400).json({
+        success: false,
+        msg:
+          "Reset code has already been sent to your email. If you didn't get the email click resend code.",
+        err: resetCodeAlreadySentError,
+      });
+    }
+
+    User.findOne({ email })
+      .then((user) => {
+        if (!user) {
+          return res.status(400).json({
+            success: false,
+            msg: "Credential Error",
+            err: credentialError,
+          });
+        }
+
+        let code = uuidv4();
+        let newResetPasswordCode = new ResetPasswordCode({
+          code: getHash(code),
+          userEmail: email,
+        });
+        newResetPasswordCode.save().then(() => {
+          sendMail(email, `Your code: ${code}`)
+            .then((info) => {
+              return res.json({
+                success: true,
+              });
+            })
+            .catch((err) => {
+              console.log(err);
+              return res.status(500).json({
+                success: false,
+                msg: "Server error while sending the user email.",
+                err: serverError,
+              });
+            });
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json({
+          success: false,
+          msg: "Server error while finding the user email.",
+          err: serverError,
+        });
+      });
+  });
 });
 
 // @route   post /api/user/reset_password/validate_code
 // @desc    Compare the code given by user and code in the db
 // @access  Public
-// TODO: Email validation, Code validation
 router.post("/reset_password/validate_code", [checkAPIKey], (req, res) => {
   const { email, code } = req.body;
+
+  const emailValidationDetails = emailValidation(email);
+  if (!emailValidationDetails.success) {
+    return res.status(400).json({
+      success: false,
+      msg: emailValidationDetails.msg,
+      err: emailValidationDetails.err,
+    });
+  }
+
+  if (!uuidv4Validate(code)) {
+    return res.status(400).json({
+      success: false,
+      msg: "Code is not valid.",
+      err: invalidResetCodeError,
+    });
+  }
 
   ResetPasswordCode.findOne({ userEmail: email }).then((document) => {
     bcrypt.compare(code, document.code).then((valid) => {
       if (!valid) {
         return res.status(400).json({
           success: false,
-          msg: "Code is invalid",
+          msg: "Code is invalid.",
           err: invalidResetCodeError,
         });
       }
@@ -186,7 +247,7 @@ router.post("/reset_password/validate_code", [checkAPIKey], (req, res) => {
         .catch((err) => {
           return res.status(500).json({
             success: false,
-            msg: "Server error while saving the document",
+            msg: "Server error while saving the document.",
             err: serverError,
           });
         });
@@ -197,10 +258,35 @@ router.post("/reset_password/validate_code", [checkAPIKey], (req, res) => {
 // @route   put /api/user/reset_password/change_password
 // @desc    Change the password of the user if the code is validated
 // @access  Public
-// TODO: Email validation, Code validation
-// FIXME: Validate Code as well
 router.put("/reset_password/change_password", [checkAPIKey], (req, res) => {
-  const { email, password } = req.body;
+  // Code is validated here to ensure that user is the one changing the password.
+  const { email, code, password } = req.body;
+
+  const emailValidationDetails = emailValidation(email);
+  if (!emailValidationDetails.success) {
+    return res.status(400).json({
+      success: false,
+      msg: emailValidationDetails.msg,
+      err: emailValidationDetails.err,
+    });
+  }
+
+  if (!uuidv4Validate(code)) {
+    return res.status(400).json({
+      success: false,
+      msg: "Code is not valid.",
+      err: invalidResetCodeError,
+    });
+  }
+
+  const passwordValidationDetails = passwordValidation(password);
+  if (!passwordValidationDetails.success) {
+    return res.status(400).json({
+      success: false,
+      msg: passwordValidationDetails.msg,
+      err: passwordValidationDetails.err,
+    });
+  }
 
   ResetPasswordCode.findOne({ userEmail: email }).then((document) => {
     if (!document) {
@@ -211,54 +297,64 @@ router.put("/reset_password/change_password", [checkAPIKey], (req, res) => {
       });
     }
 
-    if (!document.validated) {
-      return res.status(400).json({
-        success: false,
-        msg: "Please validate the code.",
-        err: invalidResetCodeError,
-      });
-    }
-
-    User.findOne({ email }).then((user) => {
-      if (!user) {
+    bcrypt.compare(code, document.code).then((valid) => {
+      if (!document.validated) {
         return res.status(400).json({
           success: false,
-          msg: "Credential Error",
-          err: credentialError,
+          msg: "Please validate the code.",
+          err: invalidResetCodeError,
         });
       }
-      bcrypt.compare(password, user.password).then((same) => {
-        if (same) {
+
+      if (!valid) {
+        return res.status(400).json({
+          success: false,
+          msg: "Code is invalid.",
+          err: invalidResetCodeError,
+        });
+      }
+
+      User.findOne({ email }).then((user) => {
+        if (!user) {
           return res.status(400).json({
             success: false,
-            msg: "Please enter a different password from before.",
-            err: samePasswordError,
+            msg: "Credential Error.",
+            err: credentialError,
           });
         }
-        user.password = getHash(password);
-        user
-          .save()
-          .then(() => {
-            document
-              .remove()
-              .then(() => {
-                return res.json({ success: true });
-              })
-              .catch((err) => {
-                return res.status(500).json({
-                  success: false,
-                  msg: "Server error while deleting the reset password code.",
-                  err: serverError,
-                });
-              });
-          })
-          .catch((err) => {
-            return res.status(500).json({
+        bcrypt.compare(password, user.password).then((same) => {
+          if (same) {
+            return res.status(400).json({
               success: false,
-              msg: "Server error while finding the user",
-              err: serverError,
+              msg: "Please enter a different password from before.",
+              err: samePasswordError,
             });
-          });
+          }
+          user.password = getHash(password);
+          user
+            .save()
+            .then(() => {
+              document
+                .remove()
+                .then(() => {
+                  return res.json({ success: true });
+                })
+                .catch((err) => {
+                  return res.status(500).json({
+                    success: false,
+                    msg: "Server error while deleting the reset password code.",
+                    err: serverError,
+                  });
+                });
+            })
+            .catch((err) => {
+              return res.status(500).json({
+                success: false,
+                msg: "Server error while finding the user",
+                err: serverError,
+              });
+            });
+        });
       });
     });
   });

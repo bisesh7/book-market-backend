@@ -1,6 +1,10 @@
 const jwt = require("jsonwebtoken");
 const config = require("config");
-const { tokenExpiredError, invalidTokenError } = require("../utils/errors");
+const {
+  tokenExpiredError,
+  invalidTokenError,
+  tokenError,
+} = require("../utils/errors");
 
 exports.checkAccessRights = (req, res, next) => {
   let accessToken = req.cookies["x-auth-token"];
@@ -8,7 +12,11 @@ exports.checkAccessRights = (req, res, next) => {
   if (!accessToken) {
     return res
       .status(401)
-      .json({ success: false, msg: "Access denied, token missing!" });
+      .json({
+        success: false,
+        msg: "Access denied, token missing!",
+        err: tokenError,
+      });
   }
   accessToken = accessToken.split(" ");
   try {
