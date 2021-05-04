@@ -7,7 +7,7 @@ import PurchaseHistoryPage from "./PurchaseHistoryPage";
 import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
 import UnauthorizedPageComponent from "../ErrorPages/UnauthorizedPageComponent";
-import getUserData from "../../config/userDataAPI";
+import getUserData from "../../config/authAPI";
 
 const ProfileComponent = (props) => {
   // To know which tab user needs

@@ -40,4 +40,12 @@ const getUserData = () => {
   });
 };
 
+export const purchaseBooks = (json) => {
+  return axios.post("/api/purchase_book/", json, {
+    headers: {
+      authorization: process.env.REACT_APP_API_KEY,
+    },
+  });
+};
+
 export default getUserData;

@@ -1,7 +1,7 @@
 import { credentialError, serverError } from "../utils/errors";
 import { LOGIN_USER, LOGOUT_USER } from "./ActionTypes";
 import axios from "axios";
-import getUserData from "../config/userDataAPI";
+import getUserData from "../config/authAPI";
 
 export const loginUser = (
   values,

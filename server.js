@@ -5,6 +5,7 @@ const user = require("./Routes/API/user");
 const mongoose = require("mongoose");
 const config = require("config");
 const cookieParser = require("cookie-parser");
+const bookPurchased = require("./Routes/API/booksPurchased");
 
 const app = express();
 
@@ -36,6 +37,8 @@ app.use("/api/books", books);
 app.use("/api/auth", auth);
 // Routes for the user
 app.use("/api/user", user);
+// Routes for the booksPurchased
+app.use("/api/purchase_book", bookPurchased);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

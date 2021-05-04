@@ -7,11 +7,8 @@ const OrderSummaryComponent = ({
   totalAmount,
   discount,
   className,
+  proceedToCheckoutButtonHandler,
 }) => {
-  const proceedToCheckoutHandler = (e) => {
-    e.preventDefault();
-  };
-
   const couponApplyHandler = (e) => {
     e.preventDefault();
   };
@@ -42,7 +39,16 @@ const OrderSummaryComponent = ({
         color="primary"
         size="sm"
         type="button"
-        onClick={proceedToCheckoutHandler}
+        onClick={(e) => {
+          e.preventDefault();
+          const usedCoupon = discount === 0 ? false : true;
+          proceedToCheckoutButtonHandler(
+            totalAmount,
+            usedCoupon,
+            discount,
+            totalAmount - discount
+          );
+        }}
         disabled={length === 0}
       >
         Proceed To Checkout

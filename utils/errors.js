@@ -13,4 +13,10 @@ module.exports = {
   resetCodeAlreadySentError: "resetCodeAlreadySentError",
   resetCodeNotInitiatedError: "resetCodeNotInitiatedError",
   samePasswordError: "samePasswordError",
+  useCouponError: "useCouponError",
+  subTotalError: "subTotalError",
+  totalError: "totalError",
+  discountError: "discountError",
+  stockError: "stockError",
+  amountError: "amountError",
 };

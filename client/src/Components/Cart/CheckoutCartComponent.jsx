@@ -6,7 +6,7 @@ import { Col, Container, List, ListInlineItem, Media, Row } from "reactstrap";
 import CheckoutCartItemMediaComponent from "./CheckoutCartItemMediaComponent";
 import OrderSummaryComponent from "./OrderSummaryComponent";
 import { setBooks } from "../../Actions/actionBook";
-import getUserData from "../../config/userDataAPI";
+import getUserData, { purchaseBooks } from "../../config/authAPI";
 import UnauthorizedPageComponent from "../ErrorPages/UnauthorizedPageComponent";
 import EmptyCartJumbotronComponent from "./EmptyCartJumbotron";
 
@@ -106,6 +106,28 @@ const CheckoutCartComponent = (props) => {
     setPageTitle("Checkout Cart | Book-Market");
   }, []);
 
+  const proceedToCheckoutButtonHandler = (
+    subTotalAmount,
+    usedCoupon,
+    discount,
+    totalAmount
+  ) => {
+    const json = {
+      purchasedBooks: cart,
+      subTotalAmount,
+      usedCoupon,
+      discount,
+      totalAmount,
+    };
+    purchaseBooks(json)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div>
       <Helmet>
@@ -140,6 +162,7 @@ const CheckoutCartComponent = (props) => {
                 length={cart.length}
                 totalAmount={totalAmount}
                 discount={discount}
+                proceedToCheckoutButtonHandler={proceedToCheckoutButtonHandler}
               />
             </Col>
           </Row>
