@@ -4,8 +4,14 @@ const checkAPIKey = require("../../middlewares/checkAPIKey");
 const Book = require("../../models/Book");
 const UserBooksPurchase = require("../../models/UserBooksPurchase");
 const booksPurchasedValidation = require("../../utils/booksPurchasedValidation");
-const { serverError, stockError, amountError } = require("../../utils/errors");
+const {
+  serverError,
+  stockError,
+  amountError,
+  bookError,
+} = require("../../utils/errors");
 const router = express.Router();
+const Promise = require("bluebird");
 
 // @route   POST /api/purchase_book/
 // @desc    Adds the purchase history to the db
@@ -41,9 +47,25 @@ router.post("/", [checkAPIKey, checkAccessRights], (req, res) => {
     purchasedBookIds.push(bookPurchased.bookId);
   });
 
+  // If there is no books in purchasedBooks, then there is error in client
+  if (!purchasedBookIds.length) {
+    return res.status(400).json({
+      success: false,
+      msg: "Please provide the books to purchase.",
+      err: bookError,
+    });
+  }
   // Get the books purchases from the database
   Book.find({ id: { $in: purchasedBookIds } }).then((books) => {
     // Book purchased validation
+    if (!books.length) {
+      return res.status(400).json({
+        success: false,
+        msg: "Books with given book id were not found",
+        err: bookError,
+      });
+    }
+
     for (let i = 0; i < books.length; i++) {
       const book = books[i];
       // If the stock of book is 0 then client has errors
@@ -68,15 +90,7 @@ router.post("/", [checkAPIKey, checkAccessRights], (req, res) => {
             break;
           }
 
-          console.log(
-            book["name "],
-            parseFloat(book.price.slice(1)),
-            "*",
-            bookPurchased.quantity,
-            "=",
-            parseFloat(book.price.slice(1)) * bookPurchased.quantity
-          );
-
+          // Checking the amount calculated in the client
           if (
             parseFloat(book.price.slice(1)) * bookPurchased.quantity !==
             bookPurchased.amount
@@ -92,24 +106,41 @@ router.post("/", [checkAPIKey, checkAccessRights], (req, res) => {
       }
     }
 
-    if (purchaseValidation.valid) {
-      const newUserBooksPurchase = new UserBooksPurchase({
-        userId,
-        purchasedBooks,
-        usedCoupon,
-        discount,
-        subTotalAmount,
-        totalAmount,
-      });
-
-      return res.json({ success: true });
-    } else {
+    if (!purchaseValidation.valid) {
       return res.status(400).json({
         success: false,
         msg: purchaseValidation.msg,
         err: purchaseValidation.err,
       });
     }
+
+    const savePromises = [];
+
+    for (let i = 0; i < books.length; i++) {
+      const book = books[i];
+      for (let j = 0; j < purchasedBooks.length; j++) {
+        const bookPurchased = purchasedBooks[j];
+        if (book.id === bookPurchased.bookId) {
+          book.stock -= bookPurchased.quantity;
+          savePromises.push(book.save());
+        }
+      }
+    }
+
+    Promise.all(savePromises).then(() => {
+      console.log("Stock decreased");
+    });
+
+    const newUserBooksPurchase = new UserBooksPurchase({
+      userId,
+      purchasedBooks,
+      usedCoupon,
+      discount,
+      subTotalAmount,
+      totalAmount,
+    });
+
+    return res.json({ success: true });
   });
 
   //   newUserBooksPurchase

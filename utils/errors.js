@@ -19,4 +19,5 @@ module.exports = {
   discountError: "discountError",
   stockError: "stockError",
   amountError: "amountError",
+  bookError: "bookError",
 };
