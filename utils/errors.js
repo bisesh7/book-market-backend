@@ -11,5 +11,6 @@ module.exports = {
   invalidTokenError: "invalidTokenError",
   invalidResetCodeError: "invalidResetCodeError",
   resetCodeAlreadySentError: "resetCodeAlreadySentError",
+  resetCodeNotInitiatedError: "resetCodeNotInitiatedError",
   samePasswordError: "samePasswordError",
 };

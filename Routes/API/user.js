@@ -11,6 +11,7 @@ const {
   invalidResetCodeError,
   samePasswordError,
   resetCodeAlreadySentError,
+  resetCodeNotInitiatedError,
 } = require("../../utils/errors");
 const { checkAccessRights } = require("../../middlewares/checkAccessRights");
 const { v4: uuidv4, validate: uuidv4Validate } = require("uuid");
@@ -139,8 +140,6 @@ router.get("/", [checkAPIKey, checkAccessRights], (req, res) => {
 // @route   post /api/user/reset_password/
 // @desc    Checks the user and sends OTP to the user
 // @access  Public
-// TODO: When new request comes check if token for
-//  the user is already in the database
 router.post("/reset_password/", [checkAPIKey], (req, res) => {
   const { email } = req.body;
 
@@ -157,8 +156,7 @@ router.post("/reset_password/", [checkAPIKey], (req, res) => {
     if (document) {
       return res.status(400).json({
         success: false,
-        msg:
-          "Reset code has already been sent to your email. If you didn't get the email click resend code.",
+        msg: "Reset code has already been sent to the email.",
         err: resetCodeAlreadySentError,
       });
     }
@@ -357,6 +355,49 @@ router.put("/reset_password/change_password", [checkAPIKey], (req, res) => {
         });
       });
     });
+  });
+});
+
+// @route   put /api/user/reset_password/resend_code
+// @desc    Resend the reset code to the email
+// @access  Public
+router.post("/reset_password/resend_code", [checkAPIKey], (req, res) => {
+  const { email } = req.body;
+
+  const emailValidationDetails = emailValidation(email);
+  if (!emailValidationDetails.success) {
+    return res.status(400).json({
+      success: false,
+      msg: emailValidationDetails.msg,
+      err: emailValidationDetails.err,
+    });
+  }
+
+  ResetPasswordCode.findOne({ userEmail: email }).then((document) => {
+    if (!document) {
+      return res.status(400).json({
+        success: false,
+        msg: "Please request to reset password.",
+        err: resetCodeNotInitiatedError,
+      });
+    }
+
+    let code = uuidv4();
+    document.code = getHash(code);
+    document
+      .save()
+      .then(() => {
+        sendMail(email, `Your code: ${code}`).then((info) => {
+          return res.json({ success: true });
+        });
+      })
+      .catch((err) => {
+        return res.status(500).json({
+          success: false,
+          msg: "Server error while finding the reset password.",
+          err: serverError,
+        });
+      });
   });
 });
 

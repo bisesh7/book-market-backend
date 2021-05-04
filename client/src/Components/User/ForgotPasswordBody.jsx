@@ -51,6 +51,41 @@ const ForgotPasswordModal = (props) => {
   const [passwordHidden, setPasswordHidden] = useState(true);
   const [codeHidden, setCodeHidden] = useState(true);
 
+  // Alert shown when reset code is sent
+  const showResetCodeSentAlert = () => {
+    showAlert(
+      "success",
+      "Please input the code that has been sent to your email."
+    );
+  };
+
+  const resendCodeHandler = (email) => {
+    setFormIsBeingSubmitted(true);
+
+    axios
+      .post(
+        "/api/user/reset_password/resend_code",
+        { email },
+        {
+          headers: {
+            authorization: process.env.REACT_APP_API_KEY,
+          },
+        }
+      )
+      .then((res) => {
+        setFormIsBeingSubmitted(false);
+        showResetCodeSentAlert();
+      })
+      .catch((err) => {
+        setFormIsBeingSubmitted(false);
+        if (err.response) {
+          showAlert("danger", err.response.data.msg);
+        } else {
+          showAlert("danger", "Unexpected server error.");
+        }
+      });
+  };
+
   const resetPasswordButtonHandler = (values) => {
     const { emailField } = values;
     setFormIsBeingSubmitted(true);
@@ -68,17 +103,31 @@ const ForgotPasswordModal = (props) => {
         setFormIsBeingSubmitted(false);
         if (res.data.success) {
           setCodeHidden(false);
-          showAlert(
-            "success",
-            "Please input the code that has been sent to your email."
-          );
+          showResetCodeSentAlert();
         }
       })
       .catch((err) => {
         setFormIsBeingSubmitted(false);
         if (err.response) {
+          // If the reset password code is already sent to the user
           if (err.response.data.err === resetCodeAlreadySentError) {
-            showAlert("info", err.response.data.msg);
+            showAlert(
+              "info",
+              <span>
+                Reset code has already been sent to your email, click{" "}
+                <a
+                  href="#resend_code"
+                  className="alert-link"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    resendCodeHandler(emailField);
+                  }}
+                >
+                  {"here"}
+                </a>{" "}
+                if you didn't receive it.
+              </span>
+            );
             setCodeHidden(false);
           } else {
             showAlert("danger", err.response.data.msg);
