@@ -6,9 +6,7 @@ import { useState } from "react";
 import { renderField } from "./renderField";
 import {
   email,
-  length10,
   minLength8,
-  number,
   oneLowercase,
   oneNumber,
   oneSpecialCharacter,
@@ -36,7 +34,7 @@ const ForgotPasswordModal = (props) => {
     props.setPage("login");
   };
 
-  const { handleSubmit, reset, submitting } = props;
+  const { handleSubmit, submitting } = props;
   const [formIsBeingSubmitted, setFormIsBeingSubmitted] = useState(false);
 
   const [passwordType, setPasswordType] = useState("password");

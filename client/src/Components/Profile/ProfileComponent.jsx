@@ -24,6 +24,7 @@ const ProfileComponent = (props) => {
       default:
         props.history.push("/not_found");
     }
+    // eslint-disable-next-line
   }, [props.location.hash]);
 
   // Page title differs according to the tabs

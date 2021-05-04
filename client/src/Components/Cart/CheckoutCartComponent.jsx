@@ -26,6 +26,8 @@ const CheckoutCartComponent = (props) => {
   const [totalAmount, setTotalAmount] = useState(0);
 
   // Discount
+  // TODO: remove next comment after setDiscount has been used
+  // eslint-disable-next-line
   const [discount, setDiscount] = useState(0);
 
   useEffect(() => {
