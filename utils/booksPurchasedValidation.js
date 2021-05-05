@@ -1,5 +1,9 @@
-const { amountError, bookError, stockError } = require("./errors");
-
+const {
+  amountError,
+  bookError,
+  stockError,
+  forbiddenError,
+} = require("./errors");
 const { isBoolean, isNumber } = require("./booksPurchasedValidationFunctions");
 const {
   detailsError,
@@ -9,6 +13,7 @@ const {
   totalError,
 } = require("./errors");
 const { isDefined } = require("./userValidationFunctions");
+const mongoose = require("mongoose");
 
 const booksPurchasedValidation = (
   purchasedBooks,
@@ -125,7 +130,33 @@ const bookPurchasedCompareToDatabaseValidation = (books, purchasedBooks) => {
   };
 };
 
+const getUserIdValidation = (id, inSessionUserId) => {
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return {
+      valid: false,
+      msg: "Please provide a valid user id.",
+      err: detailsError,
+      status: 400,
+    };
+  }
+
+  if (id !== inSessionUserId) {
+    return {
+      valid: false,
+      msg: "Forbidden",
+      err: forbiddenError,
+      status: 403,
+    };
+  }
+
+  return {
+    valid: true,
+    msg: "Everything is good",
+  };
+};
+
 module.exports = {
   booksPurchasedValidation,
   bookPurchasedCompareToDatabaseValidation,
+  getUserIdValidation,
 };

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, {
@@ -6,9 +6,12 @@ import ToolkitProvider, {
   Search,
 } from "react-bootstrap-table2-toolkit";
 import { Col, Row } from "reactstrap";
-import products from "../../data/products.json";
+// import products from "../../data/products.json";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import { getNPRFromDollar } from "../../utils/getNPRFromDollar";
+import { getPurchasedBooks } from "../../config/authAPI";
+import { connect } from "react-redux";
+import { getFormattedDate } from "../../utils/getFormattedDate";
 
 const imageFormatter = (cell, row) => {
   return <img className="purchase-history-table-img" src={cell} alt={cell} />;
@@ -18,12 +21,22 @@ const priceFormatter = (cell, row) => {
   return <span>{getNPRFromDollar(cell.substring(1, cell.length))}</span>;
 };
 
+const dateFormatter = (cell) => {
+  return <span>{getFormattedDate(cell)}</span>;
+};
+
 const columns = [
   {
-    dataField: "id",
-    text: "ID",
+    dataField: "SN",
+    text: "S.N.",
     sort: true,
     classes: "purchase-history-id",
+  },
+  {
+    dataField: "date",
+    text: "Purchase date",
+    sort: true,
+    formatter: dateFormatter,
   },
   {
     dataField: "bookId",
@@ -47,7 +60,24 @@ const columns = [
     sort: true,
   },
   {
-    dataField: "total",
+    dataField: "subTotalAmount",
+    text: "Sub Total",
+    sort: true,
+    formatter: priceFormatter,
+  },
+  {
+    dataField: "discount",
+    text: "Discount",
+    sort: true,
+    formatter: priceFormatter,
+  },
+  {
+    dataField: "usedCoupon",
+    text: "Used Coupon",
+    sort: true,
+  },
+  {
+    dataField: "totalAmount",
     text: "Total",
     sort: true,
     formatter: priceFormatter,
@@ -90,6 +120,48 @@ const PurchaseHistoryPage = (props) => {
     showTotal: true,
     paginationTotalRenderer: customTotal,
   };
+
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    getPurchasedBooks(props.user.user._id)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.success) {
+          let products = [];
+          let count = 1;
+          for (let i = 0; i < res.data.booksPurchased.length; i++) {
+            const bookPurchased = res.data.booksPurchased[i];
+            for (let j = 0; j < bookPurchased.purchasedBooks.length; j++) {
+              const purchasedBook = bookPurchased.purchasedBooks[j];
+
+              const book = props.books.books.find(
+                (book) => book.id === purchasedBook.bookId
+              );
+
+              products.push({
+                _id: bookPurchased._id,
+                SN: count,
+                date: bookPurchased.date,
+                subTotalAmount: "$" + bookPurchased.subTotalAmount.toString(),
+                discount: "$" + bookPurchased.discount.toString(),
+                totalAmount: "$500" + bookPurchased.totalAmount.toString(),
+                usedCoupon: bookPurchased.usedCoupon,
+                bookId: purchasedBook.bookId,
+                quantity: purchasedBook.quantity,
+                name: book["name "],
+                image: book.image,
+              });
+              count++;
+            }
+          }
+          setProducts(products);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <div className="purchase-history-table-container">
@@ -142,4 +214,9 @@ const PurchaseHistoryPage = (props) => {
   );
 };
 
-export default PurchaseHistoryPage;
+const mapStateToProps = (state) => ({
+  user: state.user,
+  books: state.books,
+});
+
+export default connect(mapStateToProps, null)(PurchaseHistoryPage);

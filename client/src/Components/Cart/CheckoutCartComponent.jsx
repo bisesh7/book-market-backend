@@ -6,11 +6,15 @@ import { Col, Container, List, ListInlineItem, Media, Row } from "reactstrap";
 import CheckoutCartItemMediaComponent from "./CheckoutCartItemMediaComponent";
 import OrderSummaryComponent from "./OrderSummaryComponent";
 import { setBooks } from "../../Actions/actionBook";
+import { setCart } from "../../Actions/actionCart";
 import getUserData, { purchaseBooks } from "../../config/authAPI";
 import UnauthorizedPageComponent from "../ErrorPages/UnauthorizedPageComponent";
 import EmptyCartJumbotronComponent from "./EmptyCartJumbotron";
+import { useToasts } from "react-toast-notifications";
 
 const CheckoutCartComponent = (props) => {
+  const { addToast } = useToasts();
+
   useEffect(() => {
     props.setBooks(null);
     // eslint-disable-next-line
@@ -126,10 +130,39 @@ const CheckoutCartComponent = (props) => {
     };
     purchaseBooks(json)
       .then((res) => {
-        console.log(res);
+        sessionStorage.removeItem("books");
+        sessionStorage.removeItem("cart");
+        props.setBooks();
+        props.setCart([]);
+        addToast(
+          "Thank you for purchasing the books with book-market. You will be redirected to homepage shortly.",
+          {
+            appearance: "success",
+            autoDismiss: true,
+            onDismiss: () => {
+              props.history.push("/");
+            },
+          }
+        );
       })
       .catch((err) => {
-        console.log(err.response.data);
+        if (err.response) {
+          addToast(err.response.data.msg, {
+            appearance: "danger",
+            autoDismiss: true,
+            onDismiss: () => {
+              props.history.push("/");
+            },
+          });
+        } else {
+          addToast("Unexpected server error.", {
+            appearance: "danger",
+            autoDismiss: true,
+            onDismiss: () => {
+              props.history.push("/");
+            },
+          });
+        }
       });
   };
 
@@ -189,4 +222,6 @@ const mapStateToProps = (state) => ({
   books: state.books,
 });
 
-export default connect(mapStateToProps, { setBooks })(CheckoutCartComponent);
+export default connect(mapStateToProps, { setBooks, setCart })(
+  CheckoutCartComponent
+);

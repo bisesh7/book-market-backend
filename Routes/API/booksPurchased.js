@@ -9,6 +9,7 @@ const async = require("async");
 const {
   booksPurchasedValidation,
   bookPurchasedCompareToDatabaseValidation,
+  getUserIdValidation,
 } = require("../../utils/booksPurchasedValidation");
 const booksPurchaseRollback = require("../../utils/booksPurchaseRollback");
 
@@ -137,6 +138,32 @@ router.post("/", [checkAPIKey, checkAccessRights], async (req, res) => {
       return res.status(500).json({
         success: false,
         msg: "Server error while saving the purchased books.",
+        err: serverError,
+      });
+    });
+});
+
+router.get("/:userId", [checkAPIKey, checkAccessRights], async (req, res) => {
+  const { userId } = req.params;
+
+  const userIdValidation = getUserIdValidation(userId, req.user._id);
+
+  if (!userIdValidation.valid) {
+    return res.status(userIdValidation.status).json({
+      success: false,
+      msg: userIdValidation.msg,
+      err: userIdValidation.err,
+    });
+  }
+
+  UserBooksPurchase.find({ userId })
+    .then((booksPurchased) => {
+      return res.json({ success: true, booksPurchased });
+    })
+    .catch((err) => {
+      return res.status(500).json({
+        success: false,
+        msg: "Server error while finding the user book purchase record",
         err: serverError,
       });
     });

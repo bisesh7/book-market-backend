@@ -20,4 +20,5 @@ module.exports = {
   stockError: "stockError",
   amountError: "amountError",
   bookError: "bookError",
+  forbiddenError: "forbiddenError",
 };

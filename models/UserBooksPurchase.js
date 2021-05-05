@@ -45,7 +45,7 @@ const BookPurchaseSchema = mongoose.Schema({
 });
 
 const UserBooksPurchase = mongoose.model(
-  "user_book_purchased",
+  "user_book_purchases",
   BookPurchaseSchema
 );
 

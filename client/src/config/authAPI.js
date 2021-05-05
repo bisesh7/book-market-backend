@@ -48,4 +48,12 @@ export const purchaseBooks = (json) => {
   });
 };
 
+export const getPurchasedBooks = (id) => {
+  return axios.get(`/api/purchase_book/${id}`, {
+    headers: {
+      authorization: process.env.REACT_APP_API_KEY,
+    },
+  });
+};
+
 export default getUserData;
