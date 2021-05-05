@@ -25,9 +25,7 @@ router.post("/", [checkAPIKey, checkAccessRights], async (req, res) => {
     totalAmount,
   } = req.body;
 
-  console.log(req.body);
-
-  const userId = req.user._id;
+  const purchasingUser = req.user._id;
 
   //   Validation
   let purchaseValidation = booksPurchasedValidation(
@@ -72,7 +70,7 @@ router.post("/", [checkAPIKey, checkAccessRights], async (req, res) => {
 
   // If everything is valid we create a new purchase
   const newUserBooksPurchase = new UserBooksPurchase({
-    userId,
+    purchasingUser,
     purchasedBooks,
     usedCoupon,
     discount,
@@ -159,11 +157,12 @@ router.get("/:userId", [checkAPIKey, checkAccessRights], async (req, res) => {
     });
   }
 
-  UserBooksPurchase.find({ userId })
+  UserBooksPurchase.find({ purchasingUser: userId })
     .then((booksPurchased) => {
       return res.json({ success: true, booksPurchased });
     })
     .catch((err) => {
+      console.log(err);
       return res.status(500).json({
         success: false,
         msg: "Server error while finding the user book purchase record",

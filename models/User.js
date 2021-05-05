@@ -20,6 +20,7 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+    min: 8,
   },
   registerDate: {
     type: Date,
@@ -29,10 +30,12 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     default: "",
     required: true,
+    length: 10,
   },
 });
 
 UserSchema.methods = {
+  // arrow function should not be used here.
   createAccessToken: async function () {
     try {
       let { _id, email } = this;
