@@ -11,7 +11,7 @@ const {
   bookError,
 } = require("../../utils/errors");
 const router = express.Router();
-const Promise = require("bluebird");
+const async = require("async");
 
 // @route   POST /api/purchase_book/
 // @desc    Adds the purchase history to the db
@@ -118,17 +118,25 @@ router.post("/", [checkAPIKey, checkAccessRights], (req, res) => {
 
     for (let i = 0; i < books.length; i++) {
       const book = books[i];
+
       for (let j = 0; j < purchasedBooks.length; j++) {
         const bookPurchased = purchasedBooks[j];
         if (book.id === bookPurchased.bookId) {
           book.stock -= bookPurchased.quantity;
-          savePromises.push(book.save());
+          savePromises.push((cb) => {
+            book.save().then((result) => {
+              cb(null, result);
+            });
+          });
         }
       }
     }
 
-    Promise.all(savePromises).then(() => {
-      console.log("Stock decreased");
+    async.parallel(savePromises).then((result) => {
+      if (result.length !== books.length) {
+        // err
+      }
+      console.log(result);
     });
 
     const newUserBooksPurchase = new UserBooksPurchase({
