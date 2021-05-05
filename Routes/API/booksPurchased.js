@@ -15,7 +15,7 @@ const booksPurchaseRollback = require("../../utils/booksPurchaseRollback");
 
 // @route   POST /api/purchase_book/
 // @desc    Adds the purchase history to the db
-// @access  private
+// @access  PRIVATE
 router.post("/", [checkAPIKey, checkAccessRights], async (req, res) => {
   const {
     purchasedBooks,
@@ -143,6 +143,9 @@ router.post("/", [checkAPIKey, checkAccessRights], async (req, res) => {
     });
 });
 
+// @route   GET /api/purchase_book/:userId
+// @desc    Get all the books purchased data of the given user
+// @access  PRIVATE
 router.get("/:userId", [checkAPIKey, checkAccessRights], async (req, res) => {
   const { userId } = req.params;
 
