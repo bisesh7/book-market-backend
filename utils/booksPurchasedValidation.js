@@ -1,3 +1,5 @@
+const { amountError, bookError, stockError } = require("./errors");
+
 const { isBoolean, isNumber } = require("./booksPurchasedValidationFunctions");
 const {
   detailsError,
@@ -68,4 +70,62 @@ const booksPurchasedValidation = (
   };
 };
 
-module.exports = booksPurchasedValidation;
+const bookPurchasedCompareToDatabaseValidation = (books, purchasedBooks) => {
+  // Book purchased validation
+  if (!books.length) {
+    return {
+      valid: false,
+      msg: "Books with given book id were not found",
+      err: bookError,
+    };
+  }
+
+  for (let i = 0; i < books.length; i++) {
+    const book = books[i];
+    // If the stock of book is 0 then client has errors
+    if (book.stock <= 0) {
+      return {
+        valid: false,
+        msg: `Stock of ${book["name "]} is 0`,
+        err: stockError,
+      };
+    }
+
+    for (let j = 0; j < purchasedBooks.length; j++) {
+      const bookPurchased = purchasedBooks[j];
+      // If the stock - quantity is less than 0 in one of the books purchased, client has errors
+      if (book.id === bookPurchased.bookId) {
+        if (book.stock - bookPurchased.quantity < 0) {
+          return {
+            valid: false,
+            msg: `Only ${book.stock} ${book["name "]} is left.`,
+            err: stockError,
+          };
+        }
+
+        // Checking the amount calculated in the client
+        if (
+          parseFloat(book.price.slice(1)) * bookPurchased.quantity !==
+          bookPurchased.amount
+        ) {
+          console.log(bookPurchased);
+          return {
+            valid: false,
+            msg: `Amount calculated is not correct for ${book["name "]}.`,
+            err: amountError,
+          };
+        }
+      }
+    }
+  }
+
+  return {
+    valid: true,
+    msg: "Everything is valid",
+  };
+};
+
+module.exports = {
+  booksPurchasedValidation,
+  bookPurchasedCompareToDatabaseValidation,
+};

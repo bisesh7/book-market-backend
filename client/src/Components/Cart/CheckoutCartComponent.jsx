@@ -29,11 +29,13 @@ const CheckoutCartComponent = (props) => {
   // TODO: remove next comment after setDiscount has been used
   // eslint-disable-next-line
   const [discount, setDiscount] = useState(0);
+  const [cartWithAmount, setCartWithAmount] = useState([]);
 
   useEffect(() => {
     if (cart.length) {
       let itemMedias = [];
       let totalAmount = 0;
+      let cartWithAmount = [];
       cart.forEach((bookInCart, key) => {
         // Finding the book with the id
         const book = books.find(
@@ -45,6 +47,8 @@ const CheckoutCartComponent = (props) => {
         const totalPriceOfBook = priceOfBook * bookInCart.quantity;
         totalAmount += totalPriceOfBook;
 
+        cartWithAmount.push({ ...bookInCart, amount: totalPriceOfBook });
+
         itemMedias.push(
           <CheckoutCartItemMediaComponent
             image={book.image}
@@ -53,7 +57,7 @@ const CheckoutCartComponent = (props) => {
             quantity={bookInCart.quantity}
             genre={book.genre}
             publishedDate={book.published_date}
-            total={book.price}
+            price={book.price}
             key={key}
             id={book.id}
             stock={book.stock}
@@ -61,6 +65,7 @@ const CheckoutCartComponent = (props) => {
         );
         setTotalAmount(totalAmount);
         setItemsMedias(itemMedias);
+        setCartWithAmount(cartWithAmount);
       });
     }
   }, [cart, books]);
@@ -113,7 +118,7 @@ const CheckoutCartComponent = (props) => {
     totalAmount
   ) => {
     const json = {
-      purchasedBooks: cart,
+      purchasedBooks: cartWithAmount,
       subTotalAmount,
       usedCoupon,
       discount,
@@ -124,7 +129,7 @@ const CheckoutCartComponent = (props) => {
         console.log(res);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response.data);
       });
   };
 

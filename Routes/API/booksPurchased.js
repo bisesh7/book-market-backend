@@ -3,15 +3,14 @@ const { checkAccessRights } = require("../../middlewares/checkAccessRights");
 const checkAPIKey = require("../../middlewares/checkAPIKey");
 const Book = require("../../models/Book");
 const UserBooksPurchase = require("../../models/UserBooksPurchase");
-const booksPurchasedValidation = require("../../utils/booksPurchasedValidation");
-const {
-  serverError,
-  stockError,
-  amountError,
-  bookError,
-} = require("../../utils/errors");
+const { serverError, bookError } = require("../../utils/errors");
 const router = express.Router();
 const async = require("async");
+const {
+  booksPurchasedValidation,
+  bookPurchasedCompareToDatabaseValidation,
+} = require("../../utils/booksPurchasedValidation");
+const booksPurchaseRollback = require("../../utils/booksPurchaseRollback");
 
 // @route   POST /api/purchase_book/
 // @desc    Adds the purchase history to the db
@@ -25,22 +24,18 @@ router.post("/", [checkAPIKey, checkAccessRights], async (req, res) => {
     totalAmount,
   } = req.body;
 
+  console.log(req.body);
+
   const userId = req.user._id;
 
   //   Validation
-  const purchaseValidation = booksPurchasedValidation(
+  let purchaseValidation = booksPurchasedValidation(
     purchasedBooks,
     usedCoupon,
     subTotalAmount,
     discount,
     totalAmount
   );
-
-  const setPurchaseValidation = (valid, msg, err) => {
-    purchaseValidation.valid = valid;
-    purchaseValidation.msg = msg;
-    purchaseValidation.err = err;
-  };
 
   let purchasedBookIds = [];
   purchasedBooks.forEach((bookPurchased) => {
@@ -59,55 +54,13 @@ router.post("/", [checkAPIKey, checkAccessRights], async (req, res) => {
   // Get the books purchases from the database
   const books = await Book.find({ id: { $in: purchasedBookIds } });
 
-  // Book purchased validation
-  if (!books.length) {
-    return res.status(400).json({
-      success: false,
-      msg: "Books with given book id were not found",
-      err: bookError,
-    });
-  }
+  // Further validation which need books in database for comparison
+  purchaseValidation = bookPurchasedCompareToDatabaseValidation(
+    books,
+    purchasedBooks
+  );
 
-  for (let i = 0; i < books.length; i++) {
-    const book = books[i];
-    // If the stock of book is 0 then client has errors
-    if (book.stock <= 0) {
-      setPurchaseValidation(
-        false,
-        `Stock of ${book["name "]} is 0`,
-        stockError
-      );
-      break;
-    }
-    for (let j = 0; j < purchasedBooks.length; j++) {
-      const bookPurchased = purchasedBooks[j];
-      // If the stock - quantity is less than 0 in one of the books purchased, client has errors
-      if (book.id === bookPurchased.bookId) {
-        if (book.stock - bookPurchased.quantity < 0) {
-          setPurchaseValidation(
-            false,
-            `Only ${book.stock} ${book["name "]} is left.`,
-            stockError
-          );
-          break;
-        }
-
-        // Checking the amount calculated in the client
-        if (
-          parseFloat(book.price.slice(1)) * bookPurchased.quantity !==
-          bookPurchased.amount
-        ) {
-          setPurchaseValidation(
-            false,
-            `Amount calculated is not correct for ${book["name "]}.`,
-            amountError
-          );
-          break;
-        }
-      }
-    }
-  }
-
+  // If invalid we respond the error to the client
   if (!purchaseValidation.valid) {
     return res.status(400).json({
       success: false,
@@ -116,31 +69,7 @@ router.post("/", [checkAPIKey, checkAccessRights], async (req, res) => {
     });
   }
 
-  const savePromises = [];
-
-  for (let i = 0; i < books.length; i++) {
-    const book = books[i];
-
-    for (let j = 0; j < purchasedBooks.length; j++) {
-      const bookPurchased = purchasedBooks[j];
-      if (book.id === bookPurchased.bookId) {
-        book.stock -= bookPurchased.quantity;
-        savePromises.push((cb) => {
-          book.save().then(() => {
-            cb(null, i);
-          });
-        });
-      }
-    }
-  }
-
-  async.parallel(savePromises).then((result) => {
-    if (result.length !== books.length) {
-      // err
-    }
-    console.log(result);
-  });
-
+  // If everything is valid we create a new purchase
   const newUserBooksPurchase = new UserBooksPurchase({
     userId,
     purchasedBooks,
@@ -150,21 +79,67 @@ router.post("/", [checkAPIKey, checkAccessRights], async (req, res) => {
     totalAmount,
   });
 
-  return res.json({ success: true });
+  // We save the new purchase data to the database
+  newUserBooksPurchase
+    .save()
+    .then((userBooksPurchaseData) => {
+      // We have to decrease the stock in the database for each books purchased by the user.
+      const savePromises = [];
 
-  //   newUserBooksPurchase
-  //     .save()
-  //     .then(() => {
-  //       return res.json({ success: true });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       return res.status(500).json({
-  //         success: false,
-  //         msg: "Server error while saving the purchased books",
-  //         err: serverError,
-  //       });
-  //     });
+      // We loop through the books
+      for (let i = 0; i < books.length; i++) {
+        const book = books[i];
+
+        // test
+        // i === 0 ? (book.id = undefined) : null;
+
+        // In order to update the stock of book we need to compare it with books purchased
+        for (let j = 0; j < purchasedBooks.length; j++) {
+          const bookPurchased = purchasedBooks[j];
+          if (book.id === bookPurchased.bookId) {
+            // We push the update query to the array to execute every queries
+            // We need to know when the database has been updated
+            savePromises.push((cb) => {
+              Book.updateOne(
+                { id: bookPurchased.bookId },
+                {
+                  stock: book.stock - bookPurchased.quantity,
+                }
+              ).then((result) => {
+                cb(null, result);
+              });
+            });
+          }
+        }
+      }
+
+      // We update the database here
+      async.parallel(savePromises).then((result) => {
+        // After the database has been updated the length of the result needs to be equal
+        // to the length of the books if not the we need to rollback the changes.
+        if (result.length !== books.length) {
+          // Rollback all the changes made to the database
+          booksPurchaseRollback(userBooksPurchaseData._id, books, () => {
+            return res.status(500).json({
+              success: false,
+              msg:
+                "Server error while decreasing the stock of purchased books.",
+              err: serverError,
+            });
+          });
+        } else {
+          return res.json({ success: true });
+        }
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      return res.status(500).json({
+        success: false,
+        msg: "Server error while saving the purchased books.",
+        err: serverError,
+      });
+    });
 });
 
 module.exports = router;

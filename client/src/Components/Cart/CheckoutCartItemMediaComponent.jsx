@@ -23,7 +23,7 @@ const CheckoutCartItemMediaComponent = ({
   quantity,
   genre,
   publishedDate,
-  total,
+  price,
   removeBookFromCart,
   addToBooks,
   addBookToCart,
@@ -60,7 +60,7 @@ const CheckoutCartItemMediaComponent = ({
           <Media heading>
             {name} <small className="text-muted author">by {author}</small>{" "}
             <div className="float-right text-success">
-              {getNPRFromDollar(total.substring(1, total.length) * quantity)}
+              {getNPRFromDollar(price.substring(1, price.length) * quantity)}
             </div>
           </Media>
           <dl class="row checkout-cart-item-info">
