@@ -145,7 +145,7 @@ const PurchaseHistoryPage = (props) => {
                 date: bookPurchased.date,
                 subTotalAmount: "$" + bookPurchased.subTotalAmount.toString(),
                 discount: "$" + bookPurchased.discount.toString(),
-                totalAmount: "$500" + bookPurchased.totalAmount.toString(),
+                totalAmount: "$" + bookPurchased.totalAmount.toString(),
                 usedCoupon: bookPurchased.usedCoupon,
                 bookId: purchasedBook.bookId,
                 quantity: purchasedBook.quantity,
