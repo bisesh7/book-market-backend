@@ -1,5 +1,6 @@
 import {
   ADD_TO_CART,
+  DELETE_BOOK_FROM_CART,
   REMOVE_FROM_CART,
   SET_CART,
 } from "../Actions/ActionTypes";
@@ -27,6 +28,15 @@ export const setCart = (cart) => {
     dispatch({
       type: SET_CART,
       cart,
+    });
+  };
+};
+
+export const deleteBookFromCart = (bookId) => {
+  return (dispatch) => {
+    dispatch({
+      type: DELETE_BOOK_FROM_CART,
+      bookId,
     });
   };
 };

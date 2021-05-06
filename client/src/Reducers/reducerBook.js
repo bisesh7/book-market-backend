@@ -1,6 +1,7 @@
 import {
   ADD_TO_BOOKS,
   REMOVE_FROM_BOOKS,
+  RESTORE_BOOK,
   SET_BOOKS,
 } from "../Actions/ActionTypes";
 
@@ -8,7 +9,7 @@ const initState = {
   books: [],
 };
 
-const addBook = (bookId, state) => {
+const addBook = (bookId, state, quantity) => {
   const updatedBooks = [...state.books];
   const updatedBookIndex = updatedBooks.findIndex((item) => item.id === bookId);
 
@@ -16,7 +17,7 @@ const addBook = (bookId, state) => {
     const updatedBook = {
       ...updatedBooks[updatedBookIndex],
     };
-    updatedBook.stock++;
+    quantity ? (updatedBook.stock += quantity) : updatedBook.stock++;
     updatedBooks[updatedBookIndex] = updatedBook;
   }
 
@@ -50,6 +51,8 @@ const bookReducer = (state = initState, action) => {
     case SET_BOOKS:
       sessionStorage.setItem("books", JSON.stringify(action.books));
       return { ...state, books: action.books };
+    case RESTORE_BOOK:
+      return addBook(action.bookId, state, action.quantity);
     default:
       return state;
   }

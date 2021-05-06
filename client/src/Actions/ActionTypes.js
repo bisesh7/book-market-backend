@@ -6,3 +6,5 @@ export const SET_BOOKS = "SET_BOOKS";
 export const SET_CART = "SET_CART";
 export const LOGIN_USER = "LOGIN_USER";
 export const LOGOUT_USER = "LOGOUT_USER";
+export const DELETE_BOOK_FROM_CART = "DELETE_BOOK_FROM_CART";
+export const RESTORE_BOOK = "RESTORE_BOOK";

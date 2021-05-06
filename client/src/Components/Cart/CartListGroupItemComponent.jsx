@@ -1,11 +1,19 @@
 import React from "react";
 import { Col, ListGroupItem, Row } from "reactstrap";
-import { addToBooks, removeFromBooks } from "../../Actions/actionBook";
-import { addBookToCart, removeBookFromCart } from "../../Actions/actionCart";
+import {
+  addToBooks,
+  removeFromBooks,
+  restoreBooks,
+} from "../../Actions/actionBook";
+import {
+  addBookToCart,
+  removeBookFromCart,
+  deleteBookFromCart,
+} from "../../Actions/actionCart";
 import { getNPRFromDollar } from "../../utils/getNPRFromDollar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusSquare } from "@fortawesome/free-regular-svg-icons";
-import { faMinusSquare } from "@fortawesome/free-regular-svg-icons";
+import { faMinusSquare, faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import { connect } from "react-redux";
 
 const CartListGroupItem = (props) => {
@@ -25,6 +33,12 @@ const CartListGroupItem = (props) => {
     }
   };
 
+  const removeFromCartHandler = (e) => {
+    e.preventDefault();
+    props.deleteBookFromCart(props.id);
+    props.restoreBooks(props.id, props.quantity);
+  };
+
   return (
     <div>
       <ListGroupItem className={props.className}>
@@ -34,7 +48,16 @@ const CartListGroupItem = (props) => {
           </Col>
           <Col md="6">
             <small>
-              <strong>{props.name}</strong> <br />
+              <div className="d-flex justify-content-between">
+                <strong>{props.name}</strong>
+                <a
+                  href="#remove"
+                  className="cart-delete-button"
+                  onClick={removeFromCartHandler}
+                >
+                  <FontAwesomeIcon icon={faTrashAlt} />
+                </a>
+              </div>
               Quantity: {props.quantity} <br />
               <strong className="cart-quantity-button">
                 <span
@@ -59,7 +82,7 @@ const CartListGroupItem = (props) => {
                 {getNPRFromDollar(
                   props.quantity * props.price.substring(1, props.price.length)
                 )}
-              </b>
+              </b>{" "}
             </small>
           </Col>
         </Row>
@@ -68,9 +91,13 @@ const CartListGroupItem = (props) => {
   );
 };
 
-export default connect(null, {
+const dispatches = {
   addBookToCart,
   removeBookFromCart,
   addToBooks,
   removeFromBooks,
-})(CartListGroupItem);
+  deleteBookFromCart,
+  restoreBooks,
+};
+
+export default connect(null, dispatches)(CartListGroupItem);

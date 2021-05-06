@@ -1,6 +1,7 @@
 import {
   ADD_TO_BOOKS,
   REMOVE_FROM_BOOKS,
+  RESTORE_BOOK,
   SET_BOOKS,
   SET_CART,
 } from "../Actions/ActionTypes";
@@ -61,6 +62,16 @@ export const removeFromBooks = (id) => {
     dispatch({
       type: REMOVE_FROM_BOOKS,
       bookId: id,
+    });
+  };
+};
+
+export const restoreBooks = (id, quantity) => {
+  return (dispatch) => {
+    dispatch({
+      type: RESTORE_BOOK,
+      bookId: id,
+      quantity,
     });
   };
 };

@@ -2,13 +2,14 @@ import {
   SET_CART,
   ADD_TO_CART,
   REMOVE_FROM_CART,
+  DELETE_BOOK_FROM_CART,
 } from "../Actions/ActionTypes";
 
 const initState = {
   cart: [],
 };
 
-const addBookToCart = (bookId, state) => {
+const increaseBookQuantityToCart = (bookId, state) => {
   const updatedCart = [...state.cart];
   const updatedItemIndex = updatedCart.findIndex(
     (item) => item.bookId === bookId
@@ -30,7 +31,7 @@ const addBookToCart = (bookId, state) => {
   return { ...state, cart: updatedCart };
 };
 
-const removeBookFromCart = (bookId, state) => {
+const decreaseBookQuantityFromCart = (bookId, state) => {
   const updatedCart = [...state.cart];
   const updatedItemIndex = updatedCart.findIndex(
     (item) => item.bookId === bookId
@@ -50,14 +51,24 @@ const removeBookFromCart = (bookId, state) => {
   return { ...state, cart: updatedCart };
 };
 
+const deleteBookFromCart = (bookId, state) => {
+  let updatedCart = [...state.cart];
+
+  updatedCart = updatedCart.filter((item) => item.bookId !== bookId);
+
+  return { ...state, cart: updatedCart };
+};
+
 const cartReducer = (state = initState, action) => {
   switch (action.type) {
     case ADD_TO_CART:
-      return addBookToCart(action.bookId, state);
+      return increaseBookQuantityToCart(action.bookId, state);
     case REMOVE_FROM_CART:
-      return removeBookFromCart(action.bookId, state);
+      return decreaseBookQuantityFromCart(action.bookId, state);
     case SET_CART:
       return { ...state, cart: action.cart };
+    case DELETE_BOOK_FROM_CART:
+      return deleteBookFromCart(action.bookId, state);
     default:
       return state;
   }
