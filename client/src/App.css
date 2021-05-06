@@ -47,8 +47,7 @@ body {
 /* Book Cards */
 
 .book-card {
-  min-width: 16vw;
-  max-width: 16vw;
+  max-width: 17.6vw;
   border: none;
   border-radius: 0 !important;
 }

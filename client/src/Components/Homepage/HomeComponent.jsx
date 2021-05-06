@@ -23,31 +23,13 @@ const HomeComponent = (props) => {
       <NavbarComponent {...props} />
       <Container fluid={true} className="main-container">
         <BooksCarousel {...props} />
-        <Row>
-          <Col md="9">
-            {booksLoading ? (
-              <div className="d-flex justify-content-center mt-4">
-                <Spinner color="info" />
-              </div>
-            ) : (
-              <BooksDisplayComponent {...props} className="mt-3 mb-4" />
-            )}
-          </Col>
-          <Col md="3">
-            <div className="sticky-top">
-              {/* To create a space above the cart */}
-              <span>
-                <br />
-              </span>
-              <strong className="cart-text">
-                <FontAwesomeIcon icon={faShoppingCart} /> Cart
-              </strong>
-              <div>
-                <CartComponent {...props} className="cart mt-3" />
-              </div>
-            </div>
-          </Col>
-        </Row>
+        {booksLoading ? (
+          <div className="d-flex justify-content-center mt-4">
+            <Spinner color="info" />
+          </div>
+        ) : (
+          <BooksDisplayComponent {...props} className="mt-3 mb-4" />
+        )}
       </Container>
     </div>
   );

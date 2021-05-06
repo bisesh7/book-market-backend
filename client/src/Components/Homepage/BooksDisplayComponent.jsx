@@ -164,7 +164,7 @@ const BooksDisplayComponent = (props) => {
   //   Creating card deck so that the cards will be displayed in a grid
   useEffect(() => {
     if (bookCards) {
-      // Card decks containg cards
+      // Card decks containing cards
       let cardDecks = [];
       // List containing a cards in a deck
       let cardsInADeck = [];
@@ -176,8 +176,8 @@ const BooksDisplayComponent = (props) => {
         // A deck will contain at most 4 cards but final deck can contain less than 4 cards
         // So we check if the deck is final or not
         if (
-          (i === bookCards.length - 1 && cardsInADeck.length < 4) ||
-          cardsInADeck.length === 4
+          (i === bookCards.length - 1 && cardsInADeck.length < 5) ||
+          cardsInADeck.length === 5
         ) {
           // Creating a card deck
           const cardDeck = (
