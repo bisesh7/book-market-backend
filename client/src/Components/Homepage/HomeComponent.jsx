@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Col, Container, Row, Spinner } from "reactstrap";
+import { Container, Spinner } from "reactstrap";
 import BooksDisplayComponent from "./BooksDisplayComponent";
-import CartComponent from "../Cart/CartComponent";
 import NavbarComponent from "../NavbarComponent";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import BooksCarousel from "./BooksCarousel";
 import { connect } from "react-redux";
 import { setBooks } from "../../Actions/actionBook";

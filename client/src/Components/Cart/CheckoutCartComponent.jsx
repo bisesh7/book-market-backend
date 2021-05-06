@@ -80,7 +80,7 @@ const CheckoutCartComponent = (props) => {
         setCartWithAmount(cartWithAmount);
       });
     }
-  }, [cart, books]);
+  }, [cart, books, submitting]);
 
   // Cart is empty then set total to 0
   useEffect(() => {

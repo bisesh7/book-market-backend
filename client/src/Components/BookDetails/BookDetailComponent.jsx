@@ -4,7 +4,6 @@ import { getFormattedDate } from "../../utils/getFormattedDate";
 import { getFormattedGenre } from "../../utils/getFormattedGenre";
 import { getNPRFromDollar } from "../../utils/getNPRFromDollar";
 import { getNumberFromString } from "../../utils/getNumberFromString";
-import CartComponent from "../Cart/CartComponent";
 import NavbarComponent from "../NavbarComponent";
 import { addBookToCart } from "../../Actions/actionCart";
 import { removeFromBooks } from "../../Actions/actionBook";
