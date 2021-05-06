@@ -69,7 +69,14 @@ const CartComponent = (props) => {
           )}
         </div>
       ) : (
-        <Alert color="dark" className="text-center cart-empty-alert">
+        <Alert
+          color="dark"
+          className={
+            props.maxAlertWidth
+              ? "text-center cart-empty-alert width-320-px"
+              : "text-center cart-empty-alert"
+          }
+        >
           <strong>Your cart is empty.</strong> <br />
           <small>Please add the books to the cart.</small>
         </Alert>

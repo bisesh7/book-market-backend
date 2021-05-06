@@ -37,7 +37,7 @@ const CartPopover = (props) => {
           <FontAwesomeIcon icon={faShoppingCart} /> Cart
         </PopoverHeader>
         <PopoverBody className="cart-popover">
-          <CartComponent {...props} className="cart" />
+          <CartComponent {...props} className="cart" maxAlertWidth={true} />
         </PopoverBody>
       </Popover>
     </NavItem>

@@ -33,6 +33,10 @@ body {
 /* Cart Popover */
 .popover {
   top: 3px !important;
+  max-width: 320px !important;
+}
+
+.width-320-px {
   width: 320px !important;
 }
 
@@ -137,6 +141,7 @@ body {
 
 .cart-empty-alert {
   border-radius: 0 !important;
+  width: 100%;
 }
 
 .books-carousel {
