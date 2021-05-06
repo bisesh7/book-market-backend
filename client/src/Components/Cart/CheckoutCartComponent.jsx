@@ -11,9 +11,12 @@ import getUserData, { purchaseBooks } from "../../config/authAPI";
 import UnauthorizedPageComponent from "../ErrorPages/UnauthorizedPageComponent";
 import EmptyCartJumbotronComponent from "./EmptyCartJumbotron";
 import { useToasts } from "react-toast-notifications";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const CheckoutCartComponent = (props) => {
-  const { addToast } = useToasts();
+  // Toast notification
+  const { addToast, removeToast } = useToasts();
 
   useEffect(() => {
     props.setBooks(null);
@@ -38,6 +41,7 @@ const CheckoutCartComponent = (props) => {
   // Data is being submitted
   const [submitting, setSubmitting] = useState(false);
 
+  // Create cart media items dynamically
   useEffect(() => {
     if (cart.length) {
       let itemMedias = [];
@@ -78,6 +82,7 @@ const CheckoutCartComponent = (props) => {
     }
   }, [cart, books]);
 
+  // Cart is empty then set total to 0
   useEffect(() => {
     if (!cart.length) {
       setTotalAmount(0);
@@ -126,6 +131,19 @@ const CheckoutCartComponent = (props) => {
     totalAmount
   ) => {
     setSubmitting(true);
+    let toastId = null;
+    addToast(
+      <span>
+        Saving to database <FontAwesomeIcon icon={faSpinner} spin />{" "}
+      </span>,
+      {
+        appearance: "info",
+        autoDismiss: false,
+      },
+      (id) => {
+        toastId = id;
+      }
+    );
     const json = {
       purchasedBooks: cartWithAmount,
       subTotalAmount,
@@ -141,29 +159,35 @@ const CheckoutCartComponent = (props) => {
           sessionStorage.removeItem("cart");
           props.setBooks();
           props.setCart([]);
-          addToast(
-            "Thank you for purchasing the books with book-market. You will be redirected to homepage shortly.",
-            {
-              appearance: "success",
-              autoDismiss: true,
-              onDismiss: () => {
-                props.history.push("/");
-              },
-            }
-          );
+          removeToast(toastId, () => {
+            addToast(
+              "Thank you for purchasing the books with book-market. You will be redirected to homepage shortly.",
+              {
+                appearance: "success",
+                autoDismiss: true,
+                onDismiss: () => {
+                  props.history.push("/");
+                },
+              }
+            );
+          });
         }
       })
       .catch((err) => {
         setSubmitting(false);
         if (err.response) {
-          addToast(err.response.data.msg, {
-            appearance: "error",
-            autoDismiss: true,
+          removeToast(toastId, () => {
+            addToast(err.response.data.msg, {
+              appearance: "error",
+              autoDismiss: true,
+            });
           });
         } else {
-          addToast("Unexpected server error.", {
-            appearance: "error",
-            autoDismiss: true,
+          removeToast(toastId, () => {
+            addToast("Unexpected server error.", {
+              appearance: "error",
+              autoDismiss: true,
+            });
           });
         }
       });
