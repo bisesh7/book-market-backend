@@ -76,6 +76,14 @@ body {
   height: auto;
 }
 
+.cart-delete-button {
+  color: hsl(0, 50%, 50%);
+}
+
+.cart-delete-button:hover {
+  color: hsl(0, 100%, 50%);
+}
+
 .cart-quantity-button {
   font-size: 1.1rem;
 }

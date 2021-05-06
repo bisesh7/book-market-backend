@@ -56,6 +56,8 @@ const deleteBookFromCart = (bookId, state) => {
 
   updatedCart = updatedCart.filter((item) => item.bookId !== bookId);
 
+  sessionStorage.setItem("cart", JSON.stringify(updatedCart));
+
   return { ...state, cart: updatedCart };
 };
 

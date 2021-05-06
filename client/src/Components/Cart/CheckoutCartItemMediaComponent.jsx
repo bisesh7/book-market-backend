@@ -1,6 +1,7 @@
 import {
   faMinusSquare,
   faPlusSquare,
+  faTrashAlt,
 } from "@fortawesome/free-regular-svg-icons";
 import {
   faMinusSquare as faMinusSquareSolid,
@@ -13,8 +14,16 @@ import { getNPRFromDollar } from "../../utils/getNPRFromDollar";
 import { getFormattedDate } from "../../utils/getFormattedDate";
 import { getFormattedGenre } from "../../utils/getFormattedGenre";
 import { connect } from "react-redux";
-import { addToBooks, removeFromBooks } from "../../Actions/actionBook";
-import { addBookToCart, removeBookFromCart } from "../../Actions/actionCart";
+import {
+  addToBooks,
+  removeFromBooks,
+  restoreBooks,
+} from "../../Actions/actionBook";
+import {
+  addBookToCart,
+  removeBookFromCart,
+  deleteBookFromCart,
+} from "../../Actions/actionCart";
 
 const CheckoutCartItemMediaComponent = ({
   image,
@@ -30,6 +39,8 @@ const CheckoutCartItemMediaComponent = ({
   removeFromBooks,
   id,
   stock,
+  deleteBookFromCart,
+  restoreBooks,
 }) => {
   const quantityDecreaseHandler = (e) => {
     e.preventDefault();
@@ -45,6 +56,12 @@ const CheckoutCartItemMediaComponent = ({
       addBookToCart(id);
       removeFromBooks(id);
     }
+  };
+
+  const removeFromCartHandler = (e) => {
+    e.preventDefault();
+    deleteBookFromCart(id);
+    restoreBooks(id, quantity);
   };
 
   const [plusIcon, setPlusIcon] = useState(faPlusSquare);
@@ -109,7 +126,16 @@ const CheckoutCartItemMediaComponent = ({
             <dd class="col-sm-9">{getFormattedGenre(genre)}</dd>
 
             <dt class="col-sm-3 text-muted">Date Created</dt>
-            <dd class="col-sm-9">{getFormattedDate(publishedDate)}</dd>
+            <dd class="col-sm-8">{getFormattedDate(publishedDate)}</dd>
+            <dd class="col-sm-1">
+              <a
+                href="#remove"
+                className="cart-delete-button"
+                onClick={removeFromCartHandler}
+              >
+                <FontAwesomeIcon icon={faTrashAlt} />
+              </a>
+            </dd>
           </dl>
         </Media>
       </Media>
@@ -122,4 +148,6 @@ export default connect(null, {
   removeBookFromCart,
   addToBooks,
   removeFromBooks,
+  restoreBooks,
+  deleteBookFromCart,
 })(CheckoutCartItemMediaComponent);
