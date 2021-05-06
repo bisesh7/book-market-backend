@@ -1,5 +1,9 @@
 import axios from "axios";
-import { invalidTokenError, tokenExpiredError } from "../utils/errors";
+import {
+  invalidTokenError,
+  tokenExpiredError,
+  tokenError,
+} from "../utils/errors";
 
 //response interceptor to refresh token on receiving token expired error
 axios.interceptors.response.use(

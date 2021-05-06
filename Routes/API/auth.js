@@ -106,28 +106,36 @@ router.post("/refresh_token", checkAPIKey, (req, res) => {
               .status(401)
               .json({ success: false, msg: "Token expired!", err: tokenError });
           } else {
-            // extract the payload from the token and generate a new access token
-            const payLoad = jwt.verify(
-              tokenDoc.token,
-              config.get("REFRESH_TOKEN_SECRET")
-            );
-            const accessToken = jwt.sign(
-              { user: payLoad.user },
-              config.get("ACCESS_TOKEN_SECRET"),
-              {
-                expiresIn: "10m",
-              }
-            );
-            res
-              .cookie("x-auth-token", `bearer ${accessToken}`, {
-                httpOnly: true,
-                // secure: true // only use https
-                maxAge: 24 * 60 * 60 * 1000, //24 hours,
-              })
-              .json({
-                success: true,
-                msg: "New access token has been added to the cookies.",
+            try {
+              // extract the payload from the token and generate a new access token
+              const payLoad = jwt.verify(
+                tokenDoc.token,
+                config.get("REFRESH_TOKEN_SECRET")
+              );
+              const accessToken = jwt.sign(
+                { user: payLoad.user },
+                config.get("ACCESS_TOKEN_SECRET"),
+                {
+                  expiresIn: "10m",
+                }
+              );
+              res
+                .cookie("x-auth-token", `bearer ${accessToken}`, {
+                  httpOnly: true,
+                  // secure: true // only use https
+                  maxAge: 24 * 60 * 60 * 1000, //24 hours,
+                })
+                .json({
+                  success: true,
+                  msg: "New access token has been added to the cookies.",
+                });
+            } catch (err) {
+              return res.status(403).json({
+                success: false,
+                msg: "Access denied, token expired.",
+                err: tokenError,
               });
+            }
           }
         })
         .catch((err) => {
