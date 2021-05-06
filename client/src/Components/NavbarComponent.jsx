@@ -12,6 +12,7 @@ import {
 import { logoutUser, checkUser } from "../Actions/actionUser";
 import LoginSignupModal from "./User/LoginSignupModal";
 import { useToasts } from "react-toast-notifications";
+import CartPopover from "./Cart/CartPopover";
 
 const NavbarComponent = (props) => {
   const { addToast, removeToast, updateToast } = useToasts();
@@ -94,6 +95,7 @@ const NavbarComponent = (props) => {
                 Github
               </NavLink>
             </NavItem>
+            <CartPopover {...props} />
             {props.user.user ? authLinks : guestLinks}
           </Nav>
         </Collapse>

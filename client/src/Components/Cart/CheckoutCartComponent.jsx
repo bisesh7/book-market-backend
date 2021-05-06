@@ -35,6 +35,9 @@ const CheckoutCartComponent = (props) => {
   const [discount, setDiscount] = useState(0);
   const [cartWithAmount, setCartWithAmount] = useState([]);
 
+  // Data is being submitted
+  const [submitting, setSubmitting] = useState(false);
+
   useEffect(() => {
     if (cart.length) {
       let itemMedias = [];
@@ -65,6 +68,7 @@ const CheckoutCartComponent = (props) => {
             key={key}
             id={book.id}
             stock={book.stock}
+            submitting={submitting}
           />
         );
         setTotalAmount(totalAmount);
@@ -121,6 +125,7 @@ const CheckoutCartComponent = (props) => {
     discount,
     totalAmount
   ) => {
+    setSubmitting(true);
     const json = {
       purchasedBooks: cartWithAmount,
       subTotalAmount,
@@ -130,22 +135,26 @@ const CheckoutCartComponent = (props) => {
     };
     purchaseBooks(json)
       .then((res) => {
-        sessionStorage.removeItem("books");
-        sessionStorage.removeItem("cart");
-        props.setBooks();
-        props.setCart([]);
-        addToast(
-          "Thank you for purchasing the books with book-market. You will be redirected to homepage shortly.",
-          {
-            appearance: "success",
-            autoDismiss: true,
-            onDismiss: () => {
-              props.history.push("/");
-            },
-          }
-        );
+        setSubmitting(false);
+        if (res.data.success) {
+          sessionStorage.removeItem("books");
+          sessionStorage.removeItem("cart");
+          props.setBooks();
+          props.setCart([]);
+          addToast(
+            "Thank you for purchasing the books with book-market. You will be redirected to homepage shortly.",
+            {
+              appearance: "success",
+              autoDismiss: true,
+              onDismiss: () => {
+                props.history.push("/");
+              },
+            }
+          );
+        }
       })
       .catch((err) => {
+        setSubmitting(false);
         if (err.response) {
           addToast(err.response.data.msg, {
             appearance: "error",
@@ -194,6 +203,7 @@ const CheckoutCartComponent = (props) => {
                 length={cart.length}
                 totalAmount={totalAmount}
                 discount={discount}
+                submitting={submitting}
                 proceedToCheckoutButtonHandler={proceedToCheckoutButtonHandler}
               />
             </Col>

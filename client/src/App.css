@@ -2,7 +2,7 @@
 
 :root {
   --navItemColor: cadetblue;
-  --addToCartButtonColor: #c0c0c0;
+  --addToCartButtonColor: hsl(0, 0%, 60%);
   --textBlack: #4d4e4e;
   --textBlackDarker: #303030;
 }
@@ -10,6 +10,8 @@
 body {
   font-family: "Roboto", sans-serif;
 }
+
+/* Navbar */
 
 .navbar {
   height: 4em;
@@ -27,6 +29,14 @@ body {
   font-family: "Bangers", cursive;
   font-size: 2em !important;
 }
+
+/* Cart Popover */
+.popover {
+  top: 3px !important;
+  width: 320px !important;
+}
+
+/* Book Cards */
 
 .book-card {
   min-width: 16vw;
@@ -66,9 +76,30 @@ body {
   letter-spacing: 0.6px;
 }
 
+.add-to-cart-button {
+  border-color: var(--addToCartButtonColor) !important;
+  border-radius: 0 !important;
+}
+
+.add-to-cart-button:hover {
+  border-color: var(--addToCartButtonColor) !important;
+  border-radius: 0 !important;
+  background-color: var(--addToCartButtonColor) !important;
+}
+
+.add-to-cart-button:active,
+.add-to-cart-button:focus {
+  border-color: var(--addToCartButtonColor) !important;
+  box-shadow: none !important;
+}
+
+/* Genre select in homepage */
+
 .genre-select {
   max-width: 14vw;
 }
+
+/* Cart */
 
 .cart-image,
 .book-image {
@@ -95,30 +126,13 @@ body {
 
 .cart {
   overflow-y: scroll;
-  height: 80vh;
+  max-height: 80vh;
   width: 100%;
   padding: 0px 10px 0px 0px;
 }
 
 .cart::-webkit-scrollbar {
   display: none;
-}
-
-.add-to-cart-button {
-  border-color: var(--addToCartButtonColor) !important;
-  border-radius: 0 !important;
-}
-
-.add-to-cart-button:hover {
-  border-color: var(--addToCartButtonColor) !important;
-  border-radius: 0 !important;
-  background-color: var(--addToCartButtonColor) !important;
-}
-
-.add-to-cart-button:active,
-.add-to-cart-button:focus {
-  border-color: var(--addToCartButtonColor) !important;
-  box-shadow: none !important;
 }
 
 .cart-empty-alert {

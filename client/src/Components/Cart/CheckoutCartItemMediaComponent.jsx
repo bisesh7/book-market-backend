@@ -41,10 +41,11 @@ const CheckoutCartItemMediaComponent = ({
   stock,
   deleteBookFromCart,
   restoreBooks,
+  submitting,
 }) => {
   const quantityDecreaseHandler = (e) => {
     e.preventDefault();
-    if (quantity > 0) {
+    if (!submitting && quantity > 0) {
       removeBookFromCart(id);
       addToBooks(id);
     }
@@ -52,7 +53,7 @@ const CheckoutCartItemMediaComponent = ({
 
   const quantityIncreaseHandler = (e) => {
     e.preventDefault();
-    if (stock > 0) {
+    if (!submitting && stock > 0) {
       addBookToCart(id);
       removeFromBooks(id);
     }
@@ -60,8 +61,10 @@ const CheckoutCartItemMediaComponent = ({
 
   const removeFromCartHandler = (e) => {
     e.preventDefault();
-    deleteBookFromCart(id);
-    restoreBooks(id, quantity);
+    if (!submitting) {
+      deleteBookFromCart(id);
+      restoreBooks(id, quantity);
+    }
   };
 
   const [plusIcon, setPlusIcon] = useState(faPlusSquare);
@@ -85,7 +88,11 @@ const CheckoutCartItemMediaComponent = ({
             <dd class="col-sm-9">
               <strong className="">
                 <span
-                  className="cart-quantity-minus-button mr-2"
+                  className={
+                    !submitting
+                      ? "cart-quantity-minus-button mr-2"
+                      : "cart-quantity-minus-button mr-2 disabled-button"
+                  }
                   onClick={quantityDecreaseHandler}
                   onMouseEnter={(e) => {
                     e.preventDefault();
@@ -103,7 +110,7 @@ const CheckoutCartItemMediaComponent = ({
               <strong>
                 <span
                   className={
-                    stock
+                    stock && !submitting
                       ? "cart-quantity-plus-button ml-2"
                       : "cart-quantity-plus-button ml-2 disabled-button"
                   }
@@ -130,7 +137,11 @@ const CheckoutCartItemMediaComponent = ({
             <dd class="col-sm-1">
               <a
                 href="#remove"
-                className="cart-delete-button"
+                className={
+                  !submitting
+                    ? "cart-delete-button"
+                    : "cart-delete-button disabled-button"
+                }
                 onClick={removeFromCartHandler}
               >
                 <FontAwesomeIcon icon={faTrashAlt} />

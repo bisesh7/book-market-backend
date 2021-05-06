@@ -123,7 +123,11 @@ const BooksCardComponent = (props) => {
         onClick={addToCardButtonHandler}
         block
         outline
-        className="add-to-cart-button"
+        className={
+          props.stock
+            ? "add-to-cart-button"
+            : "add-to-cart-button disabled-button"
+        }
       >
         <FontAwesomeIcon icon={faCartPlus} />
       </Button>

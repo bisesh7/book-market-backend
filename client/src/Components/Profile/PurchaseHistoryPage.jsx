@@ -161,7 +161,7 @@ const PurchaseHistoryPage = (props) => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [props.books, props.user]);
 
   return (
     <div className="purchase-history-table-container">

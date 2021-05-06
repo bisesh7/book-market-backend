@@ -8,10 +8,14 @@ const OrderSummaryComponent = ({
   discount,
   className,
   proceedToCheckoutButtonHandler,
+  submitting,
 }) => {
   const couponApplyHandler = (e) => {
     e.preventDefault();
   };
+
+  const disabled = length === 0 || submitting;
+  const disabledClassName = submitting ? "disabled-button" : null;
 
   return (
     <div className={className}>
@@ -49,7 +53,8 @@ const OrderSummaryComponent = ({
             totalAmount - discount
           );
         }}
-        disabled={length === 0}
+        className={disabledClassName}
+        disabled={disabled}
       >
         Proceed To Checkout
       </Button>
@@ -59,13 +64,18 @@ const OrderSummaryComponent = ({
       <div className="price-checkout-coupon-code mt-3">
         <span>Have a coupon code?</span>
         <InputGroup size="sm" className="mt-1">
-          <Input placeholder="Coupon" disabled={length === 0} />
+          <Input
+            placeholder="Coupon"
+            disabled={disabled}
+            className={disabledClassName}
+          />
           <InputGroupAddon addonType="append">
             <Button
               color="secondary"
               type="button"
               onClick={couponApplyHandler}
-              disabled={length === 0}
+              disabled={disabled}
+              className={disabledClassName}
             >
               Apply
             </Button>
