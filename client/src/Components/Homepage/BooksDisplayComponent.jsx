@@ -170,6 +170,7 @@ const BooksDisplayComponent = (props) => {
       let cardDecks = [];
       // List containing a cards in a deck
       let cardsInADeck = [];
+      let numberOfCardsInADeck = 5;
 
       for (let i = 0; i < bookCards.length; i++) {
         //   Push the card into four cardsInADeck
@@ -178,8 +179,9 @@ const BooksDisplayComponent = (props) => {
         // A deck will contain at most 4 cards but final deck can contain less than 4 cards
         // So we check if the deck is final or not
         if (
-          (i === bookCards.length - 1 && cardsInADeck.length < 5) ||
-          cardsInADeck.length === 5
+          (i === bookCards.length - 1 &&
+            cardsInADeck.length < numberOfCardsInADeck) ||
+          cardsInADeck.length === numberOfCardsInADeck
         ) {
           // Creating a card deck
           const cardDeck = (
