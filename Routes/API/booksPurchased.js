@@ -89,7 +89,7 @@ router.post("/", [checkAPIKey, checkAccessRights], async (req, res) => {
       for (let i = 0; i < books.length; i++) {
         const book = books[i];
 
-        // test
+        // test for error
         // i === 0 ? (book.id = undefined) : null;
 
         // In order to update the stock of book we need to compare it with books purchased
