@@ -6,12 +6,14 @@ import ToolkitProvider, {
   Search,
 } from "react-bootstrap-table2-toolkit";
 import { Col, Row } from "reactstrap";
-// import products from "../../data/products.json";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import { getNPRFromDollar } from "../../utils/getNPRFromDollar";
 import { getPurchasedBooks } from "../../config/authAPI";
 import { connect } from "react-redux";
 import { getFormattedDate } from "../../utils/getFormattedDate";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { setBooks } from "../../Actions/actionBook";
 
 const imageFormatter = (cell, row) => {
   return <img className="purchase-history-table-img" src={cell} alt={cell} />;
@@ -97,6 +99,16 @@ const PurchaseHistoryPage = (props) => {
     // eslint-disable-next-line
   }, [props.setPageTitle]);
 
+  const [loading, setLoading] = useState(false);
+
+  //If user refreshes the page we set the books
+  useEffect(() => {
+    props.setBooks((value) => {
+      setLoading(value);
+    });
+    // eslint-disable-next-line
+  }, [props.setBooks]);
+
   const { ToggleList } = ColumnToggle;
   const { SearchBar, ClearSearchButton } = Search;
 
@@ -124,9 +136,10 @@ const PurchaseHistoryPage = (props) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
+    setLoading(true);
     getPurchasedBooks(props.user.user._id)
       .then((res) => {
-        console.log(res.data);
+        setLoading(false);
         if (res.data.success) {
           let products = [];
           let count = 1;
@@ -159,6 +172,7 @@ const PurchaseHistoryPage = (props) => {
         }
       })
       .catch((err) => {
+        setLoading(false);
         console.log(err);
       });
   }, [props.books, props.user]);
@@ -205,6 +219,15 @@ const PurchaseHistoryPage = (props) => {
             <BootstrapTable
               classes="purchase-history-table shadow mt-2"
               pagination={paginationFactory(paginationOptions)}
+              noDataIndication={
+                loading ? (
+                  <span>
+                    <FontAwesomeIcon icon={faSpinner} spin />
+                  </span>
+                ) : (
+                  "No purchase history available."
+                )
+              }
               {...props.baseProps}
             />
           </div>
@@ -219,4 +242,4 @@ const mapStateToProps = (state) => ({
   books: state.books,
 });
 
-export default connect(mapStateToProps, null)(PurchaseHistoryPage);
+export default connect(mapStateToProps, { setBooks })(PurchaseHistoryPage);

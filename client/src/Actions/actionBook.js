@@ -7,11 +7,8 @@ import {
 } from "../Actions/ActionTypes";
 import axios from "axios";
 
-export const setBooks = (setBooksLoading) => {
+export const setBooks = (cb) => {
   return (dispatch) => {
-    if (setBooksLoading) {
-      setBooksLoading(true);
-    }
     const setBooksAndCart = (books) => {
       dispatch({
         type: SET_BOOKS,
@@ -24,13 +21,13 @@ export const setBooks = (setBooksLoading) => {
           cart,
         });
       }
-      if (setBooksLoading) {
-        setBooksLoading(false);
-      }
     };
 
     const books = JSON.parse(sessionStorage.getItem("books"));
     if (!books) {
+      if (cb) {
+        cb(true);
+      }
       axios
         .get("/api/books", {
           headers: {
@@ -38,8 +35,16 @@ export const setBooks = (setBooksLoading) => {
           },
         })
         .then((res) => {
+          if (cb) {
+            cb(false);
+          }
           if (res.data.success) {
             setBooksAndCart(res.data.books);
+          }
+        })
+        .catch((err) => {
+          if (cb) {
+            cb(false);
           }
         });
     } else {

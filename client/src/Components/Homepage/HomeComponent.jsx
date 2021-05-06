@@ -14,7 +14,9 @@ const HomeComponent = (props) => {
   const [booksLoading, setBooksLoading] = useState(false);
 
   useEffect(() => {
-    props.setBooks(setBooksLoading);
+    props.setBooks((value) => {
+      setBooksLoading(value);
+    });
     //eslint-disable-next-line
   }, [props.setBooks]);
 
