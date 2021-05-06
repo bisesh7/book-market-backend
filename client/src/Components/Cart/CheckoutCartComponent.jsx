@@ -148,19 +148,13 @@ const CheckoutCartComponent = (props) => {
       .catch((err) => {
         if (err.response) {
           addToast(err.response.data.msg, {
-            appearance: "danger",
+            appearance: "error",
             autoDismiss: true,
-            onDismiss: () => {
-              props.history.push("/");
-            },
           });
         } else {
           addToast("Unexpected server error.", {
-            appearance: "danger",
+            appearance: "error",
             autoDismiss: true,
-            onDismiss: () => {
-              props.history.push("/");
-            },
           });
         }
       });
