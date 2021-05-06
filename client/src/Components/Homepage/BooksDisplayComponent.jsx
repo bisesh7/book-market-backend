@@ -63,10 +63,12 @@ const BooksDisplayComponent = (props) => {
     } else {
       booksAccordingToGenre = props.books.books;
     }
-
-    setNumberOfCardDecks(3);
     setBooksAccordingToGenre(booksAccordingToGenre);
   }, [genreSelected, props.books]);
+
+  useEffect(() => {
+    setNumberOfCardDecks(3);
+  }, [genreSelected]);
 
   //   All the book cards
   const [bookCards, setBookCards] = useState(null);
