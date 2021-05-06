@@ -75,14 +75,14 @@ const BookDetailComponent = (props) => {
       {book ? (
         <div>
           <Row>
-            <Col md="6">
+            <Col md="4">
               <img
                 src={book.image}
                 className="book-image"
                 alt={book["name "]}
               />
             </Col>
-            <Col md="6" className="pl-5">
+            <Col md="8" className="pl-5">
               <div>
                 <strong className="text-primary">{book["name "]}</strong> <br />
                 <span className="text-muted">by</span> {book.author} <br />
@@ -132,17 +132,7 @@ const BookDetailComponent = (props) => {
         <Alert color="danger" isOpen={alertVisible} toggle={onAlertDismiss}>
           {alertMessage}
         </Alert>
-        <Row>
-          <Col className="mt-3 mb-4" md="9">
-            {bookDetail}
-          </Col>
-          <Col md="3">
-            <strong>Cart</strong>
-            <div className="sticky-top cart">
-              <CartComponent {...props} />
-            </div>
-          </Col>
-        </Row>
+        {bookDetail}
       </Container>
     </div>
   );
