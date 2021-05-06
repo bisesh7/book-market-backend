@@ -6,9 +6,11 @@ import {
   Popover,
   PopoverHeader,
   PopoverBody,
+  Badge,
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CartComponent from "./CartComponent";
+import { connect } from "react-redux";
 
 const CartPopover = (props) => {
   const [cartPopoverOpen, setPopoverOpen] = useState(false);
@@ -25,7 +27,14 @@ const CartPopover = (props) => {
         }}
         id="CartPopover"
       >
-        Cart
+        Cart&nbsp;
+        {props.cart.cart.length ? (
+          <sup>
+            <Badge color="secondary" className="pt-1 pr-1">
+              {props.cart.cart.length}
+            </Badge>
+          </sup>
+        ) : null}
       </NavLink>
       <Popover
         placement="bottom"
@@ -44,4 +53,8 @@ const CartPopover = (props) => {
   );
 };
 
-export default CartPopover;
+const mapStateToProps = (state) => ({
+  cart: state.cart,
+});
+
+export default connect(mapStateToProps)(CartPopover);

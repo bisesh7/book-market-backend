@@ -66,7 +66,7 @@ const ProfileComponent = (props) => {
       </Helmet>
       <NavbarComponent {...props} />
       {showProfile ? (
-        <Container fluid={true} className="mt-3">
+        <Container fluid={true} className="main-container">
           <Row>
             <Col md="2">
               <ProfileTabsComponent hash={hash} setHash={setHash} {...props} />

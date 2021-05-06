@@ -128,7 +128,7 @@ const BookDetailComponent = (props) => {
       ) : null}
 
       <NavbarComponent {...props} />
-      <Container fluid={true}>
+      <Container fluid={true} className="main-container">
         <Alert color="danger" isOpen={alertVisible} toggle={onAlertDismiss}>
           {alertMessage}
         </Alert>

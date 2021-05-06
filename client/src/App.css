@@ -11,6 +11,10 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
+.main-container {
+  margin-top: 64px;
+}
+
 /* Navbar */
 
 .navbar {
@@ -97,7 +101,7 @@ body {
   box-shadow: none !important;
 }
 
-/* Genre select in homepage */
+/* homepage */
 
 .genre-select {
   max-width: 14vw;

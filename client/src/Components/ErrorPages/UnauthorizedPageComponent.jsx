@@ -20,7 +20,7 @@ const UnauthorizedPageComponent = (props) => {
 
   return (
     <div>
-      <Jumbotron>
+      <Jumbotron className="main-container">
         <h1 className="display-3">
           {props.redirect ? (
             <FontAwesomeIcon icon={faBan} />

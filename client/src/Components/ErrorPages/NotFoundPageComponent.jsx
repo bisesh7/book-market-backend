@@ -12,7 +12,7 @@ const NotFoundPageComponent = (props) => {
         <title>Page Not Found | Book-Market</title>
       </Helmet>
       <NavbarComponent {...props} />
-      <Jumbotron>
+      <Jumbotron className="main-container">
         <h1 className="display-3">
           <FontAwesomeIcon icon={faExclamation} />
           &nbsp;Hello, there!

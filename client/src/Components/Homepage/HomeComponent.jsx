@@ -21,7 +21,7 @@ const HomeComponent = (props) => {
   return (
     <div>
       <NavbarComponent {...props} />
-      <Container fluid={true}>
+      <Container fluid={true} className="main-container">
         <BooksCarousel {...props} />
         <Row>
           <Col md="9">

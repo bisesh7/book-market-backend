@@ -73,7 +73,7 @@ const NavbarComponent = (props) => {
 
   return (
     <div>
-      <Navbar className="navbar" color="light" light expand="md">
+      <Navbar className="navbar fixed-top" color="light" light expand="md">
         <NavbarBrand
           href="/"
           onClick={(e) => {

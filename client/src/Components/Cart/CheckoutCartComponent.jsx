@@ -200,7 +200,7 @@ const CheckoutCartComponent = (props) => {
       </Helmet>
       <NavbarComponent {...props} />
       {showCheckoutCart ? (
-        <Container fluid={true} className="mt-1">
+        <Container fluid={true} className="main-container">
           {cart.length ? (
             <List type="inline">
               <ListInlineItem>
