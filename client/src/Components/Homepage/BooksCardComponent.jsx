@@ -96,20 +96,18 @@ const BooksCardComponent = (props) => {
           <span className="text-muted">By</span>{" "}
           <span className="text-primary">{props.author}</span>
           <br />
-          <span className="d-flex justify-content-between">
-            <strong className="text-danger">
-              {getNPRFromDollar(props.price.substring(1, props.price.length))}
-            </strong>
-            <span
-              className={
-                props.stock
-                  ? "text-info add-to-cart-button"
-                  : "disabled-button text-info add-to-cart-button"
-              }
-              onClick={addToCardButtonHandler}
-            >
-              <FontAwesomeIcon icon={faCartPlus} />
-            </span>
+          <strong className="text-danger">
+            {getNPRFromDollar(props.price.substring(1, props.price.length))}
+          </strong>
+          <span
+            className={
+              props.stock
+                ? "text-info add-to-cart-button"
+                : "disabled-button text-info add-to-cart-button"
+            }
+            onClick={addToCardButtonHandler}
+          >
+            <FontAwesomeIcon icon={faCartPlus} />
           </span>
         </small>
         <Collapse isOpen={isOpen}>
