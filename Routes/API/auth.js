@@ -93,7 +93,7 @@ router.post("/refresh_token", checkAPIKey, (req, res) => {
   try {
     const refreshToken = req.cookies["refresh-token"];
     if (!refreshToken) {
-      return res.status(403).json({
+      return res.status(401).json({
         success: false,
         msg: "Access denied, no refresh token.",
         err: tokenError,

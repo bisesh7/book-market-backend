@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Bangers&family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bangers&family=Nunito&display=swap");
 
 :root {
   --navItemColor: cadetblue;
@@ -8,7 +8,7 @@
 }
 
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: "Nunito", sans-serif;
 }
 
 .main-container {
