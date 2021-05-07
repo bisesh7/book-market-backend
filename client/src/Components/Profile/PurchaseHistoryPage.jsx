@@ -178,7 +178,8 @@ const PurchaseHistoryPage = (props) => {
 
   return (
     <div className="purchase-history-table-container">
-      <ToolkitProvider
+      <BootstrapTable
+        classes="purchase-history-table shadow mt-2"
         keyField="id"
         data={products}
         columns={columns}
@@ -190,47 +191,17 @@ const PurchaseHistoryPage = (props) => {
         hover
         condensed
         noDataIndication="Table is Empty"
-      >
-        {(props) => (
-          <div>
-            <Row>
-              <Col>
-                <ToggleList
-                  className="btn-group-sm"
-                  {...props.columnToggleProps}
-                />{" "}
-                <br />
-              </Col>
-              <Col>
-                <div className="purchase-history-filter float-right">
-                  <SearchBar
-                    className="form-control-sm"
-                    {...props.searchProps}
-                  />
-                  <ClearSearchButton
-                    {...props.searchProps}
-                    className="clear-search-button ml-3 btn-sm"
-                  />
-                </div>
-              </Col>
-            </Row>
-
-            <BootstrapTable
-              classes="purchase-history-table shadow mt-2"
-              noDataIndication={
-                loading ? (
-                  <span>
-                    <FontAwesomeIcon icon={faSpinner} spin />
-                  </span>
-                ) : (
-                  "No purchase history available."
-                )
-              }
-              {...props.baseProps}
-            />
-          </div>
-        )}
-      </ToolkitProvider>
+        noDataIndication={
+          loading ? (
+            <span>
+              <FontAwesomeIcon icon={faSpinner} spin />
+            </span>
+          ) : (
+            "No purchase history available."
+          )
+        }
+        {...props.baseProps}
+      />
     </div>
   );
 };
