@@ -104,12 +104,6 @@ const PurchaseHistoryPage = (props) => {
     // eslint-disable-next-line
   }, [props.setBooks]);
 
-  const customTotal = (from, to, size) => (
-    <span className="react-bootstrap-table-pagination-total">
-      Showing {from} to {to} of {size} Results
-    </span>
-  );
-
   // const paginationOptions = {
   //   pageStartIndex: 0,
   //   sizePerPage: 5,
