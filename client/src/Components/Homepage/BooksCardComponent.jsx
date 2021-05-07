@@ -34,7 +34,7 @@ const BooksCardComponent = (props) => {
         });
       };
       if (toastInToastStack.length) {
-        removeToast(toastInToastStack.id, () => {
+        removeToast(toastInToastStack[0].id, () => {
           createToast();
         });
       } else {

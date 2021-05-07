@@ -6,7 +6,6 @@ import ToolkitProvider, {
   Search,
 } from "react-bootstrap-table2-toolkit";
 import { Col, Row } from "reactstrap";
-import paginationFactory from "react-bootstrap-table2-paginator";
 import { getNPRFromDollar } from "../../utils/getNPRFromDollar";
 import { getPurchasedBooks } from "../../config/authAPI";
 import { connect } from "react-redux";
@@ -218,7 +217,6 @@ const PurchaseHistoryPage = (props) => {
 
             <BootstrapTable
               classes="purchase-history-table shadow mt-2"
-              pagination={paginationFactory(paginationOptions)}
               noDataIndication={
                 loading ? (
                   <span>

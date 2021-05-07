@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import { checkUser } from "./Actions/actionUser";
 import CheckoutCartComponent from "./Components/Cart/CheckoutCartComponent";
 import NotFoundPageComponent from "./Components/ErrorPages/NotFoundPageComponent";
+import React from "react";
 
 function App(props) {
   return (

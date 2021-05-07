@@ -126,7 +126,10 @@ export const checkUser = (addToast, removeToast) => {
         //   appearance: "warning",
         //   autoDismiss: true,
         // });
-        console.log(err.response.data.msg);
+        if (err.response) {
+          console.log(err.response.data.msg);
+        }
+        console.log(err);
       });
   };
 };
