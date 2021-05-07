@@ -1,15 +1,5 @@
-import { faFilter } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useRef, useState } from "react";
-import {
-  CardDeck,
-  Button,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-} from "reactstrap";
-import { getGenres } from "../../utils/getGenres";
+import { CardDeck, Button } from "reactstrap";
 import BooksCardComponent from "./BooksCardComponent";
 import { connect } from "react-redux";
 
@@ -18,34 +8,8 @@ const BooksDisplayComponent = (props) => {
   const [booksAccordingToGenre, setBooksAccordingToGenre] = useState(
     props.books.books
   );
-  // List of all the genres
-  const [genres, setGenres] = useState([]);
-  // The options of genre in select tag
-  const [genreOptions, setGenreOptions] = useState(null);
-  // The genre currently being selected
-  const [genreSelected, setGenreSelected] = useState("all-genres");
 
-  // Set the genres
-  useEffect(() => {
-    setGenres(getGenres(props.books.books));
-  }, [props.books]);
-
-  // Generating the genres options for selecting genre
-  useEffect(() => {
-    // Generating options from the genres list
-    const genreOptions = genres.map((genre, index) => {
-      if (genre === "(no genres listed)")
-        return <option key={index}>Others</option>;
-      else return <option key={index}>{genre}</option>;
-    });
-    // Adding option of All Genres to the select
-    genreOptions.unshift(
-      <option key={genres.length} value="all-genres" selected>
-        All Genres
-      </option>
-    );
-    setGenreOptions(genreOptions);
-  }, [genres]);
+  const genreSelected = props.genreSelected;
 
   // Filter the book results whenever the user selects a genre
   useEffect(() => {
@@ -232,24 +196,6 @@ const BooksDisplayComponent = (props) => {
 
   return (
     <div className={props.className}>
-      <InputGroup>
-        <InputGroupAddon addonType="prepend">
-          <InputGroupText>
-            <FontAwesomeIcon icon={faFilter} />
-          </InputGroupText>
-        </InputGroupAddon>
-        <Input
-          onChange={(e) => {
-            setGenreSelected(e.target.value);
-          }}
-          type="select"
-          className="genre-select"
-          defaultValue="all-genres"
-        >
-          {genreOptions}
-        </Input>
-      </InputGroup>
-
       <div className={props.className}>{cardDecksShown}</div>
       <div className="d-flex justify-content-center mt-3">
         <Button

@@ -40,6 +40,11 @@ body {
   font-size: 2em !important;
 }
 
+.nav-genre-filter {
+  position: absolute;
+  left: 40vw;
+}
+
 /* Book Cards */
 
 .book-card {

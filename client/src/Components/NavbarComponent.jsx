@@ -15,6 +15,7 @@ import { useToasts } from "react-toast-notifications";
 import CartPopover from "./Cart/CartPopover";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook } from "@fortawesome/free-solid-svg-icons";
+import FilterGenreSelect from "./Homepage/FilterGenreSelect";
 
 const NavbarComponent = (props) => {
   const { addToast, removeToast, updateToast } = useToasts();
@@ -89,6 +90,16 @@ const NavbarComponent = (props) => {
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
+          <Nav className="nav-genre-filter">
+            {props.isHomePage ? (
+              <FilterGenreSelect
+                setGenreSelected={props.genreMethods.setGenreSelected}
+                genreOptions={props.genreMethods.genreOptions}
+                className="navbar-genre-select"
+              />
+            ) : null}
+          </Nav>
+
           <Nav className="ml-auto" navbar>
             <NavItem>
               <NavLink
