@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import BootstrapTable from "react-bootstrap-table-next";
-import ToolkitProvider, {
-  ColumnToggle,
-  Search,
-} from "react-bootstrap-table2-toolkit";
-import { Col, Row } from "reactstrap";
+import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import { getNPRFromDollar } from "../../utils/getNPRFromDollar";
 import { getPurchasedBooks } from "../../config/authAPI";
 import { connect } from "react-redux";
@@ -13,6 +9,7 @@ import { getFormattedDate } from "../../utils/getFormattedDate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { setBooks } from "../../Actions/actionBook";
+import paginationFactory from "react-bootstrap-table2-paginator";
 
 const imageFormatter = (cell, row) => {
   return <img className="purchase-history-table-img" src={cell} alt={cell} />;
@@ -108,8 +105,7 @@ const PurchaseHistoryPage = (props) => {
     // eslint-disable-next-line
   }, [props.setBooks]);
 
-  const { ToggleList } = ColumnToggle;
-  const { SearchBar, ClearSearchButton } = Search;
+  const { SearchBar } = Search;
 
   const customTotal = (from, to, size) => (
     <span className="react-bootstrap-table-pagination-total">
@@ -118,10 +114,10 @@ const PurchaseHistoryPage = (props) => {
   );
 
   const paginationOptions = {
-    // pageStartIndex: 0,
+    pageStartIndex: 0,
     sizePerPage: 5,
     hideSizePerPage: true,
-    // hidePageListOnlyOnePage: true,
+    hidePageListOnlyOnePage: true,
     paginationSize: 3,
     firstPageText: "First",
     prePageText: "Back",
@@ -178,30 +174,33 @@ const PurchaseHistoryPage = (props) => {
 
   return (
     <div className="purchase-history-table-container">
-      <BootstrapTable
-        classes="purchase-history-table shadow mt-2"
-        keyField="id"
-        data={products}
-        columns={columns}
-        columnToggle
-        defaultSorted={defaultSorted}
-        search
-        bootstrap4
-        striped
-        hover
-        condensed
-        noDataIndication="Table is Empty"
-        noDataIndication={
-          loading ? (
-            <span>
-              <FontAwesomeIcon icon={faSpinner} spin />
-            </span>
-          ) : (
-            "No purchase history available."
-          )
-        }
-        {...props.baseProps}
-      />
+      <ToolkitProvider keyField="id" data={products} columns={columns} search>
+        {(props) => (
+          <div>
+            <SearchBar {...props.searchProps} />
+            <hr />
+            <BootstrapTable
+              classes="purchase-history-table shadow mt-2"
+              keyField="id"
+              data={products}
+              columns={columns}
+              defaultSorted={defaultSorted}
+              bootstrap4
+              noDataIndication={
+                loading ? (
+                  <span>
+                    <FontAwesomeIcon icon={faSpinner} spin />
+                  </span>
+                ) : (
+                  "No purchase history available."
+                )
+              }
+              // pagination={paginationFactory()}
+              {...props.baseProps}
+            />
+          </div>
+        )}
+      </ToolkitProvider>
     </div>
   );
 };
