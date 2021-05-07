@@ -15,7 +15,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusSquare } from "@fortawesome/free-regular-svg-icons";
 import { faMinusSquare, faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import { connect } from "react-redux";
-import { faCross, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const CartListGroupItem = (props) => {
   const quantityDecreaseHandler = (e) => {

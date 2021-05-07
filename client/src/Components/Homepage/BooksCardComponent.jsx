@@ -2,7 +2,7 @@ import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { Card, Button, CardText, CardBody, Collapse } from "reactstrap";
+import { Card, CardText, CardBody, Collapse } from "reactstrap";
 import { removeFromBooks } from "../../Actions/actionBook";
 import { addBookToCart } from "../../Actions/actionCart";
 import { getFormattedDate } from "../../utils/getFormattedDate";
@@ -62,6 +62,7 @@ const BooksCardComponent = (props) => {
         className="book-card-image"
         onClick={showCardDetails}
       />
+
       <CardBody className="p-2 card-body">
         <small>
           <strong
@@ -95,10 +96,21 @@ const BooksCardComponent = (props) => {
           <span className="text-muted">By</span>{" "}
           <span className="text-primary">{props.author}</span>
           <br />
-          <b className="text-danger">
-            {getNPRFromDollar(props.price.substring(1, props.price.length))}
-          </b>
-          <br />
+          <span className="d-flex justify-content-between">
+            <strong className="text-danger">
+              {getNPRFromDollar(props.price.substring(1, props.price.length))}
+            </strong>
+            <span
+              className={
+                props.stock
+                  ? "text-info add-to-cart-button"
+                  : "disabled-button text-info add-to-cart-button"
+              }
+              onClick={addToCardButtonHandler}
+            >
+              <FontAwesomeIcon icon={faCartPlus} />
+            </span>
+          </span>
         </small>
         <Collapse isOpen={isOpen}>
           <CardText>
@@ -115,22 +127,6 @@ const BooksCardComponent = (props) => {
           </CardText>
         </Collapse>
       </CardBody>
-      {/* If stock is 0 we disable button */}
-      <Button
-        size="sm"
-        color="secondary"
-        disabled={props.stock <= 0}
-        onClick={addToCardButtonHandler}
-        block
-        outline
-        className={
-          props.stock
-            ? "add-to-cart-button"
-            : "add-to-cart-button disabled-button"
-        }
-      >
-        <FontAwesomeIcon icon={faCartPlus} />
-      </Button>
     </Card>
   );
 };

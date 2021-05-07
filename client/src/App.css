@@ -44,8 +44,10 @@ body {
 
 .book-card {
   max-width: 16.3vw;
+  height: auto;
   border: none;
   border-radius: 0 !important;
+  box-sizing: border-box !important;
 }
 
 .book-card-collpase-button,
@@ -63,6 +65,9 @@ body {
   cursor: pointer;
   border-radius: 0 !important;
   opacity: 0.7;
+  height: 100%;
+  object-fit: cover;
+  height: 10em;
 }
 
 .book-card-image:hover {
@@ -71,9 +76,23 @@ body {
 
 .card-body {
   background-color: #f8f3f3;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.1px;
 }
 
+.add-to-cart-button {
+  opacity: 0.8;
+  transform: scale(1.3);
+  position: absolute;
+  right: 10px;
+}
+
+.add-to-cart-button:hover {
+  opacity: 1;
+  cursor: pointer;
+  transform: scale(1.4);
+}
+
+/* 
 .add-to-cart-button {
   border-color: var(--addToCartButtonColor) !important;
   border-radius: 0 !important;
@@ -89,7 +108,7 @@ body {
 .add-to-cart-button:focus {
   border-color: var(--addToCartButtonColor) !important;
   box-shadow: none !important;
-}
+} */
 
 /* homepage */
 
