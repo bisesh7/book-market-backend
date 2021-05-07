@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { CardDeck, Button } from "reactstrap";
+import React, { useEffect, useState } from "react";
+import { CardDeck } from "reactstrap";
 import BooksCardComponent from "./BooksCardComponent";
 import { connect } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -177,14 +177,6 @@ const BooksDisplayComponent = (props) => {
       setCardDecksShown(cardDecks.slice(0, numberOfCardDecks));
     }
   }, [cardDecks, numberOfCardDecks]);
-
-  //   Reference to the end of the page
-  let pageEnd = useRef(null);
-
-  //   Function to scroll to the bottom of the page
-  const scrollToBottom = () => {
-    pageEnd.current.scrollIntoView({ behavior: "smooth" });
-  };
 
   //   Whenever show more is clicked we add another deck of cards
   const showMoreHandler = () => {

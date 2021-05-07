@@ -56,7 +56,7 @@ const NavbarComponent = (props) => {
         setPage("/");
         break;
     }
-  }, []);
+  }, [props.location]);
 
   const guestLinks = (
     <NavItem>
