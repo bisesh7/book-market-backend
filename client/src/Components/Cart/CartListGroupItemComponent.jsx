@@ -56,7 +56,7 @@ const CartListGroupItem = (props) => {
                   className="cart-delete-button"
                   onClick={removeFromCartHandler}
                 >
-                  <FontAwesomeIcon icon={faTimes} size="lg" />
+                  <FontAwesomeIcon icon={faTrashAlt} />
                 </a>
               </div>
               <strong>Quantity:</strong> &nbsp;{props.quantity}&nbsp;

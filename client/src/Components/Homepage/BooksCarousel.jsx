@@ -12,7 +12,7 @@ const BooksCarousel = (props) => {
     props.history.push(`/book/${id}`);
   };
 
-  const getFeaturedBook = (image, title, author, id) => {
+  const getFeaturedBook = (image, title, id) => {
     return (
       <div className="d-flex justify-content-between carousel-book">
         <img
@@ -23,21 +23,6 @@ const BooksCarousel = (props) => {
           }}
           className="book-carousel-image"
         />
-        <div className="pl-3 text-white carousel-book-body">
-          <div className="carousel-book-info">
-            <span
-              className="book-card-title"
-              onClick={() => {
-                showDetailPage(id);
-              }}
-            >
-              {" "}
-              {title}{" "}
-            </span>
-            <br />
-            <span className="text-black">by</span>&nbsp;{author}
-          </div>
-        </div>
       </div>
     );
   };
@@ -47,25 +32,21 @@ const BooksCarousel = (props) => {
     getFeaturedBook(
       "http://dummyimage.com/250x250.png/cc0000/ffffff",
       "Bamity",
-      "Nikos",
       1
     ),
     getFeaturedBook(
       "http://dummyimage.com/250x250.png/5fa2dd/ffffff",
       "Span",
-      "Adela",
       2
     ),
     getFeaturedBook(
       "http://dummyimage.com/250x250.png/5fa2dd/ffffff",
       "Fixflex",
-      "Lorianna",
       3
     ),
     getFeaturedBook(
       "http://dummyimage.com/250x250.png/5fa2dd/ffffff",
       "Y-find",
-      "Catha",
       4
     ),
   ]);
@@ -84,7 +65,7 @@ const BooksCarousel = (props) => {
               {
                 resolve: slidesToShowPlugin,
                 options: {
-                  numberOfSlides: 2,
+                  numberOfSlides: 3,
                 },
               },
               {

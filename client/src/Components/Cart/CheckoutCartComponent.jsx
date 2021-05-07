@@ -228,6 +228,7 @@ const CheckoutCartComponent = (props) => {
                 totalAmount={totalAmount}
                 discount={discount}
                 submitting={submitting}
+                className="checkout-order-summary"
                 proceedToCheckoutButtonHandler={proceedToCheckoutButtonHandler}
               />
             </Col>

@@ -72,7 +72,7 @@ const BookDetailComponent = (props) => {
   const bookDetail = (
     <Fragment>
       {book ? (
-        <div>
+        <div className="book-details">
           <Row>
             <Col md="4">
               <img
@@ -106,7 +106,8 @@ const BookDetailComponent = (props) => {
                   color="secondary"
                   disabled={book.stock <= 0}
                   onClick={addToCardButtonHandler}
-                  className="mt-3 px-4"
+                  className="mt-3"
+                  outline
                 >
                   <FontAwesomeIcon icon={faCartPlus} />
                 </Button>

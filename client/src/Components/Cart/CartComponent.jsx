@@ -52,7 +52,7 @@ const CartComponent = (props) => {
       {props.cart.cart.length ? (
         <div className="cart-details">
           <strong className="float-right cart-total-amount">
-            Total:{" "}
+            <span className="text-secondary">Total:</span>{" "}
             <span className="text-danger">{getNPRFromDollar(totalAmount)}</span>
           </strong>{" "}
           <br />{" "}
