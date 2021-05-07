@@ -45,6 +45,19 @@ const NavbarComponent = (props) => {
     props.history.push("/profile#details");
   };
 
+  const [page, setPage] = useState("home");
+  useEffect(() => {
+    console.log(props.location);
+    switch (props.location.pathname) {
+      case "/profile":
+        setPage("profile");
+        break;
+      default:
+        setPage("/");
+        break;
+    }
+  }, []);
+
   const guestLinks = (
     <NavItem>
       <LoginSignupModal
@@ -62,6 +75,7 @@ const NavbarComponent = (props) => {
           href="/profile"
           onClick={profileClickHandler}
           disabled={loggingOut}
+          active={page === "profile"}
         >
           Profile
         </NavLink>

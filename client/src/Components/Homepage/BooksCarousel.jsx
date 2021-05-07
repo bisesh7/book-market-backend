@@ -12,7 +12,7 @@ const BooksCarousel = (props) => {
     props.history.push(`/book/${id}`);
   };
 
-  const getFeaturedBook = (image, title, id) => {
+  const getFeaturedBook = (image, title, author, id) => {
     return (
       <div className="d-flex justify-content-between carousel-book">
         <img
@@ -23,6 +23,13 @@ const BooksCarousel = (props) => {
           }}
           className="book-carousel-image"
         />
+        <div className="carousel-book-detail">
+          <strong>{title}</strong>&nbsp;
+          <small>
+            <span className="text-black">by</span>&nbsp;
+            <strong>{author}</strong>
+          </small>
+        </div>
       </div>
     );
   };
@@ -32,21 +39,25 @@ const BooksCarousel = (props) => {
     getFeaturedBook(
       "http://dummyimage.com/250x250.png/cc0000/ffffff",
       "Bamity",
+      "Nikos",
       1
     ),
     getFeaturedBook(
       "http://dummyimage.com/250x250.png/5fa2dd/ffffff",
       "Span",
+      "Adela",
       2
     ),
     getFeaturedBook(
       "http://dummyimage.com/250x250.png/5fa2dd/ffffff",
       "Fixflex",
+      "Lorianna",
       3
     ),
     getFeaturedBook(
       "http://dummyimage.com/250x250.png/5fa2dd/ffffff",
       "Y-find",
+      "Catha",
       4
     ),
   ]);

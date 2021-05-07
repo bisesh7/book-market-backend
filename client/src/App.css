@@ -35,6 +35,11 @@ body {
   color: white !important;
 }
 
+.navbar .nav-link.active {
+  color: white !important;
+  background: var(--navItemColor);
+}
+
 .navbar .nav-brand {
   font-family: "Bangers", cursive;
   font-size: 2em !important;
@@ -210,9 +215,35 @@ body {
   padding: 28px 0px 10px 0px;
 }
 
-.book-carousel-image,
-.book-card-title {
+.carousel-book {
+  position: relative;
+}
+
+.carousel-book:hover .book-carousel-image {
+  opacity: 0.2;
+}
+
+.carousel-book:hover .carousel-book-detail {
+  opacity: 1;
+}
+
+.book-carousel-image {
   cursor: pointer;
+  opacity: 10;
+  display: block;
+  transition: 0.5s ease;
+  backface-visibility: hidden;
+}
+
+.carousel-book-detail {
+  transition: 0.5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  color: white;
 }
 
 .carousel-book {
