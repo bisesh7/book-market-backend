@@ -13,6 +13,8 @@ import { logoutUser, checkUser } from "../Actions/actionUser";
 import LoginSignupModal from "./User/LoginSignupModal";
 import { useToasts } from "react-toast-notifications";
 import CartPopover from "./Cart/CartPopover";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBook } from "@fortawesome/free-solid-svg-icons";
 
 const NavbarComponent = (props) => {
   const { addToast, removeToast, updateToast } = useToasts();
@@ -82,7 +84,8 @@ const NavbarComponent = (props) => {
           }}
           className="nav-brand"
         >
-          Book-Market
+          <FontAwesomeIcon icon={faBook} />
+          &nbsp;Book-Market
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
