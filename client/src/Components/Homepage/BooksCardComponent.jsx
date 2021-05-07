@@ -11,7 +11,7 @@ import { getNPRFromDollar } from "../../utils/getNPRFromDollar";
 import { useToasts } from "react-toast-notifications";
 
 const BooksCardComponent = (props) => {
-  const { addToast } = useToasts();
+  const { addToast, toastStack, removeToast } = useToasts();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -23,6 +23,23 @@ const BooksCardComponent = (props) => {
       // cartDispatch(addToCart(props.id));
       props.addBookToCart(props.id);
       props.removeFromBooks(props.id);
+      const toastInToastStack = toastStack.filter(
+        (toast) => toast.name === props.title
+      );
+      const createToast = () => {
+        addToast(`${props.title} has been added to the cart.`, {
+          appearance: "success",
+          autoDismiss: true,
+          name: props.title,
+        });
+      };
+      if (toastInToastStack.length) {
+        removeToast(toastInToastStack.id, () => {
+          createToast();
+        });
+      } else {
+        createToast();
+      }
     };
     if (props.stock > 0) {
       // Check if there are 5 different books in cart
