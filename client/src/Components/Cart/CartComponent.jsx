@@ -50,20 +50,27 @@ const CartComponent = (props) => {
     <div className={props.className}>
       <ListGroup className="mb-3 cart-list">{cartListGroupItems}</ListGroup>
       {props.cart.cart.length ? (
-        <div>
-          <small className="float-right">
-            Total: {getNPRFromDollar(totalAmount)}
-          </small>{" "}
+        <div className="cart-details">
+          <strong className="float-right cart-total-amount">
+            Total:{" "}
+            <span className="text-danger">{getNPRFromDollar(totalAmount)}</span>
+          </strong>{" "}
           <br />{" "}
           {!props.user.user ? (
             <LoginSignupModal
-              className="modal-dialog-centered"
+              className="modal-dialog-centered cart-checkout-button"
               buttonLabel={"Checkout"}
               navLinkHidden={true}
               buttonHidden={false}
             />
           ) : (
-            <Button color="primary" block size="sm" onClick={checkoutHandler}>
+            <Button
+              className="cart-checkout-button"
+              color="primary"
+              block
+              size="sm"
+              onClick={checkoutHandler}
+            >
               Checkout
             </Button>
           )}
@@ -73,7 +80,7 @@ const CartComponent = (props) => {
           color="dark"
           className={
             props.maxAlertWidth
-              ? "text-center cart-empty-alert width-320-px"
+              ? "text-center cart-empty-alert"
               : "text-center cart-empty-alert"
           }
         >

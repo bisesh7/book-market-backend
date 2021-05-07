@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusSquare } from "@fortawesome/free-regular-svg-icons";
 import { faMinusSquare, faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import { connect } from "react-redux";
+import { faCross, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const CartListGroupItem = (props) => {
   const quantityDecreaseHandler = (e) => {
@@ -42,11 +43,11 @@ const CartListGroupItem = (props) => {
   return (
     <div>
       <ListGroupItem className={props.className}>
-        <Row>
-          <Col md="6" className="d-flex align-items-center">
+        <Row className="cart-item-row">
+          <Col md="4" className="d-flex align-items-center">
             <img src={props.image} alt={props.name} className="cart-image" />
           </Col>
-          <Col md="6">
+          <Col md="8" className="cart-item-details-col">
             <small>
               <div className="d-flex justify-content-between">
                 <strong>{props.name}</strong>
@@ -55,17 +56,19 @@ const CartListGroupItem = (props) => {
                   className="cart-delete-button"
                   onClick={removeFromCartHandler}
                 >
-                  <FontAwesomeIcon icon={faTrashAlt} />
+                  <FontAwesomeIcon icon={faTimes} size="lg" />
                 </a>
               </div>
-              Quantity: {props.quantity} <br />
+              <strong>Quantity:</strong> &nbsp;{props.quantity}&nbsp;
+              <br />
               <strong className="cart-quantity-button">
                 <span
                   className="cart-quantity-minus-button mr-2"
                   onClick={quantityDecreaseHandler}
                 >
-                  <FontAwesomeIcon icon={faMinusSquare} />
+                  <FontAwesomeIcon icon={faMinusSquare} size="lg" />
                 </span>
+
                 <span
                   className={
                     props.stock === 0
@@ -74,15 +77,15 @@ const CartListGroupItem = (props) => {
                   }
                   onClick={quantityIncreaseHandler}
                 >
-                  <FontAwesomeIcon icon={faPlusSquare} />
+                  <FontAwesomeIcon icon={faPlusSquare} size="lg" />
                 </span>
-              </strong>
+              </strong>{" "}
               <br />
-              <b className="text-primary">
+              <strong className="text-primary">
                 {getNPRFromDollar(
                   props.quantity * props.price.substring(1, props.price.length)
                 )}
-              </b>{" "}
+              </strong>{" "}
             </small>
           </Col>
         </Row>

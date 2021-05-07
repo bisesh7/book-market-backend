@@ -5,6 +5,7 @@
   --addToCartButtonColor: hsl(0, 0%, 60%);
   --textBlack: #4d4e4e;
   --textBlackDarker: #303030;
+  --cartWidth: 380px;
 }
 
 body {
@@ -32,16 +33,6 @@ body {
 .navbar .nav-brand {
   font-family: "Bangers", cursive;
   font-size: 2em !important;
-}
-
-/* Cart Popover */
-.popover {
-  top: 3px !important;
-  max-width: 320px !important;
-}
-
-.width-320-px {
-  width: 320px !important;
 }
 
 /* Book Cards */
@@ -108,22 +99,50 @@ body {
 
 /* Cart */
 
+/* Cart Popover */
+.popover {
+  top: 3px !important;
+  max-width: var(--cartWidth) !important;
+}
+
+.cart-item,
+.cart-empty-alert,
+.cart-list {
+  width: var(--cartWidth) !important;
+}
+
+.cart-details {
+  width: 355px;
+}
+
+.cart-checkout-button {
+  border-radius: 0 !important;
+}
+
+.cart-item-row {
+  width: 100%;
+}
+
 .cart-image,
 .book-image {
-  width: 100%;
+  width: 7.5em;
   height: auto;
 }
 
+.cart-item-details-col {
+  font-size: 1.1em;
+}
+
+.cart-total-amount {
+  font-size: 0.9em;
+}
+
 .cart-delete-button {
-  color: hsl(0, 50%, 50%);
+  color: hsla(0, 50%, 50%, 0.9);
 }
 
 .cart-delete-button:hover {
-  color: hsl(0, 100%, 50%);
-}
-
-.cart-quantity-button {
-  font-size: 1.1rem;
+  color: hsl(0, 85%, 40%);
 }
 
 .disabled-button {
@@ -144,8 +163,9 @@ body {
 
 .cart-empty-alert {
   border-radius: 0 !important;
-  width: 100%;
 }
+
+/* Carousel */
 
 .books-carousel {
   background-color: #1483cd;
