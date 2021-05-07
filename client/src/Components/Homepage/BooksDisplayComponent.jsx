@@ -2,6 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { CardDeck, Button } from "reactstrap";
 import BooksCardComponent from "./BooksCardComponent";
 import { connect } from "react-redux";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const BooksDisplayComponent = (props) => {
   // Contains the books of particular genre
@@ -149,11 +152,11 @@ const BooksDisplayComponent = (props) => {
         ) {
           // Creating a card deck
           const cardDeck = (
-            <CardDeck key={i} className="mb-4">
+            <CardDeck key={i} className="mb-4 book-card-deck">
               {cardsInADeck.map((item) => item.card)}
             </CardDeck>
           );
-          // Push the card deck to the list of carddecks
+          // Push the card deck to the list of card decks
           cardDecks.push(cardDeck);
           //   empty the cardInADeck list
           cardsInADeck = [];
@@ -184,19 +187,30 @@ const BooksDisplayComponent = (props) => {
   };
 
   //   Whenever show more is clicked we add another deck of cards
-  const showMoreHandler = (e) => {
-    e.preventDefault();
+  const showMoreHandler = () => {
     if (numberOfCardDecks !== cardDecks.length) {
-      setNumberOfCardDecks(numberOfCardDecks + 1);
       setTimeout(() => {
-        scrollToBottom();
-      }, 200);
+        setNumberOfCardDecks(numberOfCardDecks + 1);
+      }, 1200);
     }
   };
 
   return (
     <div className={props.className}>
-      <div className={props.className}>{cardDecksShown}</div>
+      <InfiniteScroll
+        dataLength={cardDecksShown.length} //This is important field to render the next data
+        next={showMoreHandler}
+        hasMore={numberOfCardDecks !== cardDecks.length}
+        loader={
+          <strong className="d-flex justify-content-center">
+            <FontAwesomeIcon icon={faSpinner} spin size="lg" />
+          </strong>
+        }
+        className="card-decks"
+      >
+        {cardDecksShown}
+      </InfiniteScroll>
+      {/* <div className={props.className}>{cardDecksShown}</div>
       <div className="d-flex justify-content-center mt-3">
         <Button
           outline
@@ -208,9 +222,8 @@ const BooksDisplayComponent = (props) => {
             ? "No More Books"
             : "Load More"}
         </Button>
-        {/* Div for bottom of the page reference */}
         <div style={{ float: "left", clear: "both" }} ref={pageEnd}></div>
-      </div>
+      </div> */}
     </div>
   );
 };
