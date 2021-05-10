@@ -30,6 +30,7 @@ const BooksDisplayComponent = (props) => {
     } else {
       booksAccordingToGenre = props.books.books;
     }
+    console.log(booksAccordingToGenre);
     setBooksAccordingToGenre(booksAccordingToGenre);
   }, [genreSelected, props.books]);
 
@@ -187,12 +188,16 @@ const BooksDisplayComponent = (props) => {
     }
   };
 
+  console.log(numberOfCardDecks, cardDecks.length);
+
   return (
     <div className={props.className}>
       <InfiniteScroll
         dataLength={cardDecksShown.length} //This is important field to render the next data
         next={showMoreHandler}
-        hasMore={numberOfCardDecks !== cardDecks.length}
+        hasMore={
+          cardDecks.length >= 3 ? numberOfCardDecks !== cardDecks.length : false
+        }
         loader={
           <strong className="d-flex justify-content-center">
             <FontAwesomeIcon icon={faSpinner} spin size="lg" />
@@ -202,20 +207,6 @@ const BooksDisplayComponent = (props) => {
       >
         {cardDecksShown}
       </InfiniteScroll>
-      {/* <div className={props.className}>{cardDecksShown}</div>
-      <div className="d-flex justify-content-center mt-3">
-        <Button
-          outline
-          color="primary"
-          onClick={showMoreHandler}
-          disabled={cardDecks.length === cardDecksShown.length}
-        >
-          {cardDecks.length === cardDecksShown.length
-            ? "No More Books"
-            : "Load More"}
-        </Button>
-        <div style={{ float: "left", clear: "both" }} ref={pageEnd}></div>
-      </div> */}
     </div>
   );
 };
