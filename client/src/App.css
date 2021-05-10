@@ -79,7 +79,6 @@ body {
   cursor: pointer;
   border-radius: 0 !important;
   opacity: 0.7;
-  height: 100%;
   object-fit: cover;
   height: 10em;
 }
@@ -98,33 +97,13 @@ body {
   transform: scale(1.3);
   position: absolute;
   right: 10px;
-  transition: transform 0.5s ease;
 }
 
-.add-to-cart-button:hover {
+.book-card .add-to-cart-button:hover .cart-icon {
   opacity: 1;
   cursor: pointer;
-  transform: scale(1.5);
+  transform: scale(1.3);
 }
-
-/* 
-.add-to-cart-button {
-  border-color: var(--addToCartButtonColor) !important;
-  border-radius: 0 !important;
-}
-
-.add-to-cart-button:hover {
-  border-color: var(--addToCartButtonColor) !important;
-  border-radius: 0 !important;
-  background-color: var(--addToCartButtonColor) !important;
-}
-
-.add-to-cart-button:active,
-.add-to-cart-button:focus {
-  border-color: var(--addToCartButtonColor) !important;
-  box-shadow: none !important;
-} */
-
 /* homepage */
 
 .genre-select {

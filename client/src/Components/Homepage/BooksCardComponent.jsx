@@ -124,7 +124,7 @@ const BooksCardComponent = (props) => {
             }
             onClick={addToCardButtonHandler}
           >
-            <FontAwesomeIcon icon={faCartPlus} />
+            <FontAwesomeIcon className="cart-icon" icon={faCartPlus} />
           </span>
         </small>
         <Collapse isOpen={isOpen}>
