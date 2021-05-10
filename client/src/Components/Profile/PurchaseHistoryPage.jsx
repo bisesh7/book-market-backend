@@ -150,8 +150,8 @@ const PurchaseHistoryPage = (props) => {
   }, [props.books, props.user]);
 
   // For pagination
+  // TODO: remove comment below after using setNumberOfProductsToDisplay
   // eslint-disable-next-line
-  // TODO: remove comment above after using setNumberOfProductsToDisplay
   const [numberOfProductsToDisplay, setNumberOfProductsToDisplay] = useState(5);
   const numberOfPages = Math.ceil(products.length / numberOfProductsToDisplay);
   const [productsDisplayed, setProductsDisplayed] = useState([]);
