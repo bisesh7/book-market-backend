@@ -105,21 +105,6 @@ const PurchaseHistoryPage = (props) => {
     // eslint-disable-next-line
   }, [props.setBooks]);
 
-  // const paginationOptions = {
-  //   pageStartIndex: 0,
-  //   sizePerPage: 5,
-  //   hideSizePerPage: true,
-  //   hidePageListOnlyOnePage: true,
-  //   paginationSize: 3,
-  //   firstPageText: "First",
-  //   prePageText: "Back",
-  //   nextPageText: "Next",
-  //   lastPageText: "Last",
-  //   disablePageTitle: true,
-  //   showTotal: true,
-  //   paginationTotalRenderer: customTotal,
-  // };
-
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -200,14 +185,12 @@ const PurchaseHistoryPage = (props) => {
             "No purchase history available."
           )
         }
-        // pagination={paginationFactory()}
         {...props.baseProps}
       />
       <PurchaseHistoryPagination
         numberOfPages={numberOfPages}
         activePage={activePage}
         setActivePage={setActivePage}
-        {...props}
       />
     </div>
   );
