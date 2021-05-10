@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { setBooks } from "../../Actions/actionBook";
 // import paginationFactory from "react-bootstrap-table2-paginator";
+import PurchaseHistoryPagination from "./PurchaseHistoryPagination";
 
 const imageFormatter = (cell, row) => {
   return <img className="purchase-history-table-img" src={cell} alt={cell} />;
@@ -163,12 +164,27 @@ const PurchaseHistoryPage = (props) => {
       });
   }, [props.books, props.user]);
 
+  const [numberOfProductsToDisplay, setNumberOfProductsToDisplay] = useState(5);
+  const numberOfPages = Math.ceil(products.length / numberOfProductsToDisplay);
+  const [productsDisplayed, setProductsDisplayed] = useState([]);
+  const [activePage, setActivePage] = useState(1);
+
+  useEffect(() => {
+    if (products && products.length) {
+      let productsDisplayed = [];
+      let initialIndex = (activePage - 1) * numberOfProductsToDisplay;
+      let finalIndex = initialIndex + numberOfProductsToDisplay;
+      productsDisplayed = products.slice(initialIndex, finalIndex);
+      setProductsDisplayed(productsDisplayed);
+    }
+  }, [activePage, numberOfProductsToDisplay, products]);
+
   return (
     <div className="purchase-history-table-container">
       <BootstrapTable
         classes="purchase-history-table shadow mt-2"
         keyField="id"
-        data={products}
+        data={productsDisplayed}
         columns={columns}
         defaultSorted={defaultSorted}
         bootstrap4
@@ -183,6 +199,12 @@ const PurchaseHistoryPage = (props) => {
         }
         // pagination={paginationFactory()}
         {...props.baseProps}
+      />
+      <PurchaseHistoryPagination
+        numberOfPages={numberOfPages}
+        activePage={activePage}
+        setActivePage={setActivePage}
+        {...props}
       />
     </div>
   );

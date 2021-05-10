@@ -358,7 +358,8 @@ body {
   color: var(--textBlack);
 }
 
-.purchase-history-table-container .pagination li:focus {
+.purchase-history-table-container .pagination li a:hover {
+  background-color: var(--navItemColor) !important;
   box-shadow: none !important;
 }
 
