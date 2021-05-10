@@ -107,7 +107,7 @@ body {
 /* homepage */
 
 .genre-select {
-  max-width: 14vw;
+  width: 14vw !important;
 }
 
 /* Cart */

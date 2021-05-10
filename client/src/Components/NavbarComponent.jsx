@@ -108,7 +108,7 @@ const NavbarComponent = (props) => {
             {props.isHomePage ? (
               <FilterGenreSelect
                 setGenreSelected={props.genreMethods.setGenreSelected}
-                genreOptions={props.genreMethods.genreOptions}
+                genres={props.genreMethods.genres}
                 className="navbar-genre-select"
               />
             ) : null}

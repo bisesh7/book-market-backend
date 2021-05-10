@@ -12,8 +12,6 @@ const HomeComponent = (props) => {
   const [booksLoading, setBooksLoading] = useState(false);
   // List of all the genres
   const [genres, setGenres] = useState([]);
-  // The options of genre in select tag
-  const [genreOptions, setGenreOptions] = useState(null);
   // The genre currently being selected
   const [genreSelected, setGenreSelected] = useState("all-genres");
 
@@ -21,23 +19,6 @@ const HomeComponent = (props) => {
   useEffect(() => {
     setGenres(getGenres(props.books.books));
   }, [props.books]);
-
-  // Generating the genres options for selecting genre
-  useEffect(() => {
-    // Generating options from the genres list
-    const genreOptions = genres.map((genre, index) => {
-      if (genre === "(no genres listed)")
-        return <option key={index}>Others</option>;
-      else return <option key={index}>{genre}</option>;
-    });
-    // Adding option of All Genres to the select
-    genreOptions.unshift(
-      <option key={genres.length} value="all-genres" selected>
-        All Genres
-      </option>
-    );
-    setGenreOptions(genreOptions);
-  }, [genres]);
 
   useEffect(() => {
     props.setBooks((value) => {
@@ -51,7 +32,7 @@ const HomeComponent = (props) => {
       <NavbarComponent
         {...props}
         isHomePage={true}
-        genreMethods={{ setGenreSelected, genreOptions }}
+        genreMethods={{ setGenreSelected, genres }}
       />
       <Container fluid={true} className="main-container">
         <BooksCarousel {...props} />
