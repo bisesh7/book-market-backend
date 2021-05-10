@@ -119,6 +119,7 @@ const NavbarComponent = (props) => {
               <NavLink
                 className="nav-link"
                 href="https://github.com/bisesh7/book-market-backend"
+                target="_blank"
               >
                 Github
               </NavLink>
